@@ -38,7 +38,7 @@ def model_from_checkpoint_path(checkpoints_path):
     return model
 
 
-def predict(model=None, inp=None, out_fname=None, checkpoints_path=None):
+def predict(model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=None):
 
     if model is None and (checkpoints_path is not None):
         model = model_from_checkpoint_path(checkpoints_path)
@@ -65,7 +65,12 @@ def predict(model=None, inp=None, out_fname=None, checkpoints_path=None):
     pr = pr.reshape((output_height,  output_width, n_classes)).argmax(axis=2)
 
     seg_img = np.zeros((output_height, output_width, 3))
-    colors = class_colors
+
+    if clrs is None:
+        colors = class_colors
+    else:
+        print("prout")
+        colors = clrs
 
     for c in range(n_classes):
         seg_img[:, :, 0] += ((pr[:, :] == c)*(colors[c][0])).astype('uint8')
@@ -81,7 +86,7 @@ def predict(model=None, inp=None, out_fname=None, checkpoints_path=None):
 
 
 def predict_multiple(model=None, inps=None, inp_dir=None, out_dir=None,
-                     checkpoints_path=None):
+                     checkpoints_path=None, colors=None):
 
     if model is None and (checkpoints_path is not None):
         model = model_from_checkpoint_path(checkpoints_path)
@@ -92,7 +97,8 @@ def predict_multiple(model=None, inps=None, inp_dir=None, out_dir=None,
             glob.glob(os.path.join(inp_dir, "*.jpeg"))
 
     assert type(inps) is list
-
+    print(inp_dir)
+    print(inps)
     all_prs = []
 
     for i, inp in enumerate(tqdm(inps)):
@@ -101,10 +107,11 @@ def predict_multiple(model=None, inps=None, inp_dir=None, out_dir=None,
         else:
             if isinstance(inp, six.string_types):
                 out_fname = os.path.join(out_dir, os.path.basename(inp))
+                print("output : " + out_fname)
             else:
                 out_fname = os.path.join(out_dir, str(i) + ".jpg")
 
-        pr = predict(model, inp, out_fname)
+        pr = predict(model, inp, out_fname, clrs=colors)
         all_prs.append(pr)
 
     return all_prs

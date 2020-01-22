@@ -9,10 +9,10 @@ from keras_segmentation.data_utils.data_loader import \
     verify_segmentation_dataset, image_segmentation_generator
 from keras_segmentation.predict import predict_multiple, predict , evaluate 
 
-tr_im = "test/example_dataset/images_prepped_train"
-tr_an = "test/example_dataset/annotations_prepped_train"
-te_im = "test/example_dataset/images_prepped_test"
-te_an = "test/example_dataset/annotations_prepped_test"
+tr_im = "example_dataset/images_prepped_train"
+tr_an = "example_dataset/annotations_prepped_train"
+te_im = "example_dataset/images_prepped_test"
+te_an = "example_dataset/annotations_prepped_test"
 
 
 def test_verify():
