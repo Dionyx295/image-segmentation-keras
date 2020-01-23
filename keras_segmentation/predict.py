@@ -69,7 +69,6 @@ def predict(model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=No
     if clrs is None:
         colors = class_colors
     else:
-        print("prout")
         colors = clrs
 
     for c in range(n_classes):
@@ -97,8 +96,6 @@ def predict_multiple(model=None, inps=None, inp_dir=None, out_dir=None,
             glob.glob(os.path.join(inp_dir, "*.jpeg"))
 
     assert type(inps) is list
-    print(inp_dir)
-    print(inps)
     all_prs = []
 
     for i, inp in enumerate(tqdm(inps)):
@@ -107,7 +104,6 @@ def predict_multiple(model=None, inps=None, inp_dir=None, out_dir=None,
         else:
             if isinstance(inp, six.string_types):
                 out_fname = os.path.join(out_dir, os.path.basename(inp))
-                print("output : " + out_fname)
             else:
                 out_fname = os.path.join(out_dir, str(i) + ".jpg")
 

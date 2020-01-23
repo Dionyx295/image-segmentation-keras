@@ -26,9 +26,6 @@ def label_to_color_image(label):
 
 
 def vis_segmentation2(image, seg_map):
-    """
-    输入图片和分割 mask 的统一可视化.
-    """
     seg_image = label_to_color_image(seg_map).astype(np.uint8)
     plt.figure()
     plt.imshow(seg_image)

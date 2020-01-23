@@ -2,6 +2,7 @@ import argparse
 import json
 from .data_utils.data_loader import image_segmentation_generator, \
     verify_segmentation_dataset
+from .weighted_categorical_crossentropy import *
 import os
 import glob
 import six
@@ -70,7 +71,8 @@ def train(model,
         assert val_annotations is not None
 
     if optimizer_name is not None:
-        model.compile(loss='categorical_crossentropy',
+        loss_func = weighted_categorical_crossentropy([1, 20, 30])
+        model.compile(loss=loss_func,
                       optimizer=optimizer_name,
                       metrics=['accuracy'])
 
