@@ -34,8 +34,8 @@ def vis_segmentation2(image, seg_map):
     plt.show()
 
 
-test_path = "data\\test_images"
-predict_path =  "data\\predict"
+test_path = "data_manuel_talus\\test_images"
+predict_path =  "data_manuel_talus\\predict"
 for filename in os.listdir(predict_path):
     imgfile = os.path.join(test_path,filename)
     pngfile = os.path.join(predict_path,filename)
