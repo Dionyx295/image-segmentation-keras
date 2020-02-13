@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>630</width>
-    <height>612</height>
+    <width>748</width>
+    <height>611</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>771</width>
+      <width>741</width>
       <height>571</height>
      </rect>
     </property>
@@ -39,7 +39,7 @@
      <bool>true</bool>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="preprocess_tab">
      <attribute name="title">
@@ -50,7 +50,7 @@
        <rect>
         <x>-1</x>
         <y>0</y>
-        <width>631</width>
+        <width>731</width>
         <height>261</height>
        </rect>
       </property>
@@ -62,7 +62,7 @@
         <rect>
          <x>9</x>
          <y>19</y>
-         <width>321</width>
+         <width>391</width>
          <height>231</height>
         </rect>
        </property>
@@ -74,25 +74,52 @@
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>301</width>
+          <width>371</width>
           <height>201</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QListWidget" name="listWidget"/>
+          <widget class="QScrollArea" name="scrollArea">
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
+           <property name="widgetResizable">
+            <bool>true</bool>
+           </property>
+           <widget class="QWidget" name="scrollAreaWidgetContents">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>284</width>
+              <height>197</height>
+             </rect>
+            </property>
+            <widget class="QListWidget" name="classes_list">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>281</width>
+               <height>199</height>
+              </rect>
+             </property>
+            </widget>
+           </widget>
+          </widget>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="add_class_button">
              <property name="text">
               <string>+</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="remove_class_button">
              <property name="text">
               <string>-</string>
              </property>
@@ -106,9 +133,9 @@
       <widget class="QGroupBox" name="groupBox_4">
        <property name="geometry">
         <rect>
-         <x>340</x>
+         <x>410</x>
          <y>20</y>
-         <width>281</width>
+         <width>331</width>
          <height>121</height>
         </rect>
        </property>
@@ -120,7 +147,7 @@
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>261</width>
+          <width>311</width>
           <height>91</height>
          </rect>
         </property>
@@ -133,7 +160,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_2"/>
+          <widget class="QSpinBox" name="resize_width_spinbox"/>
          </item>
          <item>
           <widget class="QLabel" name="label">
@@ -143,7 +170,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox"/>
+          <widget class="QSpinBox" name="resize_height_spinbox"/>
          </item>
         </layout>
        </widget>
@@ -151,9 +178,9 @@
       <widget class="QGroupBox" name="groupBox_5">
        <property name="geometry">
         <rect>
-         <x>340</x>
+         <x>410</x>
          <y>140</y>
-         <width>281</width>
+         <width>331</width>
          <height>111</height>
         </rect>
        </property>
@@ -165,7 +192,7 @@
          <rect>
           <x>9</x>
           <y>20</y>
-          <width>261</width>
+          <width>311</width>
           <height>81</height>
          </rect>
         </property>
@@ -180,10 +207,10 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QLineEdit" name="lineEdit"/>
+            <widget class="QLineEdit" name="mask_prep_field"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="mask_prep_browse_button">
              <property name="maximumSize">
               <size>
                <width>30</width>
@@ -198,7 +225,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QPushButton" name="fusion_button">
            <property name="text">
             <string>Fusion</string>
            </property>
@@ -252,10 +279,10 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_5">
            <item>
-            <widget class="QLineEdit" name="lineEdit_4"/>
+            <widget class="QLineEdit" name="aug_images_source_field"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_7">
+            <widget class="QPushButton" name="aug_images_source_browse_button">
              <property name="maximumSize">
               <size>
                <width>30</width>
@@ -279,10 +306,10 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QLineEdit" name="lineEdit_3"/>
+            <widget class="QLineEdit" name="aug_seg_source_field"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_6">
+            <widget class="QPushButton" name="aug_seg_source_browse_button">
              <property name="maximumSize">
               <size>
                <width>30</width>
@@ -329,7 +356,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSpinBox" name="spinBox_3"/>
+          <widget class="QSpinBox" name="aug_images_nb_spinbox"/>
          </item>
          <item row="1" column="0">
           <widget class="QLabel" name="label_9">
@@ -374,22 +401,22 @@
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QSpinBox" name="spinBox_4"/>
+          <widget class="QSpinBox" name="aug_rotation_range_spinbox"/>
          </item>
          <item row="2" column="1">
-          <widget class="QSpinBox" name="spinBox_5"/>
+          <widget class="QSpinBox" name="aug_horizontal_spinbox"/>
          </item>
          <item row="3" column="1">
-          <widget class="QSpinBox" name="spinBox_6"/>
+          <widget class="QSpinBox" name="aug_vertical_spinbox"/>
          </item>
          <item row="4" column="1">
-          <widget class="QSpinBox" name="spinBox_7"/>
+          <widget class="QSpinBox" name="aug_zoom_spinbox"/>
          </item>
          <item row="5" column="1">
-          <widget class="QSpinBox" name="spinBox_8"/>
+          <widget class="QSpinBox" name="aug_shear_spinbox"/>
          </item>
          <item row="6" column="1">
-          <widget class="QComboBox" name="comboBox"/>
+          <widget class="QComboBox" name="aug_fill_combobox"/>
          </item>
         </layout>
        </widget>
@@ -426,10 +453,10 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
-            <widget class="QLineEdit" name="lineEdit_5"/>
+            <widget class="QLineEdit" name="aug_images_dest_field"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_8">
+            <widget class="QPushButton" name="aug_images_dest_browse_button">
              <property name="maximumSize">
               <size>
                <width>30</width>
@@ -453,10 +480,10 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_7">
            <item>
-            <widget class="QLineEdit" name="lineEdit_6"/>
+            <widget class="QLineEdit" name="aug_seg_dest_field"/>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_9">
+            <widget class="QPushButton" name="aug_seg_dest_browse_button">
              <property name="maximumSize">
               <size>
                <width>30</width>
@@ -473,7 +500,7 @@
         </layout>
        </widget>
       </widget>
-      <widget class="QPushButton" name="pushButton_11">
+      <widget class="QPushButton" name="aug_button">
        <property name="geometry">
         <rect>
          <x>440</x>
@@ -492,11 +519,651 @@
      <attribute name="title">
       <string>Entrainement</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>731</width>
+        <height>541</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QGroupBox" name="groupBox_10">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>320</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>300</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Paramètres</string>
+         </property>
+         <widget class="QWidget" name="horizontalLayoutWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>711</width>
+            <height>291</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <item>
+              <widget class="QGroupBox" name="groupBox_12">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>125</height>
+                </size>
+               </property>
+               <property name="title">
+                <string>Jeu d'entrainement</string>
+               </property>
+               <widget class="QWidget" name="verticalLayoutWidget_7">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>15</y>
+                  <width>331</width>
+                  <height>101</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_8">
+                 <item>
+                  <widget class="QLabel" name="label_16">
+                   <property name="text">
+                    <string>Images</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_9">
+                   <item>
+                    <widget class="QLineEdit" name="train_images_field"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="train_images_browse_button">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_17">
+                   <property name="text">
+                    <string>Segmentations</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_10">
+                   <item>
+                    <widget class="QLineEdit" name="seg_images_field"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="seg_images_browse_button">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_14">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>125</height>
+                </size>
+               </property>
+               <property name="title">
+                <string>Jeu d'évaluation</string>
+               </property>
+               <widget class="QWidget" name="verticalLayoutWidget_8">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>15</y>
+                  <width>331</width>
+                  <height>101</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <item>
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>Images</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_11">
+                   <item>
+                    <widget class="QLineEdit" name="eval_images_field"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="eval_images_browse_button">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_19">
+                   <property name="text">
+                    <string>Segmentations</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_12">
+                   <item>
+                    <widget class="QLineEdit" name="eval_seg_field"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="eval_seg_browse_button">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <item>
+              <widget class="QGroupBox" name="groupBox_11">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>120</height>
+                </size>
+               </property>
+               <property name="title">
+                <string>Modèle</string>
+               </property>
+               <widget class="QWidget" name="verticalLayoutWidget_6">
+                <property name="geometry">
+                 <rect>
+                  <x>9</x>
+                  <y>19</y>
+                  <width>331</width>
+                  <height>91</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_7">
+                 <item>
+                  <widget class="QComboBox" name="model_combobox">
+                   <item>
+                    <property name="text">
+                     <string>U-Net</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>FCN 32</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>SegNet</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>FCN 8</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="Line" name="line">
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <property name="lineWidth">
+                    <number>2</number>
+                   </property>
+                   <property name="midLineWidth">
+                    <number>0</number>
+                   </property>
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_15">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>15</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>Charger un modèle</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_8">
+                   <item>
+                    <widget class="QLineEdit" name="train_model_path_field"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="train_model_path_browse_button">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_13">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>160</height>
+                </size>
+               </property>
+               <property name="title">
+                <string>Entrainement</string>
+               </property>
+               <widget class="QWidget" name="verticalLayoutWidget_9">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>20</y>
+                  <width>331</width>
+                  <height>131</height>
+                 </rect>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <widget class="QLabel" name="label_22">
+                   <property name="text">
+                    <string>Taille du batch</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="batch_size_spinbox"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_23">
+                   <property name="text">
+                    <string>Nb d'étapes par époque</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="step_epoch_spinbox"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_24">
+                   <property name="text">
+                    <string>Nb d'époques</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="epochs_spinbox"/>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_9">
+         <property name="title">
+          <string>Logs</string>
+         </property>
+         <widget class="QScrollArea" name="scrollArea_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>711</width>
+            <height>191</height>
+           </rect>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>709</width>
+             <height>189</height>
+            </rect>
+           </property>
+           <widget class="QTextEdit" name="training_logs_textedit">
+            <property name="geometry">
+             <rect>
+              <x>-7</x>
+              <y>0</y>
+              <width>721</width>
+              <height>191</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab">
      <attribute name="title">
       <string>Prédiction</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_12">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>731</width>
+        <height>541</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_14">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_15">
+         <item>
+          <widget class="QGroupBox" name="groupBox_15">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>150</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>150</height>
+            </size>
+           </property>
+           <property name="title">
+            <string>Données</string>
+           </property>
+           <widget class="QWidget" name="formLayoutWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>9</x>
+              <y>19</y>
+              <width>601</width>
+              <height>121</height>
+             </rect>
+            </property>
+            <layout class="QFormLayout" name="formLayout_2">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>Modèle</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_16">
+               <item>
+                <widget class="QLineEdit" name="predict_model_path_field"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="predict_model_path_browse_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Images à prédire</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_27">
+               <property name="text">
+                <string>Enregistrer les segmentations dans</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_28">
+               <property name="text">
+                <string>Enregistrer les superpositions dans</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_17">
+               <item>
+                <widget class="QLineEdit" name="predict_images_field"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="predict_images_browse_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="2" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_18">
+               <item>
+                <widget class="QLineEdit" name="saved_seg_field"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="saved_seg_browse_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="3" column="1">
+              <layout class="QHBoxLayout" name="horizontalLayout_19">
+               <item>
+                <widget class="QLineEdit" name="saved_sup_field"/>
+               </item>
+               <item>
+                <widget class="QPushButton" name="saved_sup_browse_button">
+                 <property name="minimumSize">
+                  <size>
+                   <width>30</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>30</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>...</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="predict_button">
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Prédire</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_20">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>370</height>
+          </size>
+         </property>
+         <property name="title">
+          <string>Logs</string>
+         </property>
+         <widget class="QScrollArea" name="scrollArea_3">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>711</width>
+            <height>341</height>
+           </rect>
+          </property>
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_3">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>709</width>
+             <height>339</height>
+            </rect>
+           </property>
+           <widget class="QTextEdit" name="predicting_logs_textedit">
+            <property name="geometry">
+             <rect>
+              <x>-7</x>
+              <y>0</y>
+              <width>721</width>
+              <height>341</height>
+             </rect>
+            </property>
+           </widget>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -506,7 +1173,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>630</width>
+     <width>748</width>
      <height>21</height>
     </rect>
    </property>
@@ -514,9 +1181,21 @@
     <property name="title">
      <string>Configuration</string>
     </property>
+    <addaction name="action_save_conf"/>
+    <addaction name="action_load_conf"/>
    </widget>
    <addaction name="menu_configuration"/>
   </widget>
+  <action name="action_save_conf">
+   <property name="text">
+    <string>Sauvegarder cette configuration</string>
+   </property>
+  </action>
+  <action name="action_load_conf">
+   <property name="text">
+    <string>Charger une configuration</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

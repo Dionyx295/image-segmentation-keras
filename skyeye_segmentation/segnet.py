@@ -101,16 +101,17 @@ def Train(model):
 
 def Evaluate(model):
     unlabelled = (255, 255, 255)
+    charb = (0, 155, 0)
     talus = (155, 0, 0)
-    charbonniere = (0, 155, 0)
-    class_colors = np.array([unlabelled, talus])
+    tertres = (0, 0, 155)
+    class_colors = np.array([unlabelled, charb, talus, tertres])
     all_pr = predict_multiple(model=model,
-                              inp_dir=os.getcwd()+"/data_manuel_talus/test_images/",
-                              out_dir=os.getcwd()+"/data_manuel_talus/predict/",
+                              inp_dir=os.getcwd()+"/data_manuel_full/test_images/",
+                              out_dir=os.getcwd()+"/data_manuel_full/predict/",
                               colors=class_colors)
 
     # evaluating the model
-    results = model.evaluate_segmentation( inp_images_dir=os.getcwd()+"/data_manuel_talus/test_images/" , annotations_dir=os.getcwd()+"/data_manuel_talus/test_segmentation/" )
+    results = model.evaluate_segmentation( inp_images_dir=os.getcwd()+"/data_manuel_full/test_images/" , annotations_dir=os.getcwd()+"/data_manuel_full/test_segmentation/" )
     print(results)
     #print(results['class_wise_IU'][1])
 
@@ -173,7 +174,7 @@ def model_from_checkpoint_path_nb(checkpoints_path, checkpoint_nb):
 
 '''
 pp.mask_fusion(class_pathes=["data_manuel_full/talus/","data_manuel_full/charb/","data_manuel_full/tertres/",],
-            class_scales=[1, 2, 3, 4],
+            class_scales=[1, 2, 3],
             size=(400,400),
             save_to="data_manuel_full/train_segmentation/")
 '''
@@ -181,12 +182,20 @@ pp.mask_fusion(class_pathes=["data_manuel_full/talus/","data_manuel_full/charb/"
 
 #AugmentData()
 
-model = fcn_32(n_classes=4, input_height=400, input_width=400)
+#model = fcn_32(n_classes=4, input_height=400, input_width=400)
+model = model_from_checkpoint_path(os.getcwd() + "\\models\\fcn_32\\fcn_32-full")
 
-#model = model_from_checkpoint_path(os.getcwd() + "\models\\segnet\\segnet-talus")
+'''
+model.train(
+        train_images =  "data_manuel_full/aug_images/",
+        train_annotations = "data_manuel_full/aug_segmentation",
+        checkpoints_path = "models/fcn_32/fcn_32-full",
+        epochs=50,
+        steps_per_epoch=125,
+        batch_size=4)
+'''
 
-Train(model)
-#Evaluate(model)
+Evaluate(model)
 
 #graph_from_file("\models\\segnet\\archive_talus\\segnet-talus-perf.txt")
 

@@ -28,7 +28,7 @@ def mask_fusion(class_pathes=[], class_scales=[], size=(400,400), save_to="train
             for x in range(mask_array.shape[0]):  # Width
                 for y in range(mask_array.shape[1]):  # Height
                     if mask_array[x, y].all() == False:  # Pixel noir
-                        new_mask_array[x, y] = scale[0]
+                        new_mask_array[x, y] = scale
 
         new_image = save_to + file.split(".")[0] + ".png"
         new_mask_array = trans.resize(new_mask_array, size, anti_aliasing=False)
