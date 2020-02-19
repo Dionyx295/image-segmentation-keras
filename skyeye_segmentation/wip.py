@@ -106,12 +106,13 @@ def Evaluate(model):
     tertres = (0, 0, 155)
     class_colors = np.array([unlabelled, charb, talus, tertres])
     all_pr = predict_multiple(model=model,
-                              inp_dir=os.getcwd()+"/data_manuel_full/test_images/",
-                              out_dir=os.getcwd()+"/data_manuel_full/predict/",
+                              inp_dir=os.getcwd()+"/data_auto/test_images/",
+                              out_dir=os.getcwd()+"/data_auto/predict/",
                               colors=class_colors)
 
     # evaluating the model
-    results = model.evaluate_segmentation( inp_images_dir=os.getcwd()+"/data_manuel_full/test_images/" , annotations_dir=os.getcwd()+"/data_manuel_full/test_segmentation/" )
+    results = model.evaluate_segmentation( inp_images_dir=os.getcwd()+"/data_auto/test_images/" ,
+                                           annotations_dir=os.getcwd()+"/data_auto/test_segmentation/" )
     print(results)
     #print(results['class_wise_IU'][1])
 
@@ -142,14 +143,14 @@ def graph_from_file(file_path):
     pyplot.show()
 
 def Evaluate_perf(models_path, perf_file):
-    i = 96
+    i = 0
     while os.path.isfile(os.getcwd() + models_path + "." + str(i)):
         model = model_from_checkpoint_path_nb(os.getcwd() + models_path, i)
         i += 1
 
         # evaluating the model
-        results = model.evaluate_segmentation(inp_images_dir=os.getcwd() + "/data_manuel_talus/test_images/",
-                                          annotations_dir=os.getcwd() + "/data_manuel_talus/test_segmentation/")
+        results = model.evaluate_segmentation(inp_images_dir=os.getcwd() + "/data_auto/test_images/",
+                                          annotations_dir=os.getcwd() + "/data_auto/test_segmentation/")
         print(results['class_wise_IU'][1])
         file = open(os.getcwd() + perf_file, "a")
         file.write(str(results['class_wise_IU'][1]) + "\n")
@@ -182,47 +183,26 @@ pp.mask_fusion(class_pathes=["data_manuel_full/talus/","data_manuel_full/charb/"
 
 #AugmentData()
 
-#model = fcn_32(n_classes=4, input_height=400, input_width=400)
-#model = model_from_checkpoint_path(os.getcwd() + "\\models\\fcn_32\\fcn_32-full")
+#model = fcn_32(n_classes=3, input_height=400, input_width=400)
+
+model = model_from_checkpoint_path(os.getcwd() + "\\models\\fcn_32\\fcn_32-auto")
+
 '''
 model.train(
-        train_images =  "data_manuel_full/aug_images/",
-        train_annotations = "data_manuel_full/aug_segmentation",
-        checkpoints_path = "models/fcn_32/fcn_32-full",
-        epochs=1000,
-        steps_per_epoch=125,
+        train_images =  "data_auto/aug_images/",
+        train_annotations = "data_auto/aug_segmentation/",
+        checkpoints_path = "models/fcn_32/fcn_32-auto",
+        epochs=5,
+        steps_per_epoch=250,
         batch_size=4)
 '''
 
-#Evaluate(model)
-#Evaluate_perf("\\models\\fcn_32\\fcn_32-full", "\\models\\fcn_32\\fcn_32-full-perf.txt")
 
-graph_from_file("\models\\fcn_32\\fcn_32-full-perf.txt")
+Evaluate(model)
+Evaluate_perf("\\models\\fcn_32\\fcn_32-auto", "\\models\\fcn_32\\fcn_32-auto-perf.txt")
+
+#graph_from_file("\models\\fcn_32\\fcn_32-full-perf.txt")
 
 
-## UNET
-'''
-model = unet(n_classes=2, input_height=400, input_width=400)
-model.train(
-        train_images =  "data_manuel_talus/aug_images/",
-        train_annotations = "data_manuel_talus/aug_segmentation",
-        checkpoints_path = "models/unet/unet-talus",
-        epochs=50,
-        steps_per_epoch=63,
-        batch_size=8)
-Evaluate_perf("\models\\unet\\unet-talus", "\models\\unet\\unet-talus-perf.txt")
-'''
 
-## VGG_UNET
-'''
-model = unet(n_classes=2, input_height=400, input_width=400)
-model.train(
-        train_images =  "data_manuel_talus/aug_images/",
-        train_annotations = "data_manuel_talus/aug_segmentation",
-        checkpoints_path = "models/vgg_unet/vgg_unet-talus",
-        epochs=50,
-        steps_per_epoch=63,
-        batch_size=8)
-Evaluate_perf("\models\\vgg_unet\\vgg_unet-talus", "\models\\vgg_unet\\vgg_unet-talus-perf.txt")
-'''
 
