@@ -142,7 +142,7 @@ def graph_from_file(file_path):
     pyplot.show()
 
 def Evaluate_perf(models_path, perf_file):
-    i = 0
+    i = 96
     while os.path.isfile(os.getcwd() + models_path + "." + str(i)):
         model = model_from_checkpoint_path_nb(os.getcwd() + models_path, i)
         i += 1
@@ -183,21 +183,21 @@ pp.mask_fusion(class_pathes=["data_manuel_full/talus/","data_manuel_full/charb/"
 #AugmentData()
 
 #model = fcn_32(n_classes=4, input_height=400, input_width=400)
-model = model_from_checkpoint_path(os.getcwd() + "\\models\\fcn_32\\fcn_32-full")
-
+#model = model_from_checkpoint_path(os.getcwd() + "\\models\\fcn_32\\fcn_32-full")
 '''
 model.train(
         train_images =  "data_manuel_full/aug_images/",
         train_annotations = "data_manuel_full/aug_segmentation",
         checkpoints_path = "models/fcn_32/fcn_32-full",
-        epochs=50,
+        epochs=1000,
         steps_per_epoch=125,
         batch_size=4)
 '''
 
-Evaluate(model)
+#Evaluate(model)
+#Evaluate_perf("\\models\\fcn_32\\fcn_32-full", "\\models\\fcn_32\\fcn_32-full-perf.txt")
 
-#graph_from_file("\models\\segnet\\archive_talus\\segnet-talus-perf.txt")
+graph_from_file("\models\\fcn_32\\fcn_32-full-perf.txt")
 
 
 ## UNET

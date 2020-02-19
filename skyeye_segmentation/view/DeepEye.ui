@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>748</width>
+    <width>758</width>
     <height>611</height>
    </rect>
   </property>
@@ -39,7 +39,7 @@
      <bool>true</bool>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="preprocess_tab">
      <attribute name="title">
@@ -574,7 +574,7 @@
                  <rect>
                   <x>10</x>
                   <y>15</y>
-                  <width>331</width>
+                  <width>211</width>
                   <height>101</height>
                  </rect>
                 </property>
@@ -653,7 +653,7 @@
                  <rect>
                   <x>10</x>
                   <y>15</y>
-                  <width>331</width>
+                  <width>211</width>
                   <height>101</height>
                  </rect>
                 </property>
@@ -719,30 +719,30 @@
             </layout>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_13">
+            <layout class="QVBoxLayout" name="verticalLayout_17">
              <item>
-              <widget class="QGroupBox" name="groupBox_11">
+              <widget class="QGroupBox" name="groupBox_18">
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>120</height>
+                 <height>140</height>
                 </size>
                </property>
                <property name="title">
-                <string>Modèle</string>
+                <string>Nouveau modèle</string>
                </property>
-               <widget class="QWidget" name="verticalLayoutWidget_6">
+               <widget class="QWidget" name="verticalLayoutWidget_13">
                 <property name="geometry">
                  <rect>
                   <x>9</x>
                   <y>19</y>
-                  <width>331</width>
-                  <height>91</height>
+                  <width>211</width>
+                  <height>112</height>
                  </rect>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_7">
+                <layout class="QVBoxLayout" name="verticalLayout_18">
                  <item>
-                  <widget class="QComboBox" name="model_combobox">
+                  <widget class="QComboBox" name="model_combobox_3">
                    <item>
                     <property name="text">
                      <string>U-Net</string>
@@ -766,58 +766,74 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="Line" name="line">
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                   <property name="lineWidth">
-                    <number>2</number>
-                   </property>
-                   <property name="midLineWidth">
-                    <number>0</number>
-                   </property>
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_15">
-                   <property name="maximumSize">
-                    <size>
-                     <width>16777215</width>
-                     <height>15</height>
-                    </size>
-                   </property>
+                  <widget class="QLabel" name="label_33">
                    <property name="text">
-                    <string>Charger un modèle</string>
+                    <string>Largeur des images d'entrée</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_8">
-                   <item>
-                    <widget class="QLineEdit" name="train_model_path_field"/>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="train_model_path_browse_button">
-                     <property name="maximumSize">
-                      <size>
-                       <width>30</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>...</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
+                  <widget class="QSpinBox" name="step_epoch_spinbox_3"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_34">
+                   <property name="text">
+                    <string>Hauteur des images d'entrée</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="epochs_spinbox_3"/>
                  </item>
                 </layout>
                </widget>
               </widget>
              </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_19">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>55</height>
+                </size>
+               </property>
+               <property name="title">
+                <string>Modèle existant</string>
+               </property>
+               <widget class="QWidget" name="layoutWidget_2">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>20</y>
+                  <width>211</width>
+                  <height>25</height>
+                 </rect>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_14">
+                 <item>
+                  <widget class="QLineEdit" name="eval_images_field_2"/>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="eval_images_browse_button_2">
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
               <widget class="QGroupBox" name="groupBox_13">
                <property name="maximumSize">
@@ -834,7 +850,7 @@
                  <rect>
                   <x>10</x>
                   <y>20</y>
-                  <width>331</width>
+                  <width>211</width>
                   <height>131</height>
                  </rect>
                 </property>
@@ -871,6 +887,20 @@
                  </item>
                 </layout>
                </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="aug_button_2">
+               <property name="text">
+                <string>Entrainement</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="aug_button_3">
+               <property name="text">
+                <string>Evaluation</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -1173,7 +1203,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>748</width>
+     <width>758</width>
      <height>21</height>
     </rect>
    </property>
