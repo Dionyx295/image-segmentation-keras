@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QMessageBox
 
 
 #############################################################################
-def messagederreur(typerr, contexte, msgerr):
+def errormsg(typerr, contexte, msgerr):
     """Permet d'afficher et/ou de neutraliser les messages d'erreur.
        Pour les messages critiques: affiche dans une fenêtre graphique.
        Mise en place par: QtCore.qInstallMessageHandler(messagederreur)

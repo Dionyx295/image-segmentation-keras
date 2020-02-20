@@ -192,11 +192,10 @@ model.train(
         train_images =  "data_auto/aug_images/",
         train_annotations = "data_auto/aug_segmentation/",
         checkpoints_path = "models/fcn_32/fcn_32-auto",
-        epochs=5,
+        epochs=100,
         steps_per_epoch=250,
         batch_size=4)
 '''
-
 
 Evaluate(model)
 Evaluate_perf("\\models\\fcn_32\\fcn_32-auto", "\\models\\fcn_32\\fcn_32-auto-perf.txt")

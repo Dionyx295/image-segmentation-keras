@@ -1,16 +1,18 @@
 import sys
 import os
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
-from PyQt5.QtCore import pyqtSlot, qInstallMessageHandler, QtWarningMsg
-from skyeye_segmentation.controller.msgerreur import messagederreur
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtCore import pyqtSlot, qInstallMessageHandler, QtWarningMsg, QThreadPool
+from skyeye_segmentation.controller.errormsg import errormsg
 
 from skyeye_segmentation.view import main_window
+from skyeye_segmentation.controller.skyeye_func import *
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = main_window.Ui_MainWindow()
         self.ui.setupUi(self)
+        self.threadpool = QThreadPool()
 
         # Connections to slots
         ## File and folder browsers
@@ -33,14 +35,14 @@ class MainWindow(QMainWindow):
         ## Classes prep
         self.ui.add_class_button.clicked.connect(self.on_add_class_button_click)
         self.ui.remove_class_button.clicked.connect(self.on_remove_class_button_click)
-
+        self.ui.fusion_button.clicked.connect(self.on_fusion_button_click)
 
         self.ui.train_button.clicked.connect(self.on_train_button_click)
 
         self.classes_folders = {}
 
         # Error message handler
-        qInstallMessageHandler(messagederreur)
+        qInstallMessageHandler(errormsg)
         self.show()
 
     # Slots
@@ -157,10 +159,10 @@ class MainWindow(QMainWindow):
         if folderName:
             new_class = os.path.basename(folderName)
             if(new_class not in self.classes_folders):
-                self.classes_folders[new_class] = folderName
+                self.classes_folders[new_class] = folderName + "/"
                 self.ui.classes_list.addItem(new_class)
             else:
-                messagederreur(typerr=QtWarningMsg,
+                errormsg(typerr=QtWarningMsg,
                                msgerr="Une classe du nom de {} existe déjà dans la liste !".format(new_class),
                                contexte="")
 
@@ -171,14 +173,47 @@ class MainWindow(QMainWindow):
             self.ui.classes_list.takeItem(self.ui.classes_list.row(item))
             del self.classes_folders[item.text()]
 
+    @pyqtSlot()
+    def on_fusion_button_click(self):
+        save_dir = self.ui.mask_prep_field.text() + "/"
+        if not os.path.exists(save_dir):
+            errormsg(typerr=QtWarningMsg,
+                     msgerr="Le chemin spécifié est introuvable :\n{}".format(save_dir))
+            return
+
+        # At least one class
+        if self.classes_folders:
+            n_classes = len(self.classes_folders)
+            scales = np.linspace(0, n_classes, n_classes+1).tolist()
+            width = int(self.ui.resize_width_spinbox.text())
+            height = int(self.ui.resize_height_spinbox.text())
+            print(list(self.classes_folders.values()))
+
+            worker = MaskFusionWorker(class_pathes=list(self.classes_folders.values()),
+                        class_scales=scales,
+                        size=(width, height),
+                        save_to=save_dir)
+            self.ui.progress_bar.setEnabled(True) # Todo : fonction qui bloque les autres lancements pdt traitement
+            self.ui.progress_bar.setValue(0)
+            worker.signals.progressed.connect(self.update_progress_bar)
+            worker.signals.finished.connect(self.treatment_done)
+            self.threadpool.start(worker)
+
 
     @pyqtSlot()
     def on_train_button_click(self):
         self.ui.training_logs_textedit.append("Début de l'entrainement !")
 
+    def update_progress_bar(self, value):
+        self.ui.progress_bar.setValue(value)
 
+    def treatment_done(self, msg=""):
+        self.ui.progress_bar.setEnabled(False)
+        self.ui.progress_bar.setValue(0)
 
-app = QApplication(sys.argv)
-w = MainWindow()
-w.show()
-sys.exit(app.exec_())
+        # unlock other treatments
+
+        if msg:
+            QMessageBox.information(self,
+                                    "Terminé",
+                                    "{}\n".format(msg))
