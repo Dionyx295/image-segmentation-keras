@@ -8,6 +8,9 @@ from PyQt5.QtCore import QRunnable, pyqtSlot, pyqtSignal
 
 from skyeye_segmentation.controller.worker_signals import WorkerSignals
 
+'''
+    Worker wrapper for the mask fusion func
+'''
 class MaskFusionWorker(QRunnable):
 
     def __init__(self, *args, **kwargs):
@@ -44,7 +47,7 @@ class MaskFusionWorker(QRunnable):
                 # For each pixel
                 for x in range(mask_array.shape[0]):  # Width
                     for y in range(mask_array.shape[1]):  # Height
-                        if mask_array[x, y].all() == False:  # Pixel noir
+                        if mask_array[x, y].all() == False:  # Black pixel
                             new_mask_array[x, y] = scale
 
             new_image = save_to + file.split(".")[0] + ".png"

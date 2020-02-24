@@ -368,7 +368,14 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QSpinBox" name="aug_images_nb_spinbox"/>
+             <widget class="QSpinBox" name="aug_images_nb_spinbox">
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>999999</number>
+              </property>
+             </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_9">
@@ -387,7 +394,7 @@
             <item row="3" column="0">
              <widget class="QLabel" name="label_11">
               <property name="text">
-               <string>Décalage vertcial (%)</string>
+               <string>Décalage vertical (%)</string>
               </property>
              </widget>
             </item>
@@ -413,22 +420,63 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QSpinBox" name="aug_rotation_range_spinbox"/>
+             <widget class="QSpinBox" name="aug_rotation_range_spinbox">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+             </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QSpinBox" name="aug_horizontal_spinbox"/>
+             <widget class="QSpinBox" name="aug_horizontal_spinbox">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+             </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QSpinBox" name="aug_vertical_spinbox"/>
+             <widget class="QSpinBox" name="aug_vertical_spinbox">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+             </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QSpinBox" name="aug_zoom_spinbox"/>
+             <widget class="QSpinBox" name="aug_zoom_spinbox">
+              <property name="maximum">
+               <number>100</number>
+              </property>
+             </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QSpinBox" name="aug_shear_spinbox"/>
+             <widget class="QSpinBox" name="aug_shear_spinbox">
+              <property name="maximum">
+               <number>360</number>
+              </property>
+             </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QComboBox" name="aug_fill_combobox"/>
+             <widget class="QComboBox" name="aug_fill_combobox">
+              <item>
+               <property name="text">
+                <string>constant</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>nearest</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>reflect</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>wrap</string>
+               </property>
+              </item>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -785,7 +833,17 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="width_model_spinbox"/>
+                     <widget class="QSpinBox" name="width_model_spinbox">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>99999</number>
+                      </property>
+                      <property name="value">
+                       <number>400</number>
+                      </property>
+                     </widget>
                     </item>
                     <item>
                      <widget class="QLabel" name="label_34">
@@ -795,7 +853,17 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="height_model_spinbox"/>
+                     <widget class="QSpinBox" name="height_model_spinbox">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>99999</number>
+                      </property>
+                      <property name="value">
+                       <number>400</number>
+                      </property>
+                     </widget>
                     </item>
                    </layout>
                   </widget>
@@ -810,7 +878,7 @@
                    </size>
                   </property>
                   <property name="title">
-                   <string>Modèle existant</string>
+                   <string>Modèle existant (vide pour un nouveau modèle)</string>
                   </property>
                   <widget class="QWidget" name="layoutWidget_2">
                    <property name="geometry">
@@ -875,7 +943,14 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="batch_size_spinbox"/>
+                     <widget class="QSpinBox" name="batch_size_spinbox">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>99999</number>
+                      </property>
+                     </widget>
                     </item>
                     <item>
                      <widget class="QLabel" name="label_23">
@@ -885,7 +960,14 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="step_epoch_spinbox"/>
+                     <widget class="QSpinBox" name="step_epoch_spinbox">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>99999</number>
+                      </property>
+                     </widget>
                     </item>
                     <item>
                      <widget class="QLabel" name="label_24">
@@ -895,7 +977,14 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QSpinBox" name="epochs_spinbox"/>
+                     <widget class="QSpinBox" name="epochs_spinbox">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>99999</number>
+                      </property>
+                     </widget>
                     </item>
                     <item>
                      <widget class="QLabel" name="label_29">
