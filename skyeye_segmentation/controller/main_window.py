@@ -59,6 +59,8 @@ class MainWindow(QMainWindow):
         self.ui.aug_vertical_spinbox.valueChanged.connect(self.check_aug_available)
         self.ui.aug_zoom_spinbox.valueChanged.connect(self.check_aug_available)
         self.ui.aug_shear_spinbox.valueChanged.connect(self.check_aug_available)
+        self.ui.aug_width_spinbox.valueChanged.connect(self.check_aug_available)
+        self.ui.aug_height_spinbox.valueChanged.connect(self.check_aug_available)
         # Training
         self.ui.train_images_field.textChanged.connect(self.check_train_available)
         self.ui.train_seg_field.textChanged.connect(self.check_train_available)
@@ -218,29 +220,35 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def on_fusion_button_click(self):
-        save_dir = self.ui.mask_prep_field.text() + "/"
-        if not os.path.exists(save_dir):
-            errormsg(typerr=QtWarningMsg,
-                     msgerr="Le chemin spécifié est introuvable :\n{}".format(save_dir))
-            return
+        # Parameters
+        n_classes = len(self.classes_folders)
+        scales = np.linspace(0, n_classes, n_classes + 1).tolist()
+        width = int(self.ui.resize_width_spinbox.text())
+        height = int(self.ui.resize_height_spinbox.text())
+        save_dir = self.ui.mask_prep_field.text()
 
-        # At least one class
-        if self.classes_folders:
-            n_classes = len(self.classes_folders)
-            scales = np.linspace(0, n_classes, n_classes + 1).tolist()
-            width = int(self.ui.resize_width_spinbox.text())
-            height = int(self.ui.resize_height_spinbox.text())
-            print(list(self.classes_folders.values()))
+        worker = MaskFusionWorker(class_pathes=list(self.classes_folders.values()),
+                                  class_scales=scales,
+                                  size=(width, height),
+                                  save_to=save_dir)
 
-            worker = MaskFusionWorker(class_pathes=list(self.classes_folders.values()),
-                                      class_scales=scales,
-                                      size=(width, height),
-                                      save_to=save_dir)
-            self.set_progress_bar_state(True)
-            self.check_all_available()
-            worker.signals.progressed.connect(self.update_progress_bar)
-            worker.signals.finished.connect(self.treatment_done)
-            self.threadpool.start(worker)
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available() # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.finished.connect(self.treatment_done)
+        self.threadpool.start(worker)
+
+    @pyqtSlot()
+    def on_aug_button_click(self):
+        # Parameters
+        img_src = self.ui.aug_images_source_field.text()
+        seg_src = self.ui.aug_seg_source_field.text()
+        img_dest = self.ui.aug_images_dest_field.text()
+        seg_dest = self.ui.aug_seg_dest_field.text()
+
+        worker = ImageAugmentationWorker(nb_img=1, img_src="", seg_src="", img_dest="", seg_dest="", size=(10,10),
+                     rotation=90, width=0.25, height=0.25, shear=10, zoom=0.1, fill='reflect')
 
     @pyqtSlot()
     def on_train_button_click(self):
@@ -287,7 +295,7 @@ class MainWindow(QMainWindow):
         self.ui.progress_bar.setValue(0)
 
     '''
-        Check if all the required fields are completed to launch a mask fusion
+        Check that all the required fields are completed to launch a mask fusion
     '''
     def check_fusion_available(self):
         self.ui.fusion_button.setEnabled(False)
@@ -314,7 +322,7 @@ class MainWindow(QMainWindow):
         self.ui.fusion_button.setEnabled(True)
 
     '''
-        Check if all the required fields are completed to launch an image augmentation
+        Check that all the required fields are completed to launch an image augmentation
     '''
     def check_aug_available(self):
         self.ui.aug_button.setEnabled(False)
@@ -344,18 +352,21 @@ class MainWindow(QMainWindow):
         vertical = self.ui.aug_vertical_spinbox.value()
         zoom = self.ui.aug_zoom_spinbox.value()
         shear = self.ui.aug_shear_spinbox.value()
+        width = self.ui.aug_width_spinbox.value()
+        height = self.ui.aug_height_spinbox.value()
         if (nb_img <= 0 or
                 rotation_range < 0 or rotation_range > 360 or
                 horizontal < 0 or horizontal > 100 or
                 vertical < 0 or vertical > 100 or
                 zoom < 0 or zoom > 100 or
-                shear < 0 or shear > 360):
+                shear < 0 or shear > 360 or
+                width < 1 or height < 1):
             return
 
         self.ui.aug_button.setEnabled(True)
 
     '''
-        Check if all the required fields are completed to launch a training
+        Check that all the required fields are completed to launch a training
     '''
     def check_train_available(self):
         self.ui.train_button.setEnabled(False)
@@ -388,7 +399,7 @@ class MainWindow(QMainWindow):
         self.ui.train_button.setEnabled(True)
 
     '''
-        Check if all the required fields are completed to launch an evaluation
+        Check that all the required fields are completed to launch an evaluation
     '''
     def check_eval_available(self):
         self.ui.eval_button.setEnabled(False)
@@ -411,7 +422,7 @@ class MainWindow(QMainWindow):
         self.ui.eval_button.setEnabled(True)
 
     '''
-        Check if all the required fields are completed to launch a prediction
+        Check that all the required fields are completed to launch a prediction
     '''
     def check_predict_available(self):
         self.ui.predict_button.setEnabled(False)

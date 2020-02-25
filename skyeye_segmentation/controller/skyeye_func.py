@@ -1,10 +1,13 @@
 import os
+import random
 import numpy as np
 import skimage.io as io
 import skimage.transform as trans
+from matplotlib import pyplot
 from skimage import img_as_ubyte
 from PIL import Image
-from PyQt5.QtCore import QRunnable, pyqtSlot, pyqtSignal
+from PyQt5.QtCore import QRunnable, pyqtSlot
+from keras.preprocessing.image import ImageDataGenerator
 
 from skyeye_segmentation.controller.worker_signals import WorkerSignals
 
@@ -58,3 +61,93 @@ class MaskFusionWorker(QRunnable):
             self.signals.progressed.emit(progression)
 
         self.signals.finished.emit("Création des masques terminée !")
+
+'''
+    Worker wrapper for the image augmentation func
+'''
+class ImageAugmentationWorker(QRunnable):
+
+    def __init__(self, *args, **kwargs):
+        super(ImageAugmentationWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        self.augment_data(**self.kwargs)
+
+    '''
+        Data augmentation of images and masks using keras ImageDataGenerator
+    '''
+    def augment_data(self, nb_img=1, img_src="", seg_src="", img_dest="", seg_dest="", size=(10,10),
+                     rotation=90, width=0.25, height=0.25, shear=10, zoom=0.1, fill='reflect'):
+        image_gen = ImageDataGenerator(rotation_range=rotation,
+                                       width_shift_range=width,
+                                       height_shift_range=height,
+                                       shear_range=shear,
+                                       zoom_range=zoom,
+                                       horizontal_flip=True,
+                                       vertical_flip=True,
+                                       fill_mode=fill,
+                                       dtype="uint8")
+
+        rand_seed = random.randint(1, 9999999)
+
+        classes_path = os.path.basename(img_src)
+        classes_dir = os.path.dirname(img_src)
+        img_generator = image_gen.flow_from_directory(classes_dir,
+                                                      size,
+                                                      'rgb',
+                                                      classes=[classes_path],
+                                                      class_mode='categorical',
+                                                      batch_size=1,
+                                                      shuffle=False,
+                                                      seed=rand_seed,
+                                                      save_to_dir=None,
+                                                      save_prefix='',
+                                                      save_format='png',
+                                                      follow_links=False,
+                                                      subset=None,
+                                                      interpolation='nearest')
+        classes_path = os.path.basename(seg_src)
+        classes_dir = os.path.dirname(seg_src)
+        mask_generator = image_gen.flow_from_directory(classes_dir,
+                                                       size,
+                                                       'rgb',
+                                                       classes=[classes_path],
+                                                       class_mode='categorical',
+                                                       batch_size=1,
+                                                       shuffle=False,
+                                                       seed=rand_seed,
+                                                       save_to_dir=None,
+                                                       save_prefix='',
+                                                       save_format='png',
+                                                       follow_links=False,
+                                                       subset=None,
+                                                       interpolation='nearest')
+
+        file_processed=0
+
+        ## Manual saving for uint8 conversion
+        # Img
+        fig = pyplot.figure(figsize=(8, 8))
+        for i in range(1, nb_img + 1):
+            img = img_generator.next()
+            image = img[0][0].astype('uint8')
+            pyplot.imsave(img_dest + "/" + str(i) + ".png", image)
+            file_processed += 1
+            progression = (100*file_processed)/(2*nb_img)
+            self.signals.progressed.emit(progression)
+
+        # Masks
+        fig = pyplot.figure(figsize=(8, 8))
+        for i in range(1, nb_img + 1):
+            img = mask_generator.next()
+            image = img[0][0].astype('uint8')
+            pyplot.imsave(seg_dest + "/" + str(i) + ".png", image)
+            file_processed += 1
+            progression = (100 * file_processed) / (2 * nb_img)
+            self.signals.progressed.emit(progression)
+
+        self.signals.finished.emit("Augmentation terminée !")

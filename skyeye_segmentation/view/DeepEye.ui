@@ -264,7 +264,7 @@
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>411</width>
+            <width>351</width>
             <height>121</height>
            </rect>
           </property>
@@ -276,8 +276,8 @@
             <rect>
              <x>9</x>
              <y>19</y>
-             <width>391</width>
-             <height>96</height>
+             <width>331</width>
+             <height>91</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -341,10 +341,10 @@
          <widget class="QGroupBox" name="groupBox_8">
           <property name="geometry">
            <rect>
-            <x>430</x>
-            <y>20</y>
-            <width>291</width>
-            <height>211</height>
+            <x>370</x>
+            <y>10</y>
+            <width>261</width>
+            <height>251</height>
            </rect>
           </property>
           <property name="title">
@@ -353,10 +353,10 @@
           <widget class="QWidget" name="formLayoutWidget">
            <property name="geometry">
             <rect>
-             <x>9</x>
-             <y>19</y>
-             <width>271</width>
-             <height>181</height>
+             <x>10</x>
+             <y>20</y>
+             <width>241</width>
+             <height>230</height>
             </rect>
            </property>
            <layout class="QFormLayout" name="formLayout">
@@ -478,6 +478,40 @@
               </item>
              </widget>
             </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>Largeur (px)</string>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_30">
+              <property name="text">
+               <string>Hauteur (px)</string>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QSpinBox" name="aug_width_spinbox">
+              <property name="maximum">
+               <number>99999</number>
+              </property>
+              <property name="value">
+               <number>400</number>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QSpinBox" name="aug_height_spinbox">
+              <property name="maximum">
+               <number>99999</number>
+              </property>
+              <property name="value">
+               <number>400</number>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
@@ -486,7 +520,7 @@
            <rect>
             <x>10</x>
             <y>140</y>
-            <width>411</width>
+            <width>351</width>
             <height>121</height>
            </rect>
           </property>
@@ -498,7 +532,7 @@
             <rect>
              <x>9</x>
              <y>19</y>
-             <width>391</width>
+             <width>331</width>
              <height>96</height>
             </rect>
            </property>
@@ -563,9 +597,9 @@
          <widget class="QPushButton" name="aug_button">
           <property name="geometry">
            <rect>
-            <x>520</x>
-            <y>240</y>
-            <width>101</width>
+            <x>640</x>
+            <y>130</y>
+            <width>82</width>
             <height>23</height>
            </rect>
           </property>
