@@ -38,6 +38,9 @@ class MainWindow(QMainWindow):
         self.ui.remove_class_button.clicked.connect(self.on_remove_class_button_click)
         self.ui.fusion_button.clicked.connect(self.on_fusion_button_click)
 
+        ## Augmentation
+        self.ui.aug_button.clicked.connect(self.on_aug_button_click)
+
         ## Training
         self.ui.train_button.clicked.connect(self.on_train_button_click)
 
@@ -89,6 +92,20 @@ class MainWindow(QMainWindow):
 
         self.check_all_available()
         self.show()
+
+    # QMainWindow closeEvent override
+    def closeEvent(self, event):
+        # Confirmation
+        if self.ui.progress_bar.isEnabled():
+            msg = "Voulez-vous quitter et arrêter le traitement en cours ?"
+        else:
+            msg = "Voulez-vous vraiment quitter ?"
+        reply = QMessageBox.question(self, 'Quitter ?',
+                                     msg, QMessageBox.Yes, QMessageBox.Cancel)
+        if reply == QMessageBox.Yes:
+            raise SystemExit(0) # Terminate the process and other potential threads
+        else:
+            event.ignore()
 
     # Slots
 
@@ -246,9 +263,24 @@ class MainWindow(QMainWindow):
         seg_src = self.ui.aug_seg_source_field.text()
         img_dest = self.ui.aug_images_dest_field.text()
         seg_dest = self.ui.aug_seg_dest_field.text()
+        nb_img = self.ui.aug_images_nb_spinbox.value()
+        rotation = self.ui.aug_rotation_range_spinbox.value()
+        width = self.ui.aug_horizontal_spinbox.value() / 100
+        height = self.ui.aug_vertical_spinbox.value() / 100
+        shear = self.ui.aug_shear_spinbox.value()
+        zoom = self.ui.aug_zoom_spinbox.value() /100
+        fill = self.ui.aug_fill_combobox.currentText()
+        size = (self.ui.aug_width_spinbox.value(), self.ui.aug_height_spinbox.value())
+        worker = ImageAugmentationWorker(nb_img=nb_img, img_src=img_src, seg_src=seg_src, img_dest=img_dest,
+                                         seg_dest=seg_dest, size=size, rotation=rotation, width=width, height=height,
+                                         shear=shear, zoom=zoom, fill=fill)
 
-        worker = ImageAugmentationWorker(nb_img=1, img_src="", seg_src="", img_dest="", seg_dest="", size=(10,10),
-                     rotation=90, width=0.25, height=0.25, shear=10, zoom=0.1, fill='reflect')
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.finished.connect(self.treatment_done)
+        self.threadpool.start(worker)
 
     @pyqtSlot()
     def on_train_button_click(self):
