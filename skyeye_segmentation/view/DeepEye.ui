@@ -54,7 +54,7 @@
         <bool>true</bool>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="preprocess_tab">
         <attribute name="title">
@@ -277,7 +277,7 @@
              <x>9</x>
              <y>19</y>
              <width>331</width>
-             <height>91</height>
+             <height>96</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -836,28 +836,7 @@
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_18">
                     <item>
-                     <widget class="QComboBox" name="model_combobox">
-                      <item>
-                       <property name="text">
-                        <string>U-Net</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>FCN 32</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>SegNet</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>FCN 8</string>
-                       </property>
-                      </item>
-                     </widget>
+                     <widget class="QComboBox" name="model_combobox"/>
                     </item>
                     <item>
                      <widget class="QLabel" name="label_33">
@@ -944,6 +923,41 @@
                   </widget>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QGroupBox" name="groupBox_21">
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>55</height>
+                   </size>
+                  </property>
+                  <property name="title">
+                   <string>Nombre de classes</string>
+                  </property>
+                  <widget class="QWidget" name="layoutWidget_3">
+                   <property name="geometry">
+                    <rect>
+                     <x>10</x>
+                     <y>20</y>
+                     <width>211</width>
+                     <height>25</height>
+                    </rect>
+                   </property>
+                   <layout class="QHBoxLayout" name="horizontalLayout_21">
+                    <item>
+                     <widget class="QSpinBox" name="nb_class_spinbox">
+                      <property name="minimum">
+                       <number>1</number>
+                      </property>
+                      <property name="maximum">
+                       <number>255</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </widget>
+                </item>
                </layout>
               </item>
               <item>
@@ -1023,7 +1037,7 @@
                     <item>
                      <widget class="QLabel" name="label_29">
                       <property name="text">
-                       <string>Sauvegarder le modèle dans</string>
+                       <string>Sauvegarder dans [chemin]/[nom]</string>
                       </property>
                      </widget>
                     </item>
@@ -1097,7 +1111,7 @@
                 <height>188</height>
                </rect>
               </property>
-              <widget class="QTextEdit" name="training_logs_textedit">
+              <widget class="QPlainTextEdit" name="train_logs_textedit">
                <property name="geometry">
                 <rect>
                  <x>0</x>
@@ -1346,7 +1360,7 @@
                 <height>338</height>
                </rect>
               </property>
-              <widget class="QTextEdit" name="predicting_logs_textedit">
+              <widget class="QPlainTextEdit" name="predict_logs_textedit">
                <property name="geometry">
                 <rect>
                  <x>0</x>

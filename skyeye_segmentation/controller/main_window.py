@@ -1,9 +1,8 @@
 import sys
-import os
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
-from PyQt5.QtCore import pyqtSlot, qInstallMessageHandler, QtWarningMsg, QThreadPool
-from skyeye_segmentation.controller.errormsg import errormsg
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QPlainTextEdit
+from PyQt5.QtCore import pyqtSlot, qInstallMessageHandler, QtWarningMsg, QThreadPool, QRect
 
+from skyeye_segmentation.controller.errormsg import errormsg
 from skyeye_segmentation.view import main_window
 from skyeye_segmentation.controller.skyeye_func import *
 
@@ -43,6 +42,9 @@ class MainWindow(QMainWindow):
 
         ## Training
         self.ui.train_button.clicked.connect(self.on_train_button_click)
+
+        ## Evaluation
+        self.ui.eval_button.clicked.connect(self.on_eval_button_click)
 
         ## UI management
         # Mask fusion
@@ -86,6 +88,10 @@ class MainWindow(QMainWindow):
 
         # Dictionnary to bind classes and their path
         self.classes_folders = {}
+
+        # List of available models
+        model_names = model_from_name.keys()
+        self.ui.model_combobox.addItems(model_names)
 
         # Error message handler
         qInstallMessageHandler(errormsg)
@@ -284,20 +290,59 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def on_train_button_click(self):
-        self.ui.training_logs_textedit.append("Début de l'entrainement !")
+        # Parameters
+        img_src = self.ui.train_images_field.text()
+        seg_src = self.ui.train_seg_field.text()
+        existing = self.ui.existing_model_path_field.text()
+        new = self.ui.model_combobox.currentText()
+        width = self.ui.width_model_spinbox.value()
+        height = self.ui.height_model_spinbox.value()
+        batch = self.ui.batch_size_spinbox.value()
+        steps = self.ui.step_epoch_spinbox.value()
+        epochs = self.ui.epochs_spinbox.value()
+        checkpoint = self.ui.save_model_path_field.text()
+        nb_class = self.ui.nb_class_spinbox.value()
+
+        worker = TrainWorker(existing=existing, new=new, width=width, height=height, img_src=img_src,
+                             seg_src=seg_src, batch=batch, steps=steps, epochs=epochs, checkpoint=checkpoint,
+                             nb_class=nb_class)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.append_train_log)
+        worker.signals.finished.connect(self.treatment_done)
+
+        self.threadpool.start(worker)
+
+    @pyqtSlot()
+    def on_eval_button_click(self):
+        # Parameters
+        img_src = self.ui.eval_images_field.text()
+        seg_src = self.ui.eval_seg_field.text()
+        existing = self.ui.existing_model_path_field.text()
+        worker = EvalWorker(inp_images_dir=img_src, annotations_dir=seg_src, checkpoints_path=existing)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.append_train_log)
+        worker.signals.finished.connect(self.treatment_done)
+
+        self.threadpool.start(worker)
 
     ### UI management ###
     '''
         Update the current progression of the progress bar
     '''
-
     def update_progress_bar(self, value):
         self.ui.progress_bar.setValue(value)
 
     '''
         Called when a treatment is done, notify and disable progress_bar
     '''
-
     def treatment_done(self, msg=""):
         # unlock other treatments
         self.set_progress_bar_state(False)
@@ -325,6 +370,18 @@ class MainWindow(QMainWindow):
     def set_progress_bar_state(self, enabled):
         self.ui.progress_bar.setEnabled(enabled)
         self.ui.progress_bar.setValue(0)
+
+    '''
+        Train logging
+    '''
+    def append_train_log(self, line):
+        self.ui.train_logs_textedit.appendPlainText(str(line))
+
+    '''
+        Predict logging
+    '''
+    def append_predict_log(self, line):
+        self.ui.predict_logs_textedit.appendPlainText(str(line))
 
     '''
         Check that all the required fields are completed to launch a mask fusion
@@ -418,14 +475,16 @@ class MainWindow(QMainWindow):
         if path and not os.path.exists(path):
             return
         path = self.ui.save_model_path_field.text()
-        if not os.path.exists(path):
+        if not os.path.exists(os.path.dirname(path)):
             return
 
         # Parameters are OK
         batch = self.ui.batch_size_spinbox.value()
         steps = self.ui.step_epoch_spinbox.value()
         epochs = self.ui.epochs_spinbox.value()
-        if batch < 1 or steps < 1 or epochs < 1:
+        nb_class = self.ui.nb_class_spinbox.value()
+        if batch < 1 or steps < 1 or epochs < 1 or \
+                nb_class < 1 or nb_class > 255:
             return
 
         self.ui.train_button.setEnabled(True)
@@ -449,6 +508,10 @@ class MainWindow(QMainWindow):
             return
         path = self.ui.existing_model_path_field.text()
         if not os.path.exists(path):
+            return
+
+        nb_class = self.ui.nb_class_spinbox.value()
+        if nb_class < 1 or nb_class > 255:
             return
 
         self.ui.eval_button.setEnabled(True)

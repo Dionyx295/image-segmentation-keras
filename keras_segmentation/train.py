@@ -71,10 +71,10 @@ def train(model,
         assert val_annotations is not None
 
     if optimizer_name is not None:
-        weights = [0.1, 10, 20]
-        loss_func = weighted_categorical_crossentropy(weights)
-        print("Weighted loss : " + str(weights))
-        #loss_func = "binary_crossentropy"
+        #weights = [0.1, 10, 20]
+        #loss_func = weighted_categorical_crossentropy(weights)
+        #print("Weighted loss : " + str(weights))
+        loss_func = "categorical_crossentropy"
         model.compile(loss=loss_func,
                       optimizer=optimizer_name,
                       metrics=['accuracy'])

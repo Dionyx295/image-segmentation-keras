@@ -183,22 +183,21 @@ pp.mask_fusion(class_pathes=["data_manuel_full/talus/","data_manuel_full/charb/"
 
 #AugmentData()
 
-#model = fcn_32(n_classes=3, input_height=400, input_width=400)
+model = fcn_8(n_classes=3, input_height=400, input_width=400)
 
-model = model_from_checkpoint_path(os.getcwd() + "\\models\\fcn_32\\fcn_32-auto")
+#model = model_from_checkpoint_path(os.getcwd() + "\\models\\fcn_32\\fcn_32-auto")
 
-'''
+
 model.train(
-        train_images =  "data_auto/aug_images/",
-        train_annotations = "data_auto/aug_segmentation/",
-        checkpoints_path = "models/fcn_32/fcn_32-auto",
-        epochs=100,
-        steps_per_epoch=250,
+        train_images =  "data/train_images",
+        train_annotations = "data/train_segmentation",
+        checkpoints_path = "models/fcn_8",
+        epochs=1,
+        steps_per_epoch=10,
         batch_size=4)
-'''
 
 Evaluate(model)
-Evaluate_perf("\\models\\fcn_32\\fcn_32-auto", "\\models\\fcn_32\\fcn_32-auto-perf.txt")
+#Evaluate_perf("\\models\\fcn_32\\fcn_32-auto", "\\models\\fcn_32\\fcn_32-auto-perf.txt")
 
 #graph_from_file("\models\\fcn_32\\fcn_32-full-perf.txt")
 

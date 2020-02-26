@@ -15,6 +15,9 @@ class WorkerSignals(QObject):
         progressed
             `int` percentage of actual progression
 
+        finished
+            `str` message to log
+
         error
             `tuple` (exctype, value, traceback.format_exc() )
 
@@ -24,5 +27,6 @@ class WorkerSignals(QObject):
     '''
     finished = pyqtSignal(str)
     progressed = pyqtSignal(int)
+    log = pyqtSignal(str)
     error = pyqtSignal(tuple)
     result = pyqtSignal(object)
