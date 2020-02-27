@@ -33,13 +33,11 @@ def vis_segmentation2(image, seg_map):
     plt.axis('off')
     plt.show()
 
-
-test_path = "data_manuel_talus\\test_images"
-predict_path =  "data_manuel_talus\\predict"
-for filename in os.listdir(predict_path):
-    imgfile = os.path.join(test_path,filename)
-    pngfile = os.path.join(predict_path,filename)
-    img = cv2.imread(imgfile, 1)
-    img = img[:,:,::-1]
-    seg_map = cv2.imread(pngfile, 0)
-    vis_segmentation2(img, seg_map)
+def create_superpositions(img_src=None, seg_src=None):
+    for filename in os.listdir(seg_src):
+        imgfile = os.path.join(img_src,filename)
+        pngfile = os.path.join(seg_src,filename)
+        img = cv2.imread(imgfile, 1)
+        img = img[:,:,::-1]
+        seg_map = cv2.imread(pngfile, 0)
+        vis_segmentation2(img, seg_map)

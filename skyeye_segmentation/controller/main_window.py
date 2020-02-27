@@ -46,6 +46,9 @@ class MainWindow(QMainWindow):
         ## Evaluation
         self.ui.eval_button.clicked.connect(self.on_eval_button_click)
 
+        ## Prediction
+        self.ui.predict_button.clicked.connect(self.on_predict_button_click)
+
         ## UI management
         # Mask fusion
         self.ui.classes_list.model().rowsInserted.connect(self.check_fusion_available)
@@ -329,6 +332,27 @@ class MainWindow(QMainWindow):
         self.check_all_available()  # Lock other buttons
         worker.signals.progressed.connect(self.update_progress_bar)
         worker.signals.log.connect(self.append_train_log)
+        worker.signals.finished.connect(self.treatment_done)
+
+        self.threadpool.start(worker)
+
+    @pyqtSlot()
+    def on_predict_button_click(self):
+        #inp_dir=None, out_dir=None,checkpoints_path=None, colors=None
+
+        # Parameters
+        existing = self.ui.predict_model_path_field.text()
+        img_src = self.ui.predict_images_field.text()
+        seg_dest = self.ui.saved_seg_field.text()
+        sup_dest = self.ui.saved_sup_field.text()
+        worker = PredictWorker(inp_dir=img_src, out_dir=seg_dest, checkpoints_path=existing, colors=None,
+                               sup_dir=sup_dest)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.append_predict_log)
         worker.signals.finished.connect(self.treatment_done)
 
         self.threadpool.start(worker)

@@ -2,10 +2,14 @@ import glob
 import os
 import random
 import json
+
+import cv2
 import numpy as np
+import six
 import skimage.io as io
 import skimage.transform as trans
 import tensorflow as tf
+import matplotlib.pyplot as plt
 from matplotlib import pyplot
 from skimage import img_as_ubyte
 from PIL import Image
@@ -13,8 +17,10 @@ from PyQt5.QtCore import QRunnable, pyqtSlot
 from keras.preprocessing.image import ImageDataGenerator
 from tqdm import tqdm
 
-from keras_segmentation.data_utils.data_loader import verify_segmentation_dataset, image_segmentation_generator
+from keras_segmentation.data_utils.data_loader import verify_segmentation_dataset, image_segmentation_generator, \
+    get_image_array, class_colors
 from keras_segmentation.models.all_models import model_from_name
+from keras_segmentation.models.config import IMAGE_ORDERING
 from keras_segmentation.predict import model_from_checkpoint_path, get_pairs_from_paths, get_segmentation_array, predict
 from skyeye_segmentation.controller.worker_signals import WorkerSignals
 
@@ -195,7 +201,8 @@ class TrainWorker(QRunnable):
                         checkpoint_nb = existing.split('.')[-1]
                         index = -(int)(len(checkpoint_nb)+1)
                         existing = existing[0:index]
-                        model = self.model_from_checkpoint_path_nb(existing, checkpoint_nb)
+                        model = model_from_checkpoint_path_nb(existing, checkpoint_nb)
+                        self.signals.log.emit("Modèle chargé : {}".format(existing))
                     except Exception as e:
                         self.signals.finished.emit("Impossible de charger le modèle existant !" + str(e))
                         return
@@ -330,24 +337,6 @@ class TrainWorker(QRunnable):
         latest_epoch_checkpoint = max(all_checkpoint_files, key=lambda f: int(get_epoch_number_from_path(f)))
         return latest_epoch_checkpoint
 
-    def model_from_checkpoint_path_nb(self, checkpoints_path, checkpoint_nb):
-        from keras_segmentation.models.all_models import model_from_name
-        assert (os.path.isfile(checkpoints_path + "_config.json")
-                ), "Checkpoint not found."
-        model_config = json.loads(
-            open(checkpoints_path + "_config.json", "r").read())
-        weights = checkpoints_path + "." + str(checkpoint_nb)
-        assert (os.path.isfile(weights)
-                ), "Weights file not found."
-        model = model_from_name[model_config['model_class']](
-            model_config['n_classes'], input_height=model_config['input_height'],
-            input_width=model_config['input_width'])
-        print("loaded weights ", weights)
-        self.signals.log.emit("Modèle chargé : {}".format(weights))
-        model.load_weights(weights)
-        return model
-
-
 '''
     Worker wrapper for the evaluate func
 '''
@@ -379,7 +368,8 @@ class EvalWorker(QRunnable):
                         checkpoint_nb = checkpoints_path.split('.')[-1]
                         index = -(int)(len(checkpoint_nb) + 1)
                         existing = checkpoints_path[0:index]
-                        model = self.model_from_checkpoint_path_nb(existing, checkpoint_nb)
+                        model = model_from_checkpoint_path_nb(existing, checkpoint_nb)
+                        self.signals.log.emit("Modèle chargé : {}".format(checkpoints_path))
                     except Exception as e:
                         self.signals.finished.emit("Impossible de charger le modèle existant !" + str(e))
                         return
@@ -431,19 +421,176 @@ class EvalWorker(QRunnable):
                 self.signals.log.emit("")
                 self.signals.finished.emit("Evaluation terminée !")
 
-    def model_from_checkpoint_path_nb(self, checkpoints_path, checkpoint_nb):
-        from keras_segmentation.models.all_models import model_from_name
-        assert (os.path.isfile(checkpoints_path + "_config.json")
-                ), "Checkpoint not found."
-        model_config = json.loads(
-            open(checkpoints_path + "_config.json", "r").read())
-        weights = checkpoints_path + "." + str(checkpoint_nb)
-        assert (os.path.isfile(weights)
-                ), "Weights file not found."
-        model = model_from_name[model_config['model_class']](
-            model_config['n_classes'], input_height=model_config['input_height'],
-            input_width=model_config['input_width'])
-        print("loaded weights ", weights)
-        self.signals.log.emit("Modèle chargé : {}".format(weights))
-        model.load_weights(weights)
-        return model
+'''
+    Worker wrapper for the predict func
+'''
+class PredictWorker(QRunnable):
+
+    def __init__(self, *args, **kwargs):
+        super(PredictWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        self.predict_multiple(**self.kwargs)
+
+    def predict(self, model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=None):
+
+        with self.graph.as_default():
+            with self.session.as_default():
+
+                if model is None and (checkpoints_path is not None):
+                    model = model_from_checkpoint_path(checkpoints_path)
+
+                assert (inp is not None)
+                assert ((type(inp) is np.ndarray) or isinstance(inp, six.string_types)
+                        ), "Inupt should be the CV image or the input file name"
+
+                if isinstance(inp, six.string_types):
+                    inp = cv2.imread(inp)
+
+                assert len(inp.shape) == 3, "Image should be h,w,3 "
+                orininal_h = inp.shape[0]
+                orininal_w = inp.shape[1]
+
+                output_width = model.output_width
+                output_height = model.output_height
+                input_width = model.input_width
+                input_height = model.input_height
+                n_classes = model.n_classes
+
+                x = get_image_array(inp, input_width, input_height, ordering=IMAGE_ORDERING)
+                pr = model.predict(np.array([x]))[0]
+                pr = pr.reshape((output_height, output_width, n_classes)).argmax(axis=2)
+
+                seg_img = np.zeros((output_height, output_width, 3))
+
+                if clrs is None:
+                    colors = class_colors
+                else:
+                    colors = clrs
+
+                colors[0] = [255, 255, 255]  # White for background
+
+                for c in range(n_classes):
+                    seg_img[:, :, 0] += ((pr[:, :] == c) * (colors[c][0])).astype('uint8')
+                    seg_img[:, :, 1] += ((pr[:, :] == c) * (colors[c][1])).astype('uint8')
+                    seg_img[:, :, 2] += ((pr[:, :] == c) * (colors[c][2])).astype('uint8')
+
+                seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
+
+                if out_fname is not None:
+                    cv2.imwrite(out_fname, seg_img)
+        return pr
+
+    def predict_multiple(self, model=None, inps=None, inp_dir=None, out_dir=None,
+                         checkpoints_path=None, colors=None, sup_dir=None):
+
+        with self.graph.as_default():
+            with self.session.as_default():
+                if model is None and (checkpoints_path is not None):
+                    try:
+                        checkpoint_nb = checkpoints_path.split('.')[-1]
+                        index = -(int)(len(checkpoint_nb) + 1)
+                        existing = checkpoints_path[0:index]
+                        model = model_from_checkpoint_path_nb(existing, checkpoint_nb)
+                        self.signals.log.emit("Modèle chargé : {}".format(checkpoints_path))
+                    except Exception as e:
+                        self.signals.finished.emit("Impossible de charger le modèle existant !\n" + str(e))
+                        return
+
+                if inps is None and (inp_dir is not None):
+                    inps = glob.glob(os.path.join(inp_dir, "*.jpg")) + glob.glob(
+                        os.path.join(inp_dir, "*.png")) + \
+                           glob.glob(os.path.join(inp_dir, "*.jpeg"))
+
+                assert type(inps) is list
+                all_prs = []
+
+                files_nb = len(inps)
+                file_processed = 0
+                self.signals.log.emit("Prédiction de {} images...".format(str(files_nb)))
+                for i, inp in enumerate(tqdm(inps)):
+                    if out_dir is None:
+                        out_fname = None
+                    else:
+                        if isinstance(inp, six.string_types):
+                            out_fname = os.path.join(out_dir, os.path.basename(inp))
+                        else:
+                            out_fname = os.path.join(out_dir, str(i) + ".jpg")
+
+                    pr = predict(model, inp, out_fname, clrs=colors)
+                    all_prs.append(pr)
+
+                    file_processed += 1
+                    progression = 100*file_processed / (files_nb*2)
+                    self.signals.progressed.emit(progression)
+                    self.signals.log.emit("{}".format(out_fname))
+
+                self.create_superpositions(img_src=inp_dir, seg_src=out_dir, save_dir=sup_dir)
+
+                self.signals.log.emit("")
+                self.signals.finished.emit("Prédictions terminées !")
+                return all_prs
+
+    def create_pascal_label_colormap(self):
+        colormap = np.zeros((256, 3), dtype=int)
+        ind = np.arange(256, dtype=int)
+
+        for shift in reversed(range(8)):
+            for channel in range(3):
+                colormap[:, channel] |= ((ind >> channel) & 1) << shift
+            ind >>= 3
+
+        return colormap
+
+    def label_to_color_image(self, label):
+        if label.ndim != 2:
+            raise ValueError('Expect 2-D input label')
+        colormap = self.create_pascal_label_colormap()
+        if np.max(label) > len(colormap):
+            raise ValueError('label value too large.')
+
+        return colormap[label]
+
+    def create_superpositions(self, img_src, seg_src, save_dir):
+        files_nb = len(os.listdir(seg_src))
+        files_processed = 0
+        self.signals.log.emit("Création des {} superpositions...".format(str(files_nb)))
+        for filename in os.listdir(seg_src):
+            imgfile = os.path.join(img_src, filename)
+            pngfile = os.path.join(seg_src, filename)
+            img = cv2.imread(imgfile, 1)
+            img = img[:, :, ::-1]
+            seg_map = cv2.imread(pngfile, 0)
+            seg_image = self.label_to_color_image(seg_map).astype(np.uint8)
+            saved_img = os.path.join(save_dir, filename)
+            plt.figure()
+            plt.imshow(seg_image)
+            plt.imshow(img, alpha=0.5)
+            plt.axis('off')
+            plt.savefig(saved_img)
+            self.signals.log.emit(saved_img)
+            progression = 50 + 100*files_processed/(files_nb*2)
+            self.signals.progressed.emit(progression)
+
+def model_from_checkpoint_path_nb(checkpoints_path, checkpoint_nb):
+    from keras_segmentation.models.all_models import model_from_name
+    assert (os.path.isfile(checkpoints_path + "_config.json")
+            ), "Checkpoint not found."
+    model_config = json.loads(
+        open(checkpoints_path + "_config.json", "r").read())
+    weights = checkpoints_path + "." + str(checkpoint_nb)
+    assert (os.path.isfile(weights)
+            ), "Weights file not found."
+    model = model_from_name[model_config['model_class']](
+        model_config['n_classes'], input_height=model_config['input_height'],
+        input_width=model_config['input_width'])
+    print("loaded weights ", weights)
+    model.load_weights(weights)
+    return model
