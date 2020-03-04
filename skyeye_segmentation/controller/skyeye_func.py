@@ -207,17 +207,47 @@ class TrainWorker(QRunnable):
                         self.signals.finished.emit("Impossible de charger le modèle existant !" + str(e))
                         return
                 else:
+                    '''
                     try:
                         model = model_from_name[new](nb_class, input_height=height, input_width=width)
-                    except:
-                        self.signals.finished.emit("Impossible de créer un nouveau modèle {} : !".format(new))
+                    except Exception as e:
+                        self.signals.finished.emit("Impossible de créer un nouveau modèle {} !\n{}".format(new, e))
                         return
+                    '''
+                    vgg = new.find("vgg")
+                    resnet50 = new.find("resnet50")
+                    mobilenet = new.find("mobilenet")
+                    pspnet = new.find("pspnet")
+                    pspnet_50 = new.find("pspnet_50")
+                    pspnet_101 = new.find("pspnet_101")
+
+                    # Specifics models constraints
+                    if vgg != -1 or resnet50 != -1:
+                        if height % 32 != 0 or width % 32 != 0:
+                            self.signals.finished.emit("Pour un modèle vgg/resnet50/pspnet, les dimensions d'entrée doivent "
+                                                       "être des multiples de 32.")
+                            return
+                    if mobilenet != -1:
+                        if height != 224 or width != 224:
+                            self.signals.finished.emit(
+                                "Pour un modèle mobilenet, les dimensions d'entrée doivent être (224,224).")
+                            return
+                    if pspnet != -1:
+                        if pspnet_50 != -1 or pspnet_101 != -1:
+                            if not (height == 473 and width == 473) and not (height == 713 and width == 713):
+                                self.signals.finished.emit(
+                                    "Pour un modèle pspnet_50 ou pspnet_101, les dimensions d'entrée doivent être (473,473) ou (713,713).")
+                                return
+                        else:
+                            if height % 192 != 0 or width % 192 != 0:
+                                self.signals.finished.emit("Pour un modèle pspnet, les dimensions d'entrée doivent "
+                                                           "être des multiples de 192.")
+                                return
+
+                    model = model_from_name[new](nb_class, input_height=height, input_width=width)
 
                 output_width = model.output_width
                 output_height = model.output_height
-
-                global graph
-                graph = tf.get_default_graph()
 
                 # Model compilation
                 if optimizer_name is not None:
