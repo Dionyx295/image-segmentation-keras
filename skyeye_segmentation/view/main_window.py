@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'DeepEye.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.1
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -609,22 +609,13 @@ class Ui_MainWindow(object):
         self.progress_bar.setTextVisible(True)
         self.progress_bar.setObjectName("progress_bar")
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menu_bar = QtWidgets.QMenuBar(MainWindow)
-        self.menu_bar.setGeometry(QtCore.QRect(0, 0, 740, 21))
-        self.menu_bar.setObjectName("menu_bar")
-        self.menu_configuration = QtWidgets.QMenu(self.menu_bar)
-        self.menu_configuration.setObjectName("menu_configuration")
-        MainWindow.setMenuBar(self.menu_bar)
         self.action_save_conf = QtWidgets.QAction(MainWindow)
         self.action_save_conf.setObjectName("action_save_conf")
         self.action_load_conf = QtWidgets.QAction(MainWindow)
         self.action_load_conf.setObjectName("action_load_conf")
-        self.menu_configuration.addAction(self.action_save_conf)
-        self.menu_configuration.addAction(self.action_load_conf)
-        self.menu_bar.addAction(self.menu_configuration.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.main_tab.setCurrentIndex(1)
+        self.main_tab.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -707,6 +698,5 @@ class Ui_MainWindow(object):
         self.predict_button.setText(_translate("MainWindow", "Prédire"))
         self.groupBox_20.setTitle(_translate("MainWindow", "Logs"))
         self.main_tab.setTabText(self.main_tab.indexOf(self.tab), _translate("MainWindow", "Prédiction"))
-        self.menu_configuration.setTitle(_translate("MainWindow", "Configuration"))
         self.action_save_conf.setText(_translate("MainWindow", "Sauvegarder cette configuration"))
         self.action_load_conf.setText(_translate("MainWindow", "Charger une configuration"))

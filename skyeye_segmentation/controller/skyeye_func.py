@@ -37,7 +37,10 @@ class MaskFusionWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        self.mask_fusion(**self.kwargs)
+        try:
+            self.mask_fusion(**self.kwargs)
+        except Exception as e:
+            self.signals.error.emit(str(e))
 
     '''
         Fusion of binary masks into a colored unique one
@@ -88,7 +91,10 @@ class ImageAugmentationWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        self.augment_data(**self.kwargs)
+        try:
+            self.augment_data(**self.kwargs)
+        except Exception as e:
+            self.signals.error.emit(str(e))
 
     '''
         Data augmentation of images and masks using keras ImageDataGenerator
@@ -185,7 +191,10 @@ class TrainWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        self.train(**self.kwargs)
+        try:
+            self.train(**self.kwargs)
+        except Exception as e:
+            self.signals.error.emit(str(e))
 
     def train(self, existing="", new="", width=0, height=0, img_src="", seg_src="", batch=0, steps=0, epochs=0,
               checkpoint="", nb_class=0, validate=False, val_images=None, val_annotations=None, val_batch_size=1,
@@ -204,47 +213,45 @@ class TrainWorker(QRunnable):
                         model = model_from_checkpoint_path_nb(existing, checkpoint_nb)
                         self.signals.log.emit("Modèle chargé : {}".format(existing))
                     except Exception as e:
-                        self.signals.finished.emit("Impossible de charger le modèle existant !" + str(e))
+                        self.signals.error.emit("Impossible de charger le modèle existant !\n" + str(e))
                         return
                 else:
-                    '''
                     try:
+                        vgg = new.find("vgg")
+                        resnet50 = new.find("resnet50")
+                        mobilenet = new.find("mobilenet")
+                        pspnet = new.find("pspnet")
+                        pspnet_50 = new.find("pspnet_50")
+                        pspnet_101 = new.find("pspnet_101")
+
+                        # Specifics models constraints
+                        if vgg != -1 or resnet50 != -1:
+                            if height % 32 != 0 or width % 32 != 0:
+                                self.signals.error.emit("Pour un modèle vgg/resnet50/pspnet, les dimensions d'entrée doivent "
+                                                           "être des multiples de 32.")
+                                return
+                        if mobilenet != -1:
+                            if height != 224 or width != 224:
+                                self.signals.error.emit(
+                                    "Pour un modèle mobilenet, les dimensions d'entrée doivent être (224,224).")
+                                return
+                        if pspnet != -1:
+                            if pspnet_50 != -1 or pspnet_101 != -1:
+                                if not (height == 473 and width == 473) and not (height == 713 and width == 713):
+                                    self.signals.error.emit(
+                                        "Pour un modèle pspnet_50 ou pspnet_101, les dimensions d'entrée doivent être "
+                                        "(473,473) ou (713,713).")
+                                    return
+                            else:
+                                if height % 192 != 0 or width % 192 != 0:
+                                    self.signals.error.emit("Pour un modèle pspnet, les dimensions d'entrée doivent "
+                                                               "être des multiples de 192.")
+                                    return
+
                         model = model_from_name[new](nb_class, input_height=height, input_width=width)
                     except Exception as e:
-                        self.signals.finished.emit("Impossible de créer un nouveau modèle {} !\n{}".format(new, e))
+                        self.signals.error.emit("Impossible de créer un nouveau modèle {} !\n{}".format(new, e))
                         return
-                    '''
-                    vgg = new.find("vgg")
-                    resnet50 = new.find("resnet50")
-                    mobilenet = new.find("mobilenet")
-                    pspnet = new.find("pspnet")
-                    pspnet_50 = new.find("pspnet_50")
-                    pspnet_101 = new.find("pspnet_101")
-
-                    # Specifics models constraints
-                    if vgg != -1 or resnet50 != -1:
-                        if height % 32 != 0 or width % 32 != 0:
-                            self.signals.finished.emit("Pour un modèle vgg/resnet50/pspnet, les dimensions d'entrée doivent "
-                                                       "être des multiples de 32.")
-                            return
-                    if mobilenet != -1:
-                        if height != 224 or width != 224:
-                            self.signals.finished.emit(
-                                "Pour un modèle mobilenet, les dimensions d'entrée doivent être (224,224).")
-                            return
-                    if pspnet != -1:
-                        if pspnet_50 != -1 or pspnet_101 != -1:
-                            if not (height == 473 and width == 473) and not (height == 713 and width == 713):
-                                self.signals.finished.emit(
-                                    "Pour un modèle pspnet_50 ou pspnet_101, les dimensions d'entrée doivent être (473,473) ou (713,713).")
-                                return
-                        else:
-                            if height % 192 != 0 or width % 192 != 0:
-                                self.signals.finished.emit("Pour un modèle pspnet, les dimensions d'entrée doivent "
-                                                           "être des multiples de 192.")
-                                return
-
-                    model = model_from_name[new](nb_class, input_height=height, input_width=width)
 
                 output_width = model.output_width
                 output_height = model.output_height
@@ -384,7 +391,10 @@ class EvalWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        self.evaluate(**self.kwargs)
+        try:
+            self.evaluate(**self.kwargs)
+        except Exception as e:
+            self.signals.error.emit(str(e))
 
     def evaluate(self, model=None, inp_images=None, annotations=None, inp_images_dir=None, annotations_dir=None,
                  checkpoints_path=None):
@@ -467,7 +477,10 @@ class PredictWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        self.predict_multiple(**self.kwargs)
+        try:
+            self.predict_multiple(**self.kwargs)
+        except Exception as e:
+            self.signals.error.emit(str(e))
 
     def predict(self, model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=None):
 
@@ -599,7 +612,7 @@ class PredictWorker(QRunnable):
             img = img[:, :, ::-1]
             seg_map = cv2.imread(pngfile, 0)
             seg_image = self.label_to_color_image(seg_map).astype(np.uint8)
-            saved_img = os.path.join(save_dir, filename)
+            saved_img = os.path.join(save_dir, os.path.splitext(filename)[0]+"-sup.png")
             plt.figure()
             plt.imshow(seg_image)
             plt.imshow(img, alpha=0.5)

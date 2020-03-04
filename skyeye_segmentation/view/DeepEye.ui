@@ -54,7 +54,7 @@
         <bool>true</bool>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="preprocess_tab">
         <attribute name="title">
@@ -1406,24 +1406,6 @@
      <bool>true</bool>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menu_bar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>740</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menu_configuration">
-    <property name="title">
-     <string>Configuration</string>
-    </property>
-    <addaction name="action_save_conf"/>
-    <addaction name="action_load_conf"/>
-   </widget>
-   <addaction name="menu_configuration"/>
   </widget>
   <action name="action_save_conf">
    <property name="text">

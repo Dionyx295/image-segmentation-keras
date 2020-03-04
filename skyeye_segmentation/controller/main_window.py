@@ -1,6 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QPlainTextEdit
-from PyQt5.QtCore import pyqtSlot, qInstallMessageHandler, QtWarningMsg, QThreadPool, QRect
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtCore import qInstallMessageHandler, QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings
 
 from skyeye_segmentation.controller.errormsg import errormsg
 from skyeye_segmentation.view import main_window
@@ -13,6 +13,9 @@ class MainWindow(QMainWindow):
         self.ui = main_window.Ui_MainWindow()
         self.ui.setupUi(self)
         self.threadpool = QThreadPool()
+
+        self.settings = QSettings("Polytech Tours", "SkyEye")
+        self.load_settings()
 
         # Connections to slots
         ## File and folder browsers
@@ -116,6 +119,73 @@ class MainWindow(QMainWindow):
         else:
             event.ignore()
 
+    # Settings loader
+    def load_settings(self):
+        # Path fields
+        self.ui.aug_images_source_field.setText(self.settings.value("aug_images_source_field"))
+        self.ui.aug_seg_source_field.setText(self.settings.value("aug_seg_source_field"))
+        self.ui.aug_images_dest_field.setText(self.settings.value("aug_images_dest_field"))
+        self.ui.aug_seg_dest_field.setText(self.settings.value("aug_seg_dest_field"))
+        self.ui.train_images_field.setText(self.settings.value("train_images_field"))
+        self.ui.train_seg_field.setText(self.settings.value("train_seg_field"))
+        self.ui.eval_images_field.setText(self.settings.value("eval_images_field"))
+        self.ui.eval_seg_field.setText(self.settings.value("eval_seg_field"))
+        self.ui.existing_model_path_field.setText(self.settings.value("existing_model_path_field"))
+        self.ui.save_model_path_field.setText(self.settings.value("save_model_path_field"))
+        self.ui.predict_model_path_field.setText(self.settings.value("predict_model_path_field"))
+        self.ui.predict_images_field.setText(self.settings.value("predict_images_field"))
+        self.ui.saved_seg_field.setText(self.settings.value("saved_seg_field"))
+        self.ui.saved_sup_field.setText(self.settings.value("saved_sup_field"))
+
+        # Augmentation parameters
+        value = self.settings.value("aug_images_nb_spinbox")
+        if value:
+            self.ui.aug_images_nb_spinbox.setValue(value)
+        value = self.settings.value("aug_rotation_range_spinbox")
+        if value:
+            self.ui.aug_rotation_range_spinbox.setValue(value)
+        value = self.settings.value("aug_horizontal_spinbox")
+        if value:
+            self.ui.aug_horizontal_spinbox.setValue(value)
+        value = self.settings.value("aug_vertical_spinbox")
+        if value:
+            self.ui.aug_vertical_spinbox.setValue(value)
+        value = self.settings.value("aug_shear_spinbox")
+        if value:
+            self.ui.aug_shear_spinbox.setValue(value)
+        value = self.settings.value("aug_zoom_spinbox")
+        if value:
+            self.ui.aug_zoom_spinbox.setValue(value)
+        value = self.settings.value("aug_width_spinbox")
+        if value:
+            self.ui.aug_width_spinbox.setValue(value)
+        value = self.settings.value("aug_height_spinbox")
+        if value:
+            self.ui.aug_height_spinbox.setValue(value)
+        value = self.settings.value("aug_fill_combobox")
+        if value:
+            self.ui.aug_fill_combobox.setCurrentText(value)
+
+        # Train settings
+        value = self.settings.value("width_model_spinbox")
+        if value:
+            self.ui.width_model_spinbox.setValue(value)
+        value = self.settings.value("height_model_spinbox")
+        if value:
+            self.ui.height_model_spinbox.setValue(value)
+        value = self.settings.value("batch_size_spinbox")
+        if value:
+            self.ui.batch_size_spinbox.setValue(value)
+        value = self.settings.value("step_epoch_spinbox")
+        if value:
+            self.ui.step_epoch_spinbox.setValue(value)
+        value = self.settings.value("epochs_spinbox")
+        if value:
+            self.ui.epochs_spinbox.setValue(value)
+        value = self.settings.value("nb_class_spinbox")
+        if value:
+            self.ui.nb_class_spinbox.setValue(value)
+
     # Slots
 
     ## File and folder browsers
@@ -132,6 +202,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.aug_images_source_field.setText(folderName)
+            self.settings.setValue("aug_images_source_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_aug_seg_source_browse_button_click(self):
@@ -139,6 +211,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.aug_seg_source_field.setText(folderName)
+            self.settings.setValue("aug_seg_source_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_aug_images_dest_browse_button_click(self):
@@ -146,6 +220,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.aug_images_dest_field.setText(folderName)
+            self.settings.setValue("aug_images_dest_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_aug_seg_dest_browse_button_click(self):
@@ -153,6 +229,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.aug_seg_dest_field.setText(folderName)
+            self.settings.setValue("aug_seg_dest_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_train_images_browse_button_click(self):
@@ -160,6 +238,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.train_images_field.setText(folderName)
+            self.settings.setValue("train_images_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_train_seg_browse_button_click(self):
@@ -167,6 +247,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.train_seg_field.setText(folderName)
+            self.settings.setValue("train_seg_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_eval_images_browse_button_click(self):
@@ -174,6 +256,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.eval_images_field.setText(folderName)
+            self.settings.setValue("eval_images_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_eval_seg_browse_button_click(self):
@@ -181,12 +265,16 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.eval_seg_field.setText(folderName)
+            self.settings.setValue("eval_seg_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_existing_model_path_browse_button_click(self):
         fileName, _ = QFileDialog.getOpenFileName(self, "Charger un modèle")
         if fileName:
             self.ui.existing_model_path_field.setText(fileName)
+            self.settings.setValue("existing_model_path_field", fileName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_save_model_path_browse_button_click(self):
@@ -194,12 +282,16 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.save_model_path_field.setText(folderName)
+            self.settings.setValue("save_model_path_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_predict_model_path_browse_button_click(self):
         fileName, _ = QFileDialog.getOpenFileName(self, "Charger un modèle")
         if fileName:
             self.ui.predict_model_path_field.setText(fileName)
+            self.settings.setValue("predict_model_path_field", fileName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_predict_images_browse_button_click(self):
@@ -207,6 +299,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.predict_images_field.setText(folderName)
+            self.settings.setValue("predict_images_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_saved_seg_browse_button_click(self):
@@ -214,6 +308,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.saved_seg_field.setText(folderName)
+            self.settings.setValue("saved_seg_field", folderName)
+            self.settings.sync()
 
     @pyqtSlot()
     def on_saved_sup_browse_button_click(self):
@@ -221,6 +317,8 @@ class MainWindow(QMainWindow):
                                                       options=QFileDialog.ShowDirsOnly)
         if folderName:
             self.ui.saved_sup_field.setText(folderName)
+            self.settings.setValue("saved_sup_field", folderName)
+            self.settings.sync()
 
     ## Classes prep
     @pyqtSlot()
@@ -263,10 +361,22 @@ class MainWindow(QMainWindow):
         self.check_all_available() # Lock other buttons
         worker.signals.progressed.connect(self.update_progress_bar)
         worker.signals.finished.connect(self.treatment_done)
+
         self.threadpool.start(worker)
 
     @pyqtSlot()
     def on_aug_button_click(self):
+        # Saving settings
+        self.settings.setValue("aug_images_nb_spinbox", self.ui.aug_images_nb_spinbox.value())
+        self.settings.setValue("aug_rotation_range_spinbox", self.ui.aug_rotation_range_spinbox.value())
+        self.settings.setValue("aug_horizontal_spinbox", self.ui.aug_horizontal_spinbox.value())
+        self.settings.setValue("aug_vertical_spinbox", self.ui.aug_vertical_spinbox.value())
+        self.settings.setValue("aug_shear_spinbox", self.ui.aug_shear_spinbox.value())
+        self.settings.setValue("aug_zoom_spinbox", self.ui.aug_zoom_spinbox.value())
+        self.settings.setValue("aug_width_spinbox", self.ui.aug_width_spinbox.value())
+        self.settings.setValue("aug_height_spinbox", self.ui.aug_height_spinbox.value())
+        self.settings.setValue("aug_fill_combobox", self.ui.aug_fill_combobox.currentText())
+
         # Parameters
         img_src = self.ui.aug_images_source_field.text()
         seg_src = self.ui.aug_seg_source_field.text()
@@ -289,10 +399,19 @@ class MainWindow(QMainWindow):
         self.check_all_available()  # Lock other buttons
         worker.signals.progressed.connect(self.update_progress_bar)
         worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
         self.threadpool.start(worker)
 
     @pyqtSlot()
     def on_train_button_click(self):
+        # Saving settings
+        self.settings.setValue("width_model_spinbox", self.ui.width_model_spinbox.value())
+        self.settings.setValue("height_model_spinbox", self.ui.height_model_spinbox.value())
+        self.settings.setValue("batch_size_spinbox", self.ui.batch_size_spinbox.value())
+        self.settings.setValue("step_epoch_spinbox", self.ui.step_epoch_spinbox.value())
+        self.settings.setValue("epochs_spinbox", self.ui.epochs_spinbox.value())
+        self.settings.setValue("nb_class_spinbox", self.ui.nb_class_spinbox.value())
+
         # Parameters
         img_src = self.ui.train_images_field.text()
         seg_src = self.ui.train_seg_field.text()
@@ -316,7 +435,7 @@ class MainWindow(QMainWindow):
         worker.signals.progressed.connect(self.update_progress_bar)
         worker.signals.log.connect(self.append_train_log)
         worker.signals.finished.connect(self.treatment_done)
-
+        worker.signals.error.connect(self.error_appened)
         self.threadpool.start(worker)
 
     @pyqtSlot()
@@ -333,7 +452,7 @@ class MainWindow(QMainWindow):
         worker.signals.progressed.connect(self.update_progress_bar)
         worker.signals.log.connect(self.append_train_log)
         worker.signals.finished.connect(self.treatment_done)
-
+        worker.signals.error.connect(self.error_appened)
         self.threadpool.start(worker)
 
     @pyqtSlot()
@@ -354,7 +473,7 @@ class MainWindow(QMainWindow):
         worker.signals.progressed.connect(self.update_progress_bar)
         worker.signals.log.connect(self.append_predict_log)
         worker.signals.finished.connect(self.treatment_done)
-
+        worker.signals.error.connect(self.error_appened)
         self.threadpool.start(worker)
 
     ### UI management ###
@@ -367,7 +486,7 @@ class MainWindow(QMainWindow):
     '''
         Called when a treatment is done, notify and disable progress_bar
     '''
-    def treatment_done(self, msg=""):
+    def treatment_done(self, msg=None):
         # unlock other treatments
         self.set_progress_bar_state(False)
 
@@ -377,6 +496,10 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self,
                                     "Terminé",
                                     "{}\n".format(msg))
+
+    def error_appened(self, msg=""):
+        errormsg(typerr=QtCriticalMsg, msgerr=msg, contexte="")
+        self.treatment_done()
 
     '''
         Lock or unlock the treatment starting buttons

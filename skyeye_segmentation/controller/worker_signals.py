@@ -19,7 +19,7 @@ class WorkerSignals(QObject):
             `str` message to log
 
         error
-            `tuple` (exctype, value, traceback.format_exc() )
+            `str` error message to log
 
         result
             `object` data returned from processing, anything
@@ -28,5 +28,5 @@ class WorkerSignals(QObject):
     finished = pyqtSignal(str)
     progressed = pyqtSignal(int)
     log = pyqtSignal(str)
-    error = pyqtSignal(tuple)
+    error = pyqtSignal(str)
     result = pyqtSignal(object)
