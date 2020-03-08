@@ -69,7 +69,7 @@ class MaskFusionWorker(QRunnable):
                         if mask_array[x, y].all() == False:  # Black pixel
                             new_mask_array[x, y] = scale
 
-            new_image = save_to + file.split(".")[0] + ".png"
+            new_image = os.path.join(save_to,  file.split(".")[0] + ".png")
             new_mask_array = trans.resize(new_mask_array, size, anti_aliasing=False)
             io.imsave(new_image, img_as_ubyte(new_mask_array))
             file_processed += 1

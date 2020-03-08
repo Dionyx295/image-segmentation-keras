@@ -346,7 +346,7 @@ class MainWindow(QMainWindow):
     def on_fusion_button_click(self):
         # Parameters
         n_classes = len(self.classes_folders)
-        scales = np.linspace(0, n_classes, n_classes + 1).tolist()
+        scales = np.linspace(1, n_classes, n_classes).tolist()
         width = int(self.ui.resize_width_spinbox.text())
         height = int(self.ui.resize_height_spinbox.text())
         save_dir = self.ui.mask_prep_field.text()
