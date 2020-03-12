@@ -391,10 +391,14 @@ class EvalWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
+        '''
         try:
             self.evaluate(**self.kwargs)
         except Exception as e:
             self.signals.error.emit(str(e))
+        '''
+
+        self.evaluate(**self.kwargs)
 
     def evaluate(self, model=None, inp_images=None, annotations=None, inp_images_dir=None, annotations_dir=None,
                  checkpoints_path=None):
@@ -477,59 +481,11 @@ class PredictWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
+        self.predict_multiple(**self.kwargs)
         try:
             self.predict_multiple(**self.kwargs)
         except Exception as e:
             self.signals.error.emit(str(e))
-
-    def predict(self, model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=None):
-
-        with self.graph.as_default():
-            with self.session.as_default():
-
-                if model is None and (checkpoints_path is not None):
-                    model = model_from_checkpoint_path(checkpoints_path)
-
-                assert (inp is not None)
-                assert ((type(inp) is np.ndarray) or isinstance(inp, six.string_types)
-                        ), "Inupt should be the CV image or the input file name"
-
-                if isinstance(inp, six.string_types):
-                    inp = cv2.imread(inp)
-
-                assert len(inp.shape) == 3, "Image should be h,w,3 "
-                orininal_h = inp.shape[0]
-                orininal_w = inp.shape[1]
-
-                output_width = model.output_width
-                output_height = model.output_height
-                input_width = model.input_width
-                input_height = model.input_height
-                n_classes = model.n_classes
-
-                x = get_image_array(inp, input_width, input_height, ordering=IMAGE_ORDERING)
-                pr = model.predict(np.array([x]))[0]
-                pr = pr.reshape((output_height, output_width, n_classes)).argmax(axis=2)
-
-                seg_img = np.zeros((output_height, output_width, 3))
-
-                if clrs is None:
-                    colors = class_colors
-                else:
-                    colors = clrs
-
-                colors[0] = [255, 255, 255]  # White for background
-
-                for c in range(n_classes):
-                    seg_img[:, :, 0] += ((pr[:, :] == c) * (colors[c][0])).astype('uint8')
-                    seg_img[:, :, 1] += ((pr[:, :] == c) * (colors[c][1])).astype('uint8')
-                    seg_img[:, :, 2] += ((pr[:, :] == c) * (colors[c][2])).astype('uint8')
-
-                seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
-
-                if out_fname is not None:
-                    cv2.imwrite(out_fname, seg_img)
-        return pr
 
     def predict_multiple(self, model=None, inps=None, inp_dir=None, out_dir=None,
                          checkpoints_path=None, colors=None, sup_dir=None):
@@ -605,7 +561,7 @@ class PredictWorker(QRunnable):
         files_nb = len(os.listdir(seg_src))
         files_processed = 0
         self.signals.log.emit("Création des {} superpositions...".format(str(files_nb)))
-        for filename in os.listdir(seg_src):
+        for filename in os.listdir(img_src):
             imgfile = os.path.join(img_src, filename)
             pngfile = os.path.join(seg_src, filename)
             img = cv2.imread(imgfile, 1)

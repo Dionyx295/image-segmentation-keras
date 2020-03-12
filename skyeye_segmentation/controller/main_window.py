@@ -1,4 +1,7 @@
 import sys
+
+from sklearn.metrics import confusion_matrix
+
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from PyQt5.QtCore import qInstallMessageHandler, QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings
 
@@ -6,10 +9,25 @@ from skyeye_segmentation.controller.errormsg import errormsg
 from skyeye_segmentation.view import main_window
 from skyeye_segmentation.controller.skyeye_func import *
 
+from datetime import datetime
+from pathlib import Path
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        # Creating log file and redirecting stdout
+        self.stdout_original = sys.stdout
+        work_dir = os.path.join(Path(os.getcwd()).parent, "log")
+        if not os.path.isdir(work_dir):
+            os.mkdir(work_dir)
+        now = datetime.now()
+        dt_string = now.strftime("%d-%m-%Y %Hh%Mm%Ss")
+        log_file = os.path.join(work_dir, "logs_"+dt_string+".txt")
+        sys.stdout = open(log_file, 'a')
+        sys.stderr = open(log_file, 'a')
+
         self.ui = main_window.Ui_MainWindow()
         self.ui.setupUi(self)
         self.threadpool = QThreadPool()
@@ -75,6 +93,9 @@ class MainWindow(QMainWindow):
         # Training
         self.ui.train_images_field.textChanged.connect(self.check_train_available)
         self.ui.train_seg_field.textChanged.connect(self.check_train_available)
+        self.ui.model_combobox.currentTextChanged.connect(self.clear_existing_model)
+        self.ui.width_model_spinbox.valueChanged.connect(self.clear_existing_model)
+        self.ui.height_model_spinbox.valueChanged.connect(self.clear_existing_model)
         self.ui.width_model_spinbox.valueChanged.connect(self.check_train_available)
         self.ui.height_model_spinbox.valueChanged.connect(self.check_train_available)
         self.ui.existing_model_path_field.textChanged.connect(self.check_train_available)
@@ -497,9 +518,20 @@ class MainWindow(QMainWindow):
                                     "Terminé",
                                     "{}\n".format(msg))
 
+    '''
+        Called when an error happens
+    '''
     def error_appened(self, msg=""):
         errormsg(typerr=QtCriticalMsg, msgerr=msg, contexte="")
+        print("ER:", msg)
         self.treatment_done()
+
+    '''
+        Called when settings parameters for a new model,
+        clears the existing model field to avoid confusion
+    '''
+    def clear_existing_model(self):
+        self.ui.existing_model_path_field.setText("")
 
     '''
         Lock or unlock the treatment starting buttons
@@ -523,12 +555,16 @@ class MainWindow(QMainWindow):
     '''
     def append_train_log(self, line):
         self.ui.train_logs_textedit.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
 
     '''
         Predict logging
     '''
     def append_predict_log(self, line):
         self.ui.predict_logs_textedit.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
 
     '''
         Check that all the required fields are completed to launch a mask fusion
