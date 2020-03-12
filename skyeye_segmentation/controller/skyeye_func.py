@@ -16,6 +16,7 @@ from PIL import Image
 from PyQt5.QtCore import QRunnable, pyqtSlot
 from keras.preprocessing.image import ImageDataGenerator
 from tqdm import tqdm
+from sklearn.metrics import confusion_matrix
 
 from keras_segmentation.data_utils.data_loader import verify_segmentation_dataset, image_segmentation_generator, \
     get_image_array, class_colors
@@ -391,14 +392,10 @@ class EvalWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        '''
         try:
             self.evaluate(**self.kwargs)
         except Exception as e:
             self.signals.error.emit(str(e))
-        '''
-
-        self.evaluate(**self.kwargs)
 
     def evaluate(self, model=None, inp_images=None, annotations=None, inp_images_dir=None, annotations_dir=None,
                  checkpoints_path=None):
@@ -422,11 +419,8 @@ class EvalWorker(QRunnable):
                     assert (inp_images_dir is not None), "Please privide inp_images or inp_images_dir"
                     assert (annotations_dir is not None), "Please privide inp_images or inp_images_dir"
 
-                    print(inp_images_dir)
                     paths = get_pairs_from_paths(inp_images_dir, annotations_dir)
-                    print(paths)
                     paths = list(zip(*paths))
-                    print(paths)
                     inp_images = list(paths[0])
                     annotations = list(paths[1])
 
@@ -438,14 +432,19 @@ class EvalWorker(QRunnable):
                 fn = np.zeros(model.n_classes)
                 n_pixels = np.zeros(model.n_classes)
 
-                progression = 0
                 file_processed = 0
                 for inp, ann in tqdm(zip(inp_images, annotations)):
                     pr = predict(model, inp)
+
                     gt = get_segmentation_array(ann, model.n_classes, model.output_width, model.output_height, no_reshape=True)
                     gt = gt.argmax(-1)
+
                     pr = pr.flatten()
                     gt = gt.flatten()
+
+                    matrix = confusion_matrix(gt, pr)
+                    self.signals.log.emit("Image {}".format(str(inp)))
+                    self.signals.log.emit("Matrice de confusion :\n{}\n".format(str(matrix)))
 
                     for cl_i in range(model.n_classes):
                         tp[cl_i] += np.sum((pr == cl_i) * (gt == cl_i))
@@ -483,11 +482,88 @@ class PredictWorker(QRunnable):
 
     @pyqtSlot()
     def run(self):
-        self.predict_multiple(**self.kwargs)
         try:
             self.predict_multiple(**self.kwargs)
         except Exception as e:
             self.signals.error.emit(str(e))
+
+    def predict(self, model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=None, out_prob_file=None):
+
+        if model is None and (checkpoints_path is not None):
+            model = model_from_checkpoint_path(checkpoints_path)
+
+        assert (inp is not None)
+        assert ((type(inp) is np.ndarray) or isinstance(inp, six.string_types)
+                ), "Inupt should be the CV image or the input file name"
+
+        if isinstance(inp, six.string_types):
+            inp = cv2.imread(inp)
+
+        assert len(inp.shape) == 3, "Image should be h,w,3 "
+        orininal_h = inp.shape[0]
+        orininal_w = inp.shape[1]
+
+        output_width = model.output_width
+        output_height = model.output_height
+        input_width = model.input_width
+        input_height = model.input_height
+        n_classes = model.n_classes
+
+        x = get_image_array(inp, input_width, input_height, ordering=IMAGE_ORDERING)
+        pr = model.predict(np.array([x]))[0]
+
+        print("PR shape", pr.shape)
+        print(pr)
+
+        # Creating probabilities file
+        if out_prob_file is not None:
+            out_prob_file += "_prob_{}x{}.csv".format(output_width, output_height)
+
+            with open(out_prob_file, 'w+') as file:
+                # Header
+                header = "x y "
+                for i in range(0, n_classes):
+                    header += "C{} ".format(str(i))
+                header += "class\n"
+                file.write(header)
+
+                # Pixel per pixel
+                x = 0
+                y = 0
+                for pixel in pr:
+                    line = "{} {}".format(x, y)
+                    for class_prob in pixel:
+                        line += " {}".format(str(class_prob))
+                    line += " {}".format(str(np.argmax(pixel))) + "\n"
+
+                    file.write(line)
+
+                    x += 1
+                    if x >= output_width:
+                        x = 0
+                        y += 1
+
+
+        pr = pr.reshape((output_height, output_width, n_classes)).argmax(axis=2)
+
+        seg_img = np.zeros((output_height, output_width, 3))
+
+        if clrs is None:
+            colors = class_colors
+        else:
+            colors = clrs
+
+        for c in range(n_classes):
+            seg_img[:, :, 0] += ((pr[:, :] == c) * (colors[c][0])).astype('uint8')
+            seg_img[:, :, 1] += ((pr[:, :] == c) * (colors[c][1])).astype('uint8')
+            seg_img[:, :, 2] += ((pr[:, :] == c) * (colors[c][2])).astype('uint8')
+
+        seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
+
+        if out_fname is not None:
+            cv2.imwrite(out_fname, seg_img)
+
+        return pr
 
     def predict_multiple(self, model=None, inps=None, inp_dir=None, out_dir=None,
                          checkpoints_path=None, colors=None, sup_dir=None):
@@ -525,7 +601,9 @@ class PredictWorker(QRunnable):
                         else:
                             out_fname = os.path.join(out_dir, str(i) + ".jpg")
 
-                    pr = predict(model, inp, out_fname, clrs=colors)
+                    out_prob = os.path.splitext(out_fname)[0]
+                    pr = self.predict(model, inp, out_fname, clrs=colors, out_prob_file=out_prob)
+
                     all_prs.append(pr)
 
                     file_processed += 1

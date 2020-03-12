@@ -1,7 +1,5 @@
 import sys
 
-from sklearn.metrics import confusion_matrix
-
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 from PyQt5.QtCore import qInstallMessageHandler, QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings
 
@@ -121,7 +119,7 @@ class MainWindow(QMainWindow):
         self.ui.model_combobox.addItems(model_names)
 
         # Error message handler
-        qInstallMessageHandler(errormsg)
+        #qInstallMessageHandler(errormsg)
 
         self.check_all_available()
         self.show()

@@ -62,6 +62,10 @@ def predict(model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=No
 
     x = get_image_array(inp, input_width, input_height, ordering=IMAGE_ORDERING)
     pr = model.predict(np.array([x]))[0]
+
+    print("PR")
+    print(pr)
+
     pr = pr.reshape((output_height,  output_width, n_classes)).argmax(axis=2)
 
     seg_img = np.zeros((output_height, output_width, 3))
