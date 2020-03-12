@@ -422,9 +422,11 @@ class EvalWorker(QRunnable):
                     assert (inp_images_dir is not None), "Please privide inp_images or inp_images_dir"
                     assert (annotations_dir is not None), "Please privide inp_images or inp_images_dir"
 
+                    print(inp_images_dir)
                     paths = get_pairs_from_paths(inp_images_dir, annotations_dir)
                     print(paths)
                     paths = list(zip(*paths))
+                    print(paths)
                     inp_images = list(paths[0])
                     annotations = list(paths[1])
 
@@ -506,7 +508,7 @@ class PredictWorker(QRunnable):
                 if inps is None and (inp_dir is not None):
                     inps = glob.glob(os.path.join(inp_dir, "*.jpg")) + glob.glob(
                         os.path.join(inp_dir, "*.png")) + \
-                           glob.glob(os.path.join(inp_dir, "*.jpeg"))
+                           glob.glob(os.path.join(inp_dir, "*.jpeg")) + glob.glob(os.path.join(inp_dir, "*.tif"))
 
                 assert type(inps) is list
                 all_prs = []
