@@ -10,3 +10,4 @@ keras==2.2.5
 pyqt5
 opencv-python
 imgaug
+sklearn

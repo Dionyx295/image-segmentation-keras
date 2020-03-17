@@ -1,9 +1,12 @@
+"""Application entrypoint"""
+
 import sys
 from PyQt5.QtWidgets import QApplication
 
 from skyeye_segmentation.controller.main_window import MainWindow
+
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    w = MainWindow()
-    w.show()
-    sys.exit(app.exec_())
+    APP = QApplication(sys.argv)
+    W = MainWindow()
+    W.show()
+    sys.exit(APP.exec_())

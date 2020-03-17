@@ -1,10 +1,12 @@
-from PyQt5.QtCore import (QtDebugMsg, QtInfoMsg, QtWarningMsg, QtCriticalMsg,
+"""Error handler, displays the associated dialog box."""
+
+from PyQt5.QtCore import (QtDebugMsg, QtWarningMsg, QtCriticalMsg,
                           QtFatalMsg, QtSystemMsg)
 from PyQt5.QtWidgets import QMessageBox
 
 
 #############################################################################
-def errormsg(typerr, contexte, msgerr):
+def errormsg(typerr, msgerr):
     """Permet d'afficher et/ou de neutraliser les messages d'erreur.
        Pour les messages critiques: affiche dans une fenêtre graphique.
        Mise en place par: QtCore.qInstallMessageHandler(messagederreur)
