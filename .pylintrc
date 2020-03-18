@@ -1,0 +1,7 @@
+[MASTER]
+ignore=view,keras_segmentation,log,test,venv
+
+[MESSAGES CONTROL]
+disable=E0611,W0703
+
+
