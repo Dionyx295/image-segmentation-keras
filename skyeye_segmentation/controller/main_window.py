@@ -387,7 +387,7 @@ class MainWindow(QMainWindow):
     @pyqtSlot()
     def on_existing_model_path_browse_button_click(self):
         """Existing model browser"""
-        file_name, _ = QFileDialog.getOpenfile_name(self, "Charger un modèle")
+        file_name, _ = QFileDialog.getOpenFileName(self, "Charger un modèle")
         if file_name:
             self.qt_ui.existing_model_path_field.setText(file_name)
             self.settings.setValue("existing_model_path_field", file_name)
@@ -407,7 +407,7 @@ class MainWindow(QMainWindow):
     @pyqtSlot()
     def on_predict_model_path_browse_button_click(self):
         """Existing model to predict browser"""
-        file_name, _ = QFileDialog.getOpenfile_name(self, "Charger un modèle")
+        file_name, _ = QFileDialog.getOpenFileName(self, "Charger un modèle")
         if file_name:
             self.qt_ui.predict_model_path_field.setText(file_name)
             self.settings.setValue("predict_model_path_field", file_name)

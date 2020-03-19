@@ -71,11 +71,12 @@ class MaskFusionWorker(QRunnable):
 
             # For each class
             for path, scale in zip(class_pathes, class_scales):
-                mask_array = io.imread(path + file)
+                path_file = os.path.join(path, file)
+                mask_array = io.imread(path_file)
                 # For each pixel
                 for coord_x in range(mask_array.shape[0]):  # Width
                     for coord_y in range(mask_array.shape[1]):  # Height
-                        if mask_array[coord_x, coord_y].all() is False:  # Black pixel
+                        if mask_array[coord_x, coord_y].all() == 0:  # Black pixel
                             new_mask_array[coord_x, coord_y] = scale
 
             new_image = os.path.join(save_to, file.split(".")[0] + ".png")
@@ -701,11 +702,16 @@ class PredictWorker(QRunnable):
                     if out_dir is None:
                         out_fname = None
                     else:
+                        """
                         if isinstance(inp, six.string_types):
                             out_fname = os.path.join(out_dir,
                                                      os.path.basename(inp))
                         else:
                             out_fname = os.path.join(out_dir, str(i) + ".jpg")
+                        """
+                        out_fname = os.path\
+                            .join(out_dir, os.path
+                                  .splitext(os.path.basename(inp))[0] + ".png")
 
                     out_prob = os.path.splitext(out_fname)[0]
                     pred = self.predict(model, inp, out_fname, clrs=colors,
@@ -732,7 +738,8 @@ class PredictWorker(QRunnable):
         files_processed = 0
         self.signals.log.emit("Création des {} superpositions..."
                               .format(str(files_nb)))
-        for filename in os.listdir(img_src):
+        files = os.listdir(img_src)
+        for filename in files:
             imgfile = os.path.join(img_src, filename)
             pngfile = os.path.join(seg_src, filename)
             img = cv2.imread(imgfile, 1)
