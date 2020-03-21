@@ -1,4 +1,4 @@
-# Outil de segmentation d'image en Deep Learning : SkyEye
+# Outil de segmentation d'image en Deep Learning : SkyEye :small_airplane::eye::earth_africa:
 
 Ce projet est un *fork* du projet *https://github.com/divamgupta/image-segmentation-keras : Implémentation de Segnet, FCN, UNet, PSPNet et d'autres modèles avec Keras.*
 
@@ -12,9 +12,9 @@ L'idée est d'utiliser l'implémentation des modèles et classes utilitaires du 
 
 Le projet a été développé avec une distribution Python 3.6.0 (64bit) sur windows, et nécessite les dépendances suivantes (à retrouver dans requirements.txt) :
 
-- tensorflow**==1.9.0**
-- keras**==2.2.5**
-- protobuf**==3.6.0**
+- tensorflow__==1.9.0__
+- keras__==2.2.5__
+- protobuf__==3.6.0__
 - six (1.14.0)
 - pillow (7.0.0)
 - matplotlib (3.1.3)
