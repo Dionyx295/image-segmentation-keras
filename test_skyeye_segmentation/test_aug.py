@@ -46,3 +46,4 @@ def test_aug():
         im = Image.open(os.path.join(se_dest, file), "r")
         assert im.size[0] == 256
         assert im.size[1] == 256
+

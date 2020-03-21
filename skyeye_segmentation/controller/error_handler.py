@@ -7,20 +7,14 @@ from PyQt5.QtWidgets import QMessageBox
 
 #############################################################################
 def errormsg(typerr, msgerr):
-    """Permet d'afficher et/ou de neutraliser les messages d'erreur.
-       Pour les messages critiques: affiche dans une fenêtre graphique.
-       Mise en place par: QtCore.qInstallMessageHandler(messagederreur)
+    """
+       Handles and shows error messages.
+       Set up by: QtCore.qInstallMessageHandler(errormessage)
     """
     if typerr == QtDebugMsg:
-        # exemple de désactivation d'un message
-        # if "QWindowsFileSystemWatcherEngine: unknown message" in msgerr:
-        #    return
         print("DEBUG:\n{}\n".format(msgerr))
 
     elif typerr == QtWarningMsg:
-        # exemple de désactivation d'un message
-        # if "QFont::setPixelSize: Pixel size <= 0 (0)" in msgerr:
-        #    return
         print("WARNING:\n{}\n".format(msgerr))
         QMessageBox.warning(None,
                             "Attention !",
@@ -32,5 +26,4 @@ def errormsg(typerr, msgerr):
                              "ERREUR CRITIQUE:",
                              "{}\n".format(msgerr))
     else:
-        # message retourné par QtCore.QtInfoMsg créé à partir de Qt 5.5
         print("INFO:\n{}\n".format(msgerr))

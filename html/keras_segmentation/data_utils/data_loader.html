@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>keras_segmentation.data_utils.data_loader API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>keras_segmentation.data_utils.data_loader</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import glob
+import itertools
+import os
+import random
+import six
+import numpy as np
+import cv2
+
+try:
+    from tqdm import tqdm
+except ImportError:
+    print(&#34;tqdm not found, disabling progress bars&#34;)
+    def tqdm(iter):
+        return iter
+
+
+from ..models.config import IMAGE_ORDERING
+from .augmentation import augment_seg
+
+DATA_LOADER_SEED = 0
+
+random.seed(DATA_LOADER_SEED)
+class_colors = [(random.randint(0, 255), random.randint(
+    0, 255), random.randint(0, 255)) for _ in range(5000)]
+
+
+class DataLoaderError(Exception):
+    pass
+
+def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False):
+    &#34;&#34;&#34; Find all the images from the images_path directory and
+        the segmentation images from the segs_path directory
+        while checking integrity of data &#34;&#34;&#34;
+
+    ACCEPTABLE_IMAGE_FORMATS = [&#34;.jpg&#34;, &#34;.jpeg&#34;, &#34;.png&#34; , &#34;.bmp&#34;, &#34;.tif&#34;]
+    ACCEPTABLE_SEGMENTATION_FORMATS = [&#34;.png&#34;, &#34;.bmp&#34;]
+
+    image_files = []
+    segmentation_files = {}
+
+    for dir_entry in os.listdir(images_path):
+        if os.path.isfile(os.path.join(images_path, dir_entry)) and \
+                os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
+            file_name, file_extension = os.path.splitext(dir_entry)
+            image_files.append((file_name, file_extension, os.path.join(images_path, dir_entry)))
+
+    for dir_entry in os.listdir(segs_path):
+        if os.path.isfile(os.path.join(segs_path, dir_entry)) and \
+                os.path.splitext(dir_entry)[1] in ACCEPTABLE_SEGMENTATION_FORMATS:
+            file_name, file_extension = os.path.splitext(dir_entry)
+            if file_name in segmentation_files:
+                raise DataLoaderError(&#34;Segmentation file with filename {0} already exists and is ambiguous to resolve with path {1}. Please remove or rename the latter.&#34;.format(file_name, os.path.join(segs_path, dir_entry)))
+            segmentation_files[file_name] = (file_extension, os.path.join(segs_path, dir_entry))
+
+    return_value = []
+    # Match the images and segmentations
+    for image_file, _, image_full_path in image_files:
+        if image_file in segmentation_files:
+            return_value.append((image_full_path, segmentation_files[image_file][1]))
+        elif ignore_non_matching:
+            continue
+        else:
+            # Error out
+            raise DataLoaderError(&#34;No corresponding segmentation found for image {0}.&#34;.format(image_full_path))
+
+    return return_value
+
+
+def get_image_array(image_input, width, height, imgNorm=&#34;sub_mean&#34;,
+                  ordering=&#39;channels_first&#39;):
+    &#34;&#34;&#34; Load image array from input &#34;&#34;&#34;
+
+    if type(image_input) is np.ndarray:
+        # It is already an array, use it as it is
+        img = image_input
+    elif  isinstance(image_input, six.string_types)  :
+        if not os.path.isfile(image_input):
+            raise DataLoaderError(&#34;get_image_array: path {0} doesn&#39;t exist&#34;.format(image_input))
+        img = cv2.imread(image_input, 1)
+    else:
+        raise DataLoaderError(&#34;get_image_array: Can&#39;t process input type {0}&#34;.format(str(type(image_input))))
+
+    if imgNorm == &#34;sub_and_divide&#34;:
+        img = np.float32(cv2.resize(img, (width, height))) / 127.5 - 1
+    elif imgNorm == &#34;sub_mean&#34;:
+        img = cv2.resize(img, (width, height))
+        img = img.astype(np.float32)
+        img[:, :, 0] -= 103.939
+        img[:, :, 1] -= 116.779
+        img[:, :, 2] -= 123.68
+        img = img[:, :, ::-1]
+    elif imgNorm == &#34;divide&#34;:
+        img = cv2.resize(img, (width, height))
+        img = img.astype(np.float32)
+        img = img/255.0
+
+    if ordering == &#39;channels_first&#39;:
+        img = np.rollaxis(img, 2, 0)
+    return img
+
+
+def get_segmentation_array(image_input, nClasses, width, height, no_reshape=False):
+    &#34;&#34;&#34; Load segmentation array from input &#34;&#34;&#34;
+
+    seg_labels = np.zeros((height, width, nClasses))
+
+    if type(image_input) is np.ndarray:
+        # It is already an array, use it as it is
+        img = image_input
+    elif isinstance(image_input, six.string_types) :
+        if not os.path.isfile(image_input):
+            raise DataLoaderError(&#34;get_segmentation_array: path {0} doesn&#39;t exist&#34;.format(image_input))
+        img = cv2.imread(image_input, 1)
+    else:
+        raise DataLoaderError(&#34;get_segmentation_array: Can&#39;t process input type {0}&#34;.format(str(type(image_input))))
+
+    img = cv2.resize(img, (width, height), interpolation=cv2.INTER_NEAREST)
+    img = img[:, :, 0]
+
+    for c in range(nClasses):
+        seg_labels[:, :, c] = (img == c).astype(int)
+
+    if not no_reshape:
+        seg_labels = np.reshape(seg_labels, (width*height, nClasses))
+
+    return seg_labels
+
+
+def verify_segmentation_dataset(images_path, segs_path, n_classes, show_all_errors=False):
+    try:
+        img_seg_pairs = get_pairs_from_paths(images_path, segs_path)
+        if not len(img_seg_pairs):
+            print(&#34;Couldn&#39;t load any data from images_path: {0} and segmentations path: {1}&#34;.format(images_path, segs_path))
+            return False
+
+        return_value = True
+        for im_fn, seg_fn in tqdm(img_seg_pairs):
+            img = cv2.imread(im_fn)
+            seg = cv2.imread(seg_fn)
+            # Check dimensions match
+            if not img.shape == seg.shape:
+                return_value = False
+                print(&#34;The size of image {0} and its segmentation {1} doesn&#39;t match (possibly the files are corrupt).&#34;.format(im_fn, seg_fn))
+                if not show_all_errors:
+                    break
+            else:
+                max_pixel_value = np.max(seg[:, :, 0])
+                if max_pixel_value &gt;= n_classes:
+                    return_value = False
+                    print(&#34;The pixel values of the segmentation image {0} violating range [0, {1}]. Found maximum pixel value {2}&#34;.format(seg_fn, str(n_classes - 1), max_pixel_value))
+                    if not show_all_errors:
+                        break
+        if return_value:
+            print(&#34;Dataset verified! &#34;)
+        else:
+            print(&#34;Dataset not verified!&#34;)
+        return return_value
+    except DataLoaderError as e:
+        print(&#34;Found error during data loading\n{0}&#34;.format(str(e)))
+        return False
+
+def image_segmentation_generator(images_path, segs_path, batch_size,
+                                 n_classes, input_height, input_width,
+                                 output_height, output_width,
+                                 do_augment=False):
+
+    img_seg_pairs = get_pairs_from_paths(images_path, segs_path)
+    random.shuffle(img_seg_pairs)
+    zipped = itertools.cycle(img_seg_pairs)
+
+    while True:
+        X = []
+        Y = []
+        for _ in range(batch_size):
+            im, seg = next(zipped)
+
+            im = cv2.imread(im, 1)
+            seg = cv2.imread(seg, 1)
+
+            if do_augment:
+                im, seg[:, :, 0] = augment_seg(im, seg[:, :, 0])
+
+            X.append(get_image_array(im, input_width,
+                                   input_height, ordering=IMAGE_ORDERING))
+            Y.append(get_segmentation_array(
+                seg, n_classes, output_width, output_height))
+
+        yield np.array(X), np.array(Y)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="keras_segmentation.data_utils.data_loader.get_image_array"><code class="name flex">
+<span>def <span class="ident">get_image_array</span></span>(<span>image_input, width, height, imgNorm='sub_mean', ordering='channels_first')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Load image array from input</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_image_array(image_input, width, height, imgNorm=&#34;sub_mean&#34;,
+                  ordering=&#39;channels_first&#39;):
+    &#34;&#34;&#34; Load image array from input &#34;&#34;&#34;
+
+    if type(image_input) is np.ndarray:
+        # It is already an array, use it as it is
+        img = image_input
+    elif  isinstance(image_input, six.string_types)  :
+        if not os.path.isfile(image_input):
+            raise DataLoaderError(&#34;get_image_array: path {0} doesn&#39;t exist&#34;.format(image_input))
+        img = cv2.imread(image_input, 1)
+    else:
+        raise DataLoaderError(&#34;get_image_array: Can&#39;t process input type {0}&#34;.format(str(type(image_input))))
+
+    if imgNorm == &#34;sub_and_divide&#34;:
+        img = np.float32(cv2.resize(img, (width, height))) / 127.5 - 1
+    elif imgNorm == &#34;sub_mean&#34;:
+        img = cv2.resize(img, (width, height))
+        img = img.astype(np.float32)
+        img[:, :, 0] -= 103.939
+        img[:, :, 1] -= 116.779
+        img[:, :, 2] -= 123.68
+        img = img[:, :, ::-1]
+    elif imgNorm == &#34;divide&#34;:
+        img = cv2.resize(img, (width, height))
+        img = img.astype(np.float32)
+        img = img/255.0
+
+    if ordering == &#39;channels_first&#39;:
+        img = np.rollaxis(img, 2, 0)
+    return img</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.data_utils.data_loader.get_pairs_from_paths"><code class="name flex">
+<span>def <span class="ident">get_pairs_from_paths</span></span>(<span>images_path, segs_path, ignore_non_matching=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Find all the images from the images_path directory and
+the segmentation images from the segs_path directory
+while checking integrity of data</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_pairs_from_paths(images_path, segs_path, ignore_non_matching=False):
+    &#34;&#34;&#34; Find all the images from the images_path directory and
+        the segmentation images from the segs_path directory
+        while checking integrity of data &#34;&#34;&#34;
+
+    ACCEPTABLE_IMAGE_FORMATS = [&#34;.jpg&#34;, &#34;.jpeg&#34;, &#34;.png&#34; , &#34;.bmp&#34;, &#34;.tif&#34;]
+    ACCEPTABLE_SEGMENTATION_FORMATS = [&#34;.png&#34;, &#34;.bmp&#34;]
+
+    image_files = []
+    segmentation_files = {}
+
+    for dir_entry in os.listdir(images_path):
+        if os.path.isfile(os.path.join(images_path, dir_entry)) and \
+                os.path.splitext(dir_entry)[1] in ACCEPTABLE_IMAGE_FORMATS:
+            file_name, file_extension = os.path.splitext(dir_entry)
+            image_files.append((file_name, file_extension, os.path.join(images_path, dir_entry)))
+
+    for dir_entry in os.listdir(segs_path):
+        if os.path.isfile(os.path.join(segs_path, dir_entry)) and \
+                os.path.splitext(dir_entry)[1] in ACCEPTABLE_SEGMENTATION_FORMATS:
+            file_name, file_extension = os.path.splitext(dir_entry)
+            if file_name in segmentation_files:
+                raise DataLoaderError(&#34;Segmentation file with filename {0} already exists and is ambiguous to resolve with path {1}. Please remove or rename the latter.&#34;.format(file_name, os.path.join(segs_path, dir_entry)))
+            segmentation_files[file_name] = (file_extension, os.path.join(segs_path, dir_entry))
+
+    return_value = []
+    # Match the images and segmentations
+    for image_file, _, image_full_path in image_files:
+        if image_file in segmentation_files:
+            return_value.append((image_full_path, segmentation_files[image_file][1]))
+        elif ignore_non_matching:
+            continue
+        else:
+            # Error out
+            raise DataLoaderError(&#34;No corresponding segmentation found for image {0}.&#34;.format(image_full_path))
+
+    return return_value</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.data_utils.data_loader.get_segmentation_array"><code class="name flex">
+<span>def <span class="ident">get_segmentation_array</span></span>(<span>image_input, nClasses, width, height, no_reshape=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Load segmentation array from input</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_segmentation_array(image_input, nClasses, width, height, no_reshape=False):
+    &#34;&#34;&#34; Load segmentation array from input &#34;&#34;&#34;
+
+    seg_labels = np.zeros((height, width, nClasses))
+
+    if type(image_input) is np.ndarray:
+        # It is already an array, use it as it is
+        img = image_input
+    elif isinstance(image_input, six.string_types) :
+        if not os.path.isfile(image_input):
+            raise DataLoaderError(&#34;get_segmentation_array: path {0} doesn&#39;t exist&#34;.format(image_input))
+        img = cv2.imread(image_input, 1)
+    else:
+        raise DataLoaderError(&#34;get_segmentation_array: Can&#39;t process input type {0}&#34;.format(str(type(image_input))))
+
+    img = cv2.resize(img, (width, height), interpolation=cv2.INTER_NEAREST)
+    img = img[:, :, 0]
+
+    for c in range(nClasses):
+        seg_labels[:, :, c] = (img == c).astype(int)
+
+    if not no_reshape:
+        seg_labels = np.reshape(seg_labels, (width*height, nClasses))
+
+    return seg_labels</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.data_utils.data_loader.image_segmentation_generator"><code class="name flex">
+<span>def <span class="ident">image_segmentation_generator</span></span>(<span>images_path, segs_path, batch_size, n_classes, input_height, input_width, output_height, output_width, do_augment=False)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def image_segmentation_generator(images_path, segs_path, batch_size,
+                                 n_classes, input_height, input_width,
+                                 output_height, output_width,
+                                 do_augment=False):
+
+    img_seg_pairs = get_pairs_from_paths(images_path, segs_path)
+    random.shuffle(img_seg_pairs)
+    zipped = itertools.cycle(img_seg_pairs)
+
+    while True:
+        X = []
+        Y = []
+        for _ in range(batch_size):
+            im, seg = next(zipped)
+
+            im = cv2.imread(im, 1)
+            seg = cv2.imread(seg, 1)
+
+            if do_augment:
+                im, seg[:, :, 0] = augment_seg(im, seg[:, :, 0])
+
+            X.append(get_image_array(im, input_width,
+                                   input_height, ordering=IMAGE_ORDERING))
+            Y.append(get_segmentation_array(
+                seg, n_classes, output_width, output_height))
+
+        yield np.array(X), np.array(Y)</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.data_utils.data_loader.verify_segmentation_dataset"><code class="name flex">
+<span>def <span class="ident">verify_segmentation_dataset</span></span>(<span>images_path, segs_path, n_classes, show_all_errors=False)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_segmentation_dataset(images_path, segs_path, n_classes, show_all_errors=False):
+    try:
+        img_seg_pairs = get_pairs_from_paths(images_path, segs_path)
+        if not len(img_seg_pairs):
+            print(&#34;Couldn&#39;t load any data from images_path: {0} and segmentations path: {1}&#34;.format(images_path, segs_path))
+            return False
+
+        return_value = True
+        for im_fn, seg_fn in tqdm(img_seg_pairs):
+            img = cv2.imread(im_fn)
+            seg = cv2.imread(seg_fn)
+            # Check dimensions match
+            if not img.shape == seg.shape:
+                return_value = False
+                print(&#34;The size of image {0} and its segmentation {1} doesn&#39;t match (possibly the files are corrupt).&#34;.format(im_fn, seg_fn))
+                if not show_all_errors:
+                    break
+            else:
+                max_pixel_value = np.max(seg[:, :, 0])
+                if max_pixel_value &gt;= n_classes:
+                    return_value = False
+                    print(&#34;The pixel values of the segmentation image {0} violating range [0, {1}]. Found maximum pixel value {2}&#34;.format(seg_fn, str(n_classes - 1), max_pixel_value))
+                    if not show_all_errors:
+                        break
+        if return_value:
+            print(&#34;Dataset verified! &#34;)
+        else:
+            print(&#34;Dataset not verified!&#34;)
+        return return_value
+    except DataLoaderError as e:
+        print(&#34;Found error during data loading\n{0}&#34;.format(str(e)))
+        return False</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="keras_segmentation.data_utils.data_loader.DataLoaderError"><code class="flex name class">
+<span>class <span class="ident">DataLoaderError</span></span>
+<span>(</span><span>...)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Common base class for all non-exit exceptions.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class DataLoaderError(Exception):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="keras_segmentation.data_utils" href="index.html">keras_segmentation.data_utils</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="keras_segmentation.data_utils.data_loader.get_image_array" href="#keras_segmentation.data_utils.data_loader.get_image_array">get_image_array</a></code></li>
+<li><code><a title="keras_segmentation.data_utils.data_loader.get_pairs_from_paths" href="#keras_segmentation.data_utils.data_loader.get_pairs_from_paths">get_pairs_from_paths</a></code></li>
+<li><code><a title="keras_segmentation.data_utils.data_loader.get_segmentation_array" href="#keras_segmentation.data_utils.data_loader.get_segmentation_array">get_segmentation_array</a></code></li>
+<li><code><a title="keras_segmentation.data_utils.data_loader.image_segmentation_generator" href="#keras_segmentation.data_utils.data_loader.image_segmentation_generator">image_segmentation_generator</a></code></li>
+<li><code><a title="keras_segmentation.data_utils.data_loader.verify_segmentation_dataset" href="#keras_segmentation.data_utils.data_loader.verify_segmentation_dataset">verify_segmentation_dataset</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="keras_segmentation.data_utils.data_loader.DataLoaderError" href="#keras_segmentation.data_utils.data_loader.DataLoaderError">DataLoaderError</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -10,7 +10,7 @@ from PyQt5.QtCore import QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings, \
     pyqtSlot
 
 from keras_segmentation.models.all_models import model_from_name
-from skyeye_segmentation.controller.errormsg import errormsg
+from skyeye_segmentation.controller.error_handler import errormsg
 from skyeye_segmentation.view import main_window
 from skyeye_segmentation.controller.skyeye_func import MaskFusionWorker, \
     ImageAugmentationWorker, TrainWorker, EvalWorker, PredictWorker

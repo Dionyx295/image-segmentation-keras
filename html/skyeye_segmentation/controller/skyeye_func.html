@@ -1,0 +1,2500 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>skyeye_segmentation.controller.skyeye_func API documentation</title>
+<meta name="description" content="Module containing all functionality workers." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>skyeye_segmentation.controller.skyeye_func</code></h1>
+</header>
+<section id="section-intro">
+<p>Module containing all functionality workers.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;Module containing all functionality workers.&#34;&#34;&#34;
+
+import glob
+import os
+import random
+import json
+
+import cv2
+import numpy as np
+import six
+import skimage.io as io
+import skimage.transform as trans
+import tensorflow as tf
+from matplotlib import pyplot
+from skimage import img_as_ubyte
+from PIL import Image
+from PyQt5.QtCore import QRunnable, pyqtSlot
+from keras.preprocessing.image import ImageDataGenerator
+from tqdm import tqdm
+from sklearn.metrics import confusion_matrix
+
+from keras_segmentation.data_utils.data_loader import \
+    verify_segmentation_dataset, image_segmentation_generator, \
+    get_image_array, class_colors
+from keras_segmentation.models.all_models import model_from_name
+from keras_segmentation.models.config import IMAGE_ORDERING
+from keras_segmentation.predict import model_from_checkpoint_path, \
+    get_pairs_from_paths, get_segmentation_array, predict
+from skyeye_segmentation.controller.worker_signals import WorkerSignals
+
+
+class MaskFusionWorker(QRunnable):
+    &#34;&#34;&#34;
+        Worker wrapper for the mask fusion func
+    &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(MaskFusionWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.mask_fusion(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def mask_fusion(self, class_pathes=&#34;&#34;, class_scales=&#34;&#34;, size=(400, 400),
+                    save_to=&#34;&#34;):
+        &#34;&#34;&#34;Fusion of binary masks into a colored unique one&#34;&#34;&#34;
+
+        nb_files = len(os.listdir(class_pathes[0]))
+        file_processed = 0
+
+        for file in os.listdir(class_pathes[0]):
+            print(class_pathes[0] + file)
+            ext = file.split(&#34;.&#34;)[len(file.split(&#34;.&#34;)) - 1]
+            ext = ext.lower()
+            if ext not in (&#39;tif&#39;, &#39;png&#39;, &#39;jpg&#39;, &#39;jpeg&#39;):
+                continue
+
+            mask_array = io.imread(class_pathes[0] + file)
+            new_mask = Image.new(mode=&#39;L&#39;, size=(mask_array.shape[0],
+                                                 mask_array.shape[1]),
+                                 color=&#34;black&#34;)
+            new_mask_array = np.array(np.transpose(new_mask))
+
+            # For each class
+            for path, scale in zip(class_pathes, class_scales):
+                path_file = os.path.join(path, file)
+                mask_array = io.imread(path_file)
+                # For each pixel
+                for coord_x in range(mask_array.shape[0]):  # Width
+                    for coord_y in range(mask_array.shape[1]):  # Height
+                        if mask_array[coord_x, coord_y].all() == 0:  # Black pixel
+                            new_mask_array[coord_x, coord_y] = scale
+
+            new_image = os.path.join(save_to, file.split(&#34;.&#34;)[0] + &#34;.png&#34;)
+            new_mask_array = trans.resize(new_mask_array, size,
+                                          anti_aliasing=False)
+            io.imsave(new_image, img_as_ubyte(new_mask_array))
+            file_processed += 1
+            progression = int(file_processed * 100 / nb_files)
+            self.signals.progressed.emit(progression)
+
+        self.signals.finished.emit(&#34;Création des masques terminée !&#34;)
+
+
+class ImageAugmentationWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the image augmentation func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(ImageAugmentationWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.augment_data(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def augment_data(self, nb_img=1, img_src=&#34;&#34;, seg_src=&#34;&#34;, img_dest=&#34;&#34;,
+                     seg_dest=&#34;&#34;, size=(10, 10),
+                     rotation=90, width=0.25, height=0.25, shear=10, zoom=0.1,
+                     fill=&#39;reflect&#39;):
+        &#34;&#34;&#34;Data augmentation of imgs and segs using keras ImageDataGenerator&#34;&#34;&#34;
+
+        image_gen = ImageDataGenerator(rotation_range=rotation,
+                                       width_shift_range=width,
+                                       height_shift_range=height,
+                                       shear_range=shear,
+                                       zoom_range=zoom,
+                                       horizontal_flip=True,
+                                       vertical_flip=True,
+                                       fill_mode=fill,
+                                       dtype=&#34;uint8&#34;)
+
+        rand_seed = random.randint(1, 9999999)
+
+        classes_path = os.path.basename(img_src)
+        classes_dir = os.path.dirname(img_src)
+        img_generator = image_gen.flow_from_directory(classes_dir,
+                                                      size,
+                                                      &#39;rgb&#39;,
+                                                      classes=[classes_path],
+                                                      class_mode=&#39;categorical&#39;,
+                                                      batch_size=1,
+                                                      shuffle=False,
+                                                      seed=rand_seed,
+                                                      save_to_dir=None,
+                                                      save_prefix=&#39;&#39;,
+                                                      save_format=&#39;png&#39;,
+                                                      follow_links=False,
+                                                      subset=None,
+                                                      interpolation=&#39;nearest&#39;)
+        classes_path = os.path.basename(seg_src)
+        classes_dir = os.path.dirname(seg_src)
+        mask_generator = image_gen.flow_from_directory(classes_dir,
+                                                       size,
+                                                       &#39;rgb&#39;,
+                                                       classes=[classes_path],
+                                                       class_mode=&#39;categorical&#39;,
+                                                       batch_size=1,
+                                                       shuffle=False,
+                                                       seed=rand_seed,
+                                                       save_to_dir=None,
+                                                       save_prefix=&#39;&#39;,
+                                                       save_format=&#39;png&#39;,
+                                                       follow_links=False,
+                                                       subset=None,
+                                                       interpolation=&#39;nearest&#39;)
+
+        file_processed = 0
+
+        # Manual saving for uint8 conversion
+        # Img
+        for i in range(1, nb_img + 1):
+            img = img_generator.next()
+            image = img[0][0].astype(&#39;uint8&#39;)
+            pyplot.imsave(img_dest + &#34;/&#34; + str(i) + &#34;.png&#34;, image)
+            file_processed += 1
+            progression = (100 * file_processed) / (2 * nb_img)
+            self.signals.progressed.emit(progression)
+
+        # Masks
+        for i in range(1, nb_img + 1):
+            img = mask_generator.next()
+            image = img[0][0].astype(&#39;uint8&#39;)
+            pyplot.imsave(seg_dest + &#34;/&#34; + str(i) + &#34;.png&#34;, image)
+            file_processed += 1
+            progression = (100 * file_processed) / (2 * nb_img)
+            self.signals.progressed.emit(progression)
+
+        self.signals.finished.emit(&#34;Augmentation terminée !&#34;)
+
+
+def find_latest_checkpoint(checkpoints_path, fail_safe=True):
+    &#34;&#34;&#34;Loads the weights from the latest model in the specified folder.&#34;&#34;&#34;
+
+    def get_epoch_number_from_path(path):
+        return path.replace(checkpoints_path, &#34;&#34;).strip(&#34;.&#34;)
+
+    # Get all matching files
+    all_checkpoint_files = glob.glob(checkpoints_path + &#34;.*&#34;)
+    # Filter out entries where the epoc_number part is pure number
+    all_checkpoint_files = list(filter(lambda f:
+                                       get_epoch_number_from_path(f)
+                                       .isdigit()
+                                       , all_checkpoint_files))
+    if not all_checkpoint_files:
+        # The glob list is empty, don&#39;t have a checkpoints_path
+        if not fail_safe:
+            raise ValueError(&#34;Checkpoint path {0} invalid&#34;
+                             .format(checkpoints_path))
+        return None
+
+    # Find the checkpoint file with the maximum epoch
+    lt_checkpoint = max(all_checkpoint_files,
+                        key=lambda f: int(get_epoch_number_from_path(f)))
+    return lt_checkpoint
+
+
+class TrainWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the train func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(TrainWorker, self).__init__()
+
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+        with self.graph.as_default():
+            with self.session.as_default():
+                self.signals.log.emit(&#34;Début de la session d&#39;entrainement&#34;)
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.train(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def train(self, existing=&#34;&#34;, new=&#34;&#34;, width=0, height=0, img_src=&#34;&#34;,
+              seg_src=&#34;&#34;, batch=0, steps=0, epochs=0,
+              checkpoint=&#34;&#34;, nb_class=0, validate=False, val_images=None,
+              val_annotations=None, val_batch_size=1,
+              auto_resume_checkpoint=False, load_weights=None,
+              verify_dataset=True, optimizer_name=&#39;adadelta&#39;,
+              do_augment=False):
+        &#34;&#34;&#34;Launches the training process with the train config&#34;&#34;&#34;
+
+        with self.graph.as_default():
+            with self.session.as_default():
+
+                # Getting model
+                if existing:
+                    try:
+                        checkpoint_nb = existing.split(&#39;.&#39;)[-1]
+                        index = -(int)(len(checkpoint_nb) + 1)
+                        existing = existing[0:index]
+                        model = model_from_checkpoint_path_nb(existing,
+                                                              checkpoint_nb)
+                        self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                              .format(existing))
+                    except Exception as exc:
+                        self.signals.error.emit(&#34;Impossible de charger le &#34;
+                                                &#34;modèle existant !\n&#34; + str(exc))
+                        return
+                else:
+                    try:
+                        vgg = new.find(&#34;vgg&#34;)
+                        resnet50 = new.find(&#34;resnet50&#34;)
+                        mobilenet = new.find(&#34;mobilenet&#34;)
+                        pspnet = new.find(&#34;pspnet&#34;)
+                        pspnet_50 = new.find(&#34;pspnet_50&#34;)
+                        pspnet_101 = new.find(&#34;pspnet_101&#34;)
+
+                        # Specifics models constraints
+                        if vgg != -1 or resnet50 != -1:
+                            if height % 32 != 0 or width % 32 != 0:
+                                self.signals.error.emit(&#34;Pour un modèle &#34;
+                                                        &#34;vgg/resnet50/pspnet, &#34;
+                                                        &#34;les dimensions &#34;
+                                                        &#34;d&#39;entrée doivent être &#34;
+                                                        &#34;des multiples de 32.&#34;)
+                                return
+                        if mobilenet != -1:
+                            if height != 224 or width != 224:
+                                self.signals.error.emit(
+                                    &#34;Pour un modèle mobilenet, les dimensions &#34;
+                                    &#34;d&#39;entrée doivent être (224,224).&#34;)
+                                return
+                        if pspnet != -1:
+                            if pspnet_50 != -1 or pspnet_101 != -1:
+                                if not (height == 473 and width == 473) \
+                                        and not (height == 713
+                                                 and width == 713):
+                                    self.signals.error.emit(
+                                        &#34;Pour un modèle pspnet_50 ou &#34;
+                                        &#34;pspnet_101, les dimensions d&#39;entrée &#34;
+                                        &#34;doivent être &#34;
+                                        &#34;(473,473) ou (713,713).&#34;)
+                                    return
+                            else:
+                                if height % 192 != 0 or width % 192 != 0:
+                                    self.signals.error.emit(&#34;Pour un modèle &#34;
+                                                            &#34;pspnet, les &#34;
+                                                            &#34;dimensions &#34;
+                                                            &#34;d&#39;entrée doivent &#34;
+                                                            &#34;être des multiples&#34;
+                                                            &#34; de 192.&#34;)
+                                    return
+
+                        model = model_from_name[new](nb_class,
+                                                     input_height=height,
+                                                     input_width=width)
+                    except Exception as exc:
+                        self.signals.error.emit(&#34;Impossible de créer un nouveau&#34;
+                                                &#34; modèle {} !\n{}&#34;.format(new,
+                                                                          exc))
+                        return
+
+                output_width = model.output_width
+                output_height = model.output_height
+
+                # Model compilation
+                if optimizer_name is not None:
+                    # weights = [0.1, 10, 20]
+                    # loss_func = weighted_categorical_crossentropy(weights)
+                    # print(&#34;Weighted loss : &#34; + str(weights))
+                    loss_func = &#34;categorical_crossentropy&#34;
+                    model.compile(loss=loss_func,
+                                  optimizer=optimizer_name,
+                                  metrics=[&#39;accuracy&#39;])
+
+                if checkpoint is not None:
+                    with open(checkpoint + &#34;_config.json&#34;, &#34;w&#34;) as file:
+                        json.dump({
+                            &#34;model_class&#34;: model.model_name,
+                            &#34;n_classes&#34;: nb_class,
+                            &#34;input_height&#34;: height,
+                            &#34;input_width&#34;: width,
+                            &#34;output_height&#34;: height,
+                            &#34;output_width&#34;: width
+                        }, file)
+
+                if load_weights is not None and len(load_weights) &gt; 0:
+                    print(&#34;Loading weights from &#34;, load_weights)
+                    model.load_weights(load_weights)
+
+                if auto_resume_checkpoint and (checkpoint is not None):
+                    latest_checkpoint = find_latest_checkpoint(checkpoint)
+                    if latest_checkpoint is not None:
+                        print(&#34;Loading the weights from latest checkpoint &#34;,
+                              latest_checkpoint)
+                        model.load_weights(latest_checkpoint)
+
+                if verify_dataset:
+                    print(&#34;Verifying training dataset&#34;)
+                    self.signals.log.emit(&#34;Vérification du jeu d&#39;entrainement&#34;)
+                    verified = verify_segmentation_dataset(img_src, seg_src,
+                                                           nb_class)
+                    assert verified
+                    self.signals.log.emit(&#34;Jeu d&#39;entrainement vérifié !&#34;)
+                    self.signals.log.emit(&#34;&#34;)
+                    if validate:
+                        print(&#34;Verifying validation dataset&#34;)
+                        verified = verify_segmentation_dataset(val_images,
+                                                               val_annotations,
+                                                               nb_class)
+                        assert verified
+
+                train_gen = image_segmentation_generator(
+                    img_src, seg_src, batch, nb_class,
+                    height, width, output_height, output_width,
+                    do_augment=do_augment)
+
+                if validate:
+                    val_gen = image_segmentation_generator(
+                        val_images, val_annotations, val_batch_size,
+                        nb_class, height, width, output_height, output_width)
+
+                if not validate:
+                    for epoch in range(epochs):
+                        print(&#34;Starting Epoch &#34;, epoch)
+                        self.signals.log.emit(&#34;Début de l&#39;époque {}&#34;.format(epoch))
+                        history = model.fit_generator(train_gen, steps,
+                                                      epochs=1)
+                        msg = &#34;&#34;
+                        for key, value in history.history.items():
+                            msg += &#34;{}:{}  &#34;.format(str(key), str(value))
+                        self.signals.log.emit(msg)
+
+                        if checkpoint is not None:
+                            model.save_weights(checkpoint + &#34;.&#34; + str(epoch))
+                            print(&#34;saved &#34;, checkpoint + &#34;.model.&#34; + str(epoch))
+                            self.signals.log.emit(&#34;Modèle sauvegardé : &#34;
+                                                  &#34;{}.model.{}&#34;
+                                                  .format(checkpoint, str(epoch)))
+                        print(&#34;Finished Epoch&#34;, epoch)
+                        self.signals.log.emit(&#34;époque {} terminée&#34;.format(epoch))
+                        self.signals.log.emit(&#34;&#34;)
+                        progression = 100 * (epoch + 1) / epochs
+                        self.signals.progressed.emit(progression)
+                else:
+                    for epoch in range(epochs):
+                        print(&#34;Starting Epoch &#34;, epoch)
+                        self.signals.log.emit(&#34;Début de l&#39;époque {}&#34;.format(epoch))
+                        history = model.fit_generator(train_gen, steps,
+                                                      validation_data=val_gen,
+                                                      validation_steps=200,
+                                                      epochs=1)
+
+                        msg = &#34;&#34;
+                        for key, value in history.history.items():
+                            msg += &#34;{}:{}  &#34;.format(str(key), str(value))
+                        self.signals.log.emit(msg)
+
+                        if checkpoint is not None:
+                            model.save_weights(checkpoint + &#34;.&#34; + str(epoch))
+                            print(&#34;saved &#34;, checkpoint + &#34;.model.&#34; + str(epoch))
+                            self.signals.log.emit(&#34;Modèle sauvegardé : &#34;
+                                                  &#34;{}.model.{}&#34;
+                                                  .format(checkpoint, str(epoch)))
+                        print(&#34;Finished Epoch&#34;, epoch)
+                        self.signals.log.emit(&#34;époque {} terminée\n&#34;.format(epoch))
+                        self.signals.log.emit(&#34;&#34;)
+                        progression = 100 * (epoch + 1) / epochs
+                        self.signals.progressed.emit(progression)
+
+                self.signals.finished.emit(&#34;Entrainement terminé !&#34;)
+
+
+class EvalWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the evaluate func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(EvalWorker, self).__init__()
+
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.evaluate(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def evaluate(self, model=None, inp_images=None, annotations=None,
+                 inp_images_dir=None, annotations_dir=None,
+                 checkpoints_path=None):
+        &#34;&#34;&#34;Evaluate the loaded model for an imgs set and segs&#34;&#34;&#34;
+
+        with self.graph.as_default():
+            with self.session.as_default():
+                self.signals.log.emit(&#34;Début de la session d&#39;évaluation&#34;)
+                if model is None:
+                    assert (checkpoints_path is not None), &#34;Please &#34; \
+                                                           &#34;provide the model&#34; \
+                                                           &#34; or the &#34; \
+                                                           &#34;checkpoints_path&#34;
+                    try:
+                        checkpoint_nb = checkpoints_path.split(&#39;.&#39;)[-1]
+                        index = -(int)(len(checkpoint_nb) + 1)
+                        existing = checkpoints_path[0:index]
+                        model = model_from_checkpoint_path_nb(existing,
+                                                              checkpoint_nb)
+                        self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                              .format(checkpoints_path))
+                    except Exception as exc:
+                        self.signals.finished.emit(&#34;Impossible de charger le &#34;
+                                                   &#34;modèle existant !&#34; + str(exc))
+                        return
+
+                if inp_images is None:
+                    assert (inp_images_dir is not None), &#34;Please privide &#34; \
+                                                         &#34;inp_images or &#34; \
+                                                         &#34;inp_images_dir&#34;
+                    assert (annotations_dir is not None), &#34;Please privide &#34; \
+                                                          &#34;inp_images or &#34; \
+                                                          &#34;inp_images_dir&#34;
+
+                    paths = get_pairs_from_paths(inp_images_dir,
+                                                 annotations_dir)
+                    paths = list(zip(*paths))
+                    inp_images = list(paths[0])
+                    annotations = list(paths[1])
+
+                assert isinstance(inp_images, list)
+                assert isinstance(annotations, list)
+
+                tpm = np.zeros(model.n_classes)
+                fpm = np.zeros(model.n_classes)
+                fnm = np.zeros(model.n_classes)
+                n_pixels = np.zeros(model.n_classes)
+
+                file_processed = 0
+                for inp, ann in tqdm(zip(inp_images, annotations)):
+                    pred = predict(model, inp)
+
+                    ground = get_segmentation_array(ann, model.n_classes,
+                                                    model.output_width,
+                                                    model.output_height,
+                                                    no_reshape=True)
+                    ground = ground.argmax(-1)
+
+                    pred = pred.flatten()
+                    ground = ground.flatten()
+
+                    matrix = confusion_matrix(ground, pred)
+                    self.signals.log.emit(&#34;Image {}&#34;.format(str(inp)))
+                    self.signals.log.emit(&#34;Matrice de confusion :\n{}\n&#34;
+                                          .format(str(matrix)))
+
+                    for cl_i in range(model.n_classes):
+                        tpm[cl_i] += np.sum((pred == cl_i) * (ground == cl_i))
+                        fpm[cl_i] += np.sum((pred == cl_i) * (ground != cl_i))
+                        fnm[cl_i] += np.sum((pred != cl_i) * (ground == cl_i))
+                        n_pixels[cl_i] += np.sum(ground == cl_i)
+
+                    file_processed += 1
+                    progression = 100 * file_processed / len(inp_images)
+                    self.signals.progressed.emit(progression)
+
+                cl_wise_score = tpm / (tpm + fpm + fnm + 0.000000000001)
+                n_pixels_norm = n_pixels / np.sum(n_pixels)
+                frequency_weighted_iu = np.sum(cl_wise_score * n_pixels_norm)
+                mean_iu = np.mean(cl_wise_score)
+                self.signals.log.emit(&#34;frequency_weighted_IU {}&#34;
+                                      .format(str(frequency_weighted_iu)))
+                self.signals.log.emit(&#34;mean_IU {}&#34;.format(str(mean_iu)))
+                self.signals.log.emit(&#34;class_wise_IU {}&#34;
+                                      .format(str(cl_wise_score)))
+                self.signals.log.emit(&#34;&#34;)
+                self.signals.finished.emit(&#34;Evaluation terminée !&#34;)
+
+
+def create_pascal_label_colormap():
+    &#34;&#34;&#34;Creates the colormap for the superposition&#34;&#34;&#34;
+
+    colormap = np.zeros((256, 3), dtype=int)
+    ind = np.arange(256, dtype=int)
+
+    for shift in reversed(range(8)):
+        for channel in range(3):
+            colormap[:, channel] |= ((ind &gt;&gt; channel) &amp; 1) &lt;&lt; shift
+        ind &gt;&gt;= 3
+
+    return colormap
+
+
+def label_to_color_image(label):
+    &#34;&#34;&#34;Convert segs to colors&#34;&#34;&#34;
+    if label.ndim != 2:
+        raise ValueError(&#39;Expect 2-D input label&#39;)
+    colormap = create_pascal_label_colormap()
+    if np.max(label) &gt; len(colormap):
+        raise ValueError(&#39;label value too large.&#39;)
+
+    return colormap[label]
+
+
+class PredictWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the predict func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(PredictWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.predict_multiple(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def predict(self, model=None, inp=None, out_fname=None,
+                checkpoints_path=None, clrs=None, out_prob_file=None):
+        &#34;&#34;&#34;Make prediction from an img and loaded model&#34;&#34;&#34;
+
+        if model is None and (checkpoints_path is not None):
+            model = model_from_checkpoint_path(checkpoints_path)
+
+        assert inp is not None
+        assert isinstance(inp, (np.ndarray, six.string_types)), \
+            &#34;Inupt should be the CV image or the input file name&#34;
+
+        if isinstance(inp, six.string_types):
+            inp = cv2.imread(inp)
+
+        assert len(inp.shape) == 3, &#34;Image should be h,w,3 &#34;
+        orininal_h = inp.shape[0]
+        orininal_w = inp.shape[1]
+
+        output_width = model.output_width
+        output_height = model.output_height
+        input_width = model.input_width
+        input_height = model.input_height
+        n_classes = model.n_classes
+
+        img_ar = get_image_array(inp, input_width, input_height,
+                                 ordering=IMAGE_ORDERING)
+        pred = model.predict(np.array([img_ar]))[0]
+
+        # Creating probabilities file
+        if out_prob_file is not None:
+            out_prob_file += &#34;_prob_{}x{}.csv&#34;.format(output_width,
+                                                      output_height)
+
+            with open(out_prob_file, &#39;w+&#39;) as file:
+                # Header
+                header = &#34;x y &#34;
+                for i in range(0, n_classes):
+                    header += &#34;C{} &#34;.format(str(i))
+                header += &#34;class\n&#34;
+                file.write(header)
+
+                # Pixel per pixel
+                coord_x = 0
+                coord_y = 0
+                for pixel in pred:
+                    line = &#34;{} {}&#34;.format(coord_x, coord_y)
+                    for class_prob in pixel:
+                        line += &#34; {}&#34;.format(str(class_prob))
+                    line += &#34; {}&#34;.format(str(np.argmax(pixel))) + &#34;\n&#34;
+
+                    file.write(line)
+
+                    coord_x += 1
+                    if coord_x &gt;= output_width:
+                        coord_x = 0
+                        coord_y += 1
+
+        pred = pred.reshape((output_height, output_width, n_classes)).argmax(axis=2)
+
+        seg_img = np.zeros((output_height, output_width, 3))
+
+        if clrs is None:
+            colors = class_colors
+        else:
+            colors = clrs
+
+        for color in range(n_classes):
+            seg_img[:, :, 0] += ((pred[:, :] == color) * (colors[color][0])) \
+                .astype(&#39;uint8&#39;)
+            seg_img[:, :, 1] += ((pred[:, :] == color) * (colors[color][1])) \
+                .astype(&#39;uint8&#39;)
+            seg_img[:, :, 2] += ((pred[:, :] == color) * (colors[color][2])) \
+                .astype(&#39;uint8&#39;)
+
+        seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
+
+        if out_fname is not None:
+            cv2.imwrite(out_fname, seg_img)
+
+        return pred
+
+    def predict_multiple(self, model=None, inps=None, inp_dir=None,
+                         out_dir=None, checkpoints_path=None, colors=None,
+                         sup_dir=None):
+        &#34;&#34;&#34;Make multiple predictions from an img set&#34;&#34;&#34;
+
+        with self.graph.as_default():
+            with self.session.as_default():
+                if model is None and (checkpoints_path is not None):
+                    try:
+                        checkpoint_nb = checkpoints_path.split(&#39;.&#39;)[-1]
+                        index = -(int)(len(checkpoint_nb) + 1)
+                        existing = checkpoints_path[0:index]
+                        model = model_from_checkpoint_path_nb(existing,
+                                                              checkpoint_nb)
+                        self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                              .format(checkpoints_path))
+                    except Exception as exc:
+                        self.signals.finished.emit(&#34;Impossible de charger le&#34;
+                                                   &#34; modèle existant !\n&#34;
+                                                   + str(exc))
+                        return None
+
+                if inps is None and (inp_dir is not None):
+                    inps = glob.glob(os.path.join(inp_dir, &#34;*.jpg&#34;)) + \
+                           glob.glob(os.path.join(inp_dir, &#34;*.png&#34;)) + \
+                           glob.glob(os.path.join(inp_dir, &#34;*.jpeg&#34;)) + \
+                           glob.glob(os.path.join(inp_dir, &#34;*.tif&#34;))
+
+                assert isinstance(inps, list)
+                all_prs = []
+
+                files_nb = len(inps)
+                file_processed = 0
+                self.signals.log.emit(&#34;Prédiction de {} images...&#34;
+                                      .format(str(files_nb)))
+                for i, inp in enumerate(tqdm(inps)):
+                    if out_dir is None:
+                        out_fname = None
+                    else:
+                        &#34;&#34;&#34;
+                        if isinstance(inp, six.string_types):
+                            out_fname = os.path.join(out_dir,
+                                                     os.path.basename(inp))
+                        else:
+                            out_fname = os.path.join(out_dir, str(i) + &#34;.jpg&#34;)
+                        &#34;&#34;&#34;
+                        out_fname = os.path\
+                            .join(out_dir, os.path
+                                  .splitext(os.path.basename(inp))[0] + &#34;.png&#34;)
+
+                    out_prob = os.path.splitext(out_fname)[0]
+                    pred = self.predict(model, inp, out_fname, clrs=colors,
+                                        out_prob_file=out_prob)
+
+                    all_prs.append(pred)
+
+                    file_processed += 1
+                    progression = 100 * file_processed / (files_nb * 2)
+                    self.signals.progressed.emit(progression)
+                    self.signals.log.emit(&#34;{}&#34;.format(out_fname))
+
+                self.create_superpositions(img_src=inp_dir, seg_src=out_dir,
+                                           save_dir=sup_dir)
+
+                self.signals.log.emit(&#34;&#34;)
+                self.signals.finished.emit(&#34;Prédictions terminées !&#34;)
+                return all_prs
+
+    def create_superpositions(self, img_src, seg_src, save_dir):
+        &#34;&#34;&#34;Creates the superpositions images&#34;&#34;&#34;
+
+        files_nb = len(os.listdir(seg_src))
+        files_processed = 0
+        self.signals.log.emit(&#34;Création des {} superpositions...&#34;
+                              .format(str(files_nb)))
+        files = os.listdir(img_src)
+        for filename in files:
+            imgfile = os.path.join(img_src, filename)
+            pngfile = os.path.join(seg_src, filename)
+            img = cv2.imread(imgfile, 1)
+            img = img[:, :, ::-1]
+            seg_map = cv2.imread(pngfile, 0)
+            seg_image = label_to_color_image(seg_map).astype(np.uint8)
+            saved_img = os.path.join(save_dir, os.path.splitext(filename)[0] +
+                                     &#34;-sup.png&#34;)
+            pyplot.figure()
+            pyplot.imshow(seg_image)
+            pyplot.imshow(img, alpha=0.5)
+            pyplot.axis(&#39;off&#39;)
+            pyplot.savefig(saved_img)
+            self.signals.log.emit(saved_img)
+            progression = 50 + 100 * files_processed / (files_nb * 2)
+            self.signals.progressed.emit(progression)
+
+
+def model_from_checkpoint_path_nb(checkpoints_path, checkpoint_nb):
+    &#34;&#34;&#34;Loads the weights from the n° model in the specified folder.&#34;&#34;&#34;
+
+    assert (os.path.isfile(checkpoints_path + &#34;_config.json&#34;)
+            ), &#34;Checkpoint not found.&#34;
+    model_config = json.loads(
+        open(checkpoints_path + &#34;_config.json&#34;, &#34;r&#34;).read())
+    weights = checkpoints_path + &#34;.&#34; + str(checkpoint_nb)
+    assert (os.path.isfile(weights)
+            ), &#34;Weights file not found.&#34;
+    model = model_from_name[model_config[&#39;model_class&#39;]](
+        model_config[&#39;n_classes&#39;], input_height=model_config[&#39;input_height&#39;],
+        input_width=model_config[&#39;input_width&#39;])
+    print(&#34;loaded weights &#34;, weights)
+    model.load_weights(weights)
+    return model</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="skyeye_segmentation.controller.skyeye_func.create_pascal_label_colormap"><code class="name flex">
+<span>def <span class="ident">create_pascal_label_colormap</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates the colormap for the superposition</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_pascal_label_colormap():
+    &#34;&#34;&#34;Creates the colormap for the superposition&#34;&#34;&#34;
+
+    colormap = np.zeros((256, 3), dtype=int)
+    ind = np.arange(256, dtype=int)
+
+    for shift in reversed(range(8)):
+        for channel in range(3):
+            colormap[:, channel] |= ((ind &gt;&gt; channel) &amp; 1) &lt;&lt; shift
+        ind &gt;&gt;= 3
+
+    return colormap</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.find_latest_checkpoint"><code class="name flex">
+<span>def <span class="ident">find_latest_checkpoint</span></span>(<span>checkpoints_path, fail_safe=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Loads the weights from the latest model in the specified folder.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find_latest_checkpoint(checkpoints_path, fail_safe=True):
+    &#34;&#34;&#34;Loads the weights from the latest model in the specified folder.&#34;&#34;&#34;
+
+    def get_epoch_number_from_path(path):
+        return path.replace(checkpoints_path, &#34;&#34;).strip(&#34;.&#34;)
+
+    # Get all matching files
+    all_checkpoint_files = glob.glob(checkpoints_path + &#34;.*&#34;)
+    # Filter out entries where the epoc_number part is pure number
+    all_checkpoint_files = list(filter(lambda f:
+                                       get_epoch_number_from_path(f)
+                                       .isdigit()
+                                       , all_checkpoint_files))
+    if not all_checkpoint_files:
+        # The glob list is empty, don&#39;t have a checkpoints_path
+        if not fail_safe:
+            raise ValueError(&#34;Checkpoint path {0} invalid&#34;
+                             .format(checkpoints_path))
+        return None
+
+    # Find the checkpoint file with the maximum epoch
+    lt_checkpoint = max(all_checkpoint_files,
+                        key=lambda f: int(get_epoch_number_from_path(f)))
+    return lt_checkpoint</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.label_to_color_image"><code class="name flex">
+<span>def <span class="ident">label_to_color_image</span></span>(<span>label)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert segs to colors</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def label_to_color_image(label):
+    &#34;&#34;&#34;Convert segs to colors&#34;&#34;&#34;
+    if label.ndim != 2:
+        raise ValueError(&#39;Expect 2-D input label&#39;)
+    colormap = create_pascal_label_colormap()
+    if np.max(label) &gt; len(colormap):
+        raise ValueError(&#39;label value too large.&#39;)
+
+    return colormap[label]</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.model_from_checkpoint_path_nb"><code class="name flex">
+<span>def <span class="ident">model_from_checkpoint_path_nb</span></span>(<span>checkpoints_path, checkpoint_nb)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Loads the weights from the n° model in the specified folder.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def model_from_checkpoint_path_nb(checkpoints_path, checkpoint_nb):
+    &#34;&#34;&#34;Loads the weights from the n° model in the specified folder.&#34;&#34;&#34;
+
+    assert (os.path.isfile(checkpoints_path + &#34;_config.json&#34;)
+            ), &#34;Checkpoint not found.&#34;
+    model_config = json.loads(
+        open(checkpoints_path + &#34;_config.json&#34;, &#34;r&#34;).read())
+    weights = checkpoints_path + &#34;.&#34; + str(checkpoint_nb)
+    assert (os.path.isfile(weights)
+            ), &#34;Weights file not found.&#34;
+    model = model_from_name[model_config[&#39;model_class&#39;]](
+        model_config[&#39;n_classes&#39;], input_height=model_config[&#39;input_height&#39;],
+        input_width=model_config[&#39;input_width&#39;])
+    print(&#34;loaded weights &#34;, weights)
+    model.load_weights(weights)
+    return model</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="skyeye_segmentation.controller.skyeye_func.EvalWorker"><code class="flex name class">
+<span>class <span class="ident">EvalWorker</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Worker wrapper for the evaluate func</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class EvalWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the evaluate func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(EvalWorker, self).__init__()
+
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.evaluate(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def evaluate(self, model=None, inp_images=None, annotations=None,
+                 inp_images_dir=None, annotations_dir=None,
+                 checkpoints_path=None):
+        &#34;&#34;&#34;Evaluate the loaded model for an imgs set and segs&#34;&#34;&#34;
+
+        with self.graph.as_default():
+            with self.session.as_default():
+                self.signals.log.emit(&#34;Début de la session d&#39;évaluation&#34;)
+                if model is None:
+                    assert (checkpoints_path is not None), &#34;Please &#34; \
+                                                           &#34;provide the model&#34; \
+                                                           &#34; or the &#34; \
+                                                           &#34;checkpoints_path&#34;
+                    try:
+                        checkpoint_nb = checkpoints_path.split(&#39;.&#39;)[-1]
+                        index = -(int)(len(checkpoint_nb) + 1)
+                        existing = checkpoints_path[0:index]
+                        model = model_from_checkpoint_path_nb(existing,
+                                                              checkpoint_nb)
+                        self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                              .format(checkpoints_path))
+                    except Exception as exc:
+                        self.signals.finished.emit(&#34;Impossible de charger le &#34;
+                                                   &#34;modèle existant !&#34; + str(exc))
+                        return
+
+                if inp_images is None:
+                    assert (inp_images_dir is not None), &#34;Please privide &#34; \
+                                                         &#34;inp_images or &#34; \
+                                                         &#34;inp_images_dir&#34;
+                    assert (annotations_dir is not None), &#34;Please privide &#34; \
+                                                          &#34;inp_images or &#34; \
+                                                          &#34;inp_images_dir&#34;
+
+                    paths = get_pairs_from_paths(inp_images_dir,
+                                                 annotations_dir)
+                    paths = list(zip(*paths))
+                    inp_images = list(paths[0])
+                    annotations = list(paths[1])
+
+                assert isinstance(inp_images, list)
+                assert isinstance(annotations, list)
+
+                tpm = np.zeros(model.n_classes)
+                fpm = np.zeros(model.n_classes)
+                fnm = np.zeros(model.n_classes)
+                n_pixels = np.zeros(model.n_classes)
+
+                file_processed = 0
+                for inp, ann in tqdm(zip(inp_images, annotations)):
+                    pred = predict(model, inp)
+
+                    ground = get_segmentation_array(ann, model.n_classes,
+                                                    model.output_width,
+                                                    model.output_height,
+                                                    no_reshape=True)
+                    ground = ground.argmax(-1)
+
+                    pred = pred.flatten()
+                    ground = ground.flatten()
+
+                    matrix = confusion_matrix(ground, pred)
+                    self.signals.log.emit(&#34;Image {}&#34;.format(str(inp)))
+                    self.signals.log.emit(&#34;Matrice de confusion :\n{}\n&#34;
+                                          .format(str(matrix)))
+
+                    for cl_i in range(model.n_classes):
+                        tpm[cl_i] += np.sum((pred == cl_i) * (ground == cl_i))
+                        fpm[cl_i] += np.sum((pred == cl_i) * (ground != cl_i))
+                        fnm[cl_i] += np.sum((pred != cl_i) * (ground == cl_i))
+                        n_pixels[cl_i] += np.sum(ground == cl_i)
+
+                    file_processed += 1
+                    progression = 100 * file_processed / len(inp_images)
+                    self.signals.progressed.emit(progression)
+
+                cl_wise_score = tpm / (tpm + fpm + fnm + 0.000000000001)
+                n_pixels_norm = n_pixels / np.sum(n_pixels)
+                frequency_weighted_iu = np.sum(cl_wise_score * n_pixels_norm)
+                mean_iu = np.mean(cl_wise_score)
+                self.signals.log.emit(&#34;frequency_weighted_IU {}&#34;
+                                      .format(str(frequency_weighted_iu)))
+                self.signals.log.emit(&#34;mean_IU {}&#34;.format(str(mean_iu)))
+                self.signals.log.emit(&#34;class_wise_IU {}&#34;
+                                      .format(str(cl_wise_score)))
+                self.signals.log.emit(&#34;&#34;)
+                self.signals.finished.emit(&#34;Evaluation terminée !&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtCore.QRunnable</li>
+<li>sip.wrapper</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="skyeye_segmentation.controller.skyeye_func.EvalWorker.evaluate"><code class="name flex">
+<span>def <span class="ident">evaluate</span></span>(<span>self, model=None, inp_images=None, annotations=None, inp_images_dir=None, annotations_dir=None, checkpoints_path=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Evaluate the loaded model for an imgs set and segs</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate(self, model=None, inp_images=None, annotations=None,
+             inp_images_dir=None, annotations_dir=None,
+             checkpoints_path=None):
+    &#34;&#34;&#34;Evaluate the loaded model for an imgs set and segs&#34;&#34;&#34;
+
+    with self.graph.as_default():
+        with self.session.as_default():
+            self.signals.log.emit(&#34;Début de la session d&#39;évaluation&#34;)
+            if model is None:
+                assert (checkpoints_path is not None), &#34;Please &#34; \
+                                                       &#34;provide the model&#34; \
+                                                       &#34; or the &#34; \
+                                                       &#34;checkpoints_path&#34;
+                try:
+                    checkpoint_nb = checkpoints_path.split(&#39;.&#39;)[-1]
+                    index = -(int)(len(checkpoint_nb) + 1)
+                    existing = checkpoints_path[0:index]
+                    model = model_from_checkpoint_path_nb(existing,
+                                                          checkpoint_nb)
+                    self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                          .format(checkpoints_path))
+                except Exception as exc:
+                    self.signals.finished.emit(&#34;Impossible de charger le &#34;
+                                               &#34;modèle existant !&#34; + str(exc))
+                    return
+
+            if inp_images is None:
+                assert (inp_images_dir is not None), &#34;Please privide &#34; \
+                                                     &#34;inp_images or &#34; \
+                                                     &#34;inp_images_dir&#34;
+                assert (annotations_dir is not None), &#34;Please privide &#34; \
+                                                      &#34;inp_images or &#34; \
+                                                      &#34;inp_images_dir&#34;
+
+                paths = get_pairs_from_paths(inp_images_dir,
+                                             annotations_dir)
+                paths = list(zip(*paths))
+                inp_images = list(paths[0])
+                annotations = list(paths[1])
+
+            assert isinstance(inp_images, list)
+            assert isinstance(annotations, list)
+
+            tpm = np.zeros(model.n_classes)
+            fpm = np.zeros(model.n_classes)
+            fnm = np.zeros(model.n_classes)
+            n_pixels = np.zeros(model.n_classes)
+
+            file_processed = 0
+            for inp, ann in tqdm(zip(inp_images, annotations)):
+                pred = predict(model, inp)
+
+                ground = get_segmentation_array(ann, model.n_classes,
+                                                model.output_width,
+                                                model.output_height,
+                                                no_reshape=True)
+                ground = ground.argmax(-1)
+
+                pred = pred.flatten()
+                ground = ground.flatten()
+
+                matrix = confusion_matrix(ground, pred)
+                self.signals.log.emit(&#34;Image {}&#34;.format(str(inp)))
+                self.signals.log.emit(&#34;Matrice de confusion :\n{}\n&#34;
+                                      .format(str(matrix)))
+
+                for cl_i in range(model.n_classes):
+                    tpm[cl_i] += np.sum((pred == cl_i) * (ground == cl_i))
+                    fpm[cl_i] += np.sum((pred == cl_i) * (ground != cl_i))
+                    fnm[cl_i] += np.sum((pred != cl_i) * (ground == cl_i))
+                    n_pixels[cl_i] += np.sum(ground == cl_i)
+
+                file_processed += 1
+                progression = 100 * file_processed / len(inp_images)
+                self.signals.progressed.emit(progression)
+
+            cl_wise_score = tpm / (tpm + fpm + fnm + 0.000000000001)
+            n_pixels_norm = n_pixels / np.sum(n_pixels)
+            frequency_weighted_iu = np.sum(cl_wise_score * n_pixels_norm)
+            mean_iu = np.mean(cl_wise_score)
+            self.signals.log.emit(&#34;frequency_weighted_IU {}&#34;
+                                  .format(str(frequency_weighted_iu)))
+            self.signals.log.emit(&#34;mean_IU {}&#34;.format(str(mean_iu)))
+            self.signals.log.emit(&#34;class_wise_IU {}&#34;
+                                  .format(str(cl_wise_score)))
+            self.signals.log.emit(&#34;&#34;)
+            self.signals.finished.emit(&#34;Evaluation terminée !&#34;)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.EvalWorker.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Run the functionality, triggered by Qt</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def run(self):
+    &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+    try:
+        self.evaluate(**self.kwargs)
+    except Exception as exc:
+        self.signals.error.emit(str(exc))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker"><code class="flex name class">
+<span>class <span class="ident">ImageAugmentationWorker</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Worker wrapper for the image augmentation func</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImageAugmentationWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the image augmentation func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(ImageAugmentationWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.augment_data(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def augment_data(self, nb_img=1, img_src=&#34;&#34;, seg_src=&#34;&#34;, img_dest=&#34;&#34;,
+                     seg_dest=&#34;&#34;, size=(10, 10),
+                     rotation=90, width=0.25, height=0.25, shear=10, zoom=0.1,
+                     fill=&#39;reflect&#39;):
+        &#34;&#34;&#34;Data augmentation of imgs and segs using keras ImageDataGenerator&#34;&#34;&#34;
+
+        image_gen = ImageDataGenerator(rotation_range=rotation,
+                                       width_shift_range=width,
+                                       height_shift_range=height,
+                                       shear_range=shear,
+                                       zoom_range=zoom,
+                                       horizontal_flip=True,
+                                       vertical_flip=True,
+                                       fill_mode=fill,
+                                       dtype=&#34;uint8&#34;)
+
+        rand_seed = random.randint(1, 9999999)
+
+        classes_path = os.path.basename(img_src)
+        classes_dir = os.path.dirname(img_src)
+        img_generator = image_gen.flow_from_directory(classes_dir,
+                                                      size,
+                                                      &#39;rgb&#39;,
+                                                      classes=[classes_path],
+                                                      class_mode=&#39;categorical&#39;,
+                                                      batch_size=1,
+                                                      shuffle=False,
+                                                      seed=rand_seed,
+                                                      save_to_dir=None,
+                                                      save_prefix=&#39;&#39;,
+                                                      save_format=&#39;png&#39;,
+                                                      follow_links=False,
+                                                      subset=None,
+                                                      interpolation=&#39;nearest&#39;)
+        classes_path = os.path.basename(seg_src)
+        classes_dir = os.path.dirname(seg_src)
+        mask_generator = image_gen.flow_from_directory(classes_dir,
+                                                       size,
+                                                       &#39;rgb&#39;,
+                                                       classes=[classes_path],
+                                                       class_mode=&#39;categorical&#39;,
+                                                       batch_size=1,
+                                                       shuffle=False,
+                                                       seed=rand_seed,
+                                                       save_to_dir=None,
+                                                       save_prefix=&#39;&#39;,
+                                                       save_format=&#39;png&#39;,
+                                                       follow_links=False,
+                                                       subset=None,
+                                                       interpolation=&#39;nearest&#39;)
+
+        file_processed = 0
+
+        # Manual saving for uint8 conversion
+        # Img
+        for i in range(1, nb_img + 1):
+            img = img_generator.next()
+            image = img[0][0].astype(&#39;uint8&#39;)
+            pyplot.imsave(img_dest + &#34;/&#34; + str(i) + &#34;.png&#34;, image)
+            file_processed += 1
+            progression = (100 * file_processed) / (2 * nb_img)
+            self.signals.progressed.emit(progression)
+
+        # Masks
+        for i in range(1, nb_img + 1):
+            img = mask_generator.next()
+            image = img[0][0].astype(&#39;uint8&#39;)
+            pyplot.imsave(seg_dest + &#34;/&#34; + str(i) + &#34;.png&#34;, image)
+            file_processed += 1
+            progression = (100 * file_processed) / (2 * nb_img)
+            self.signals.progressed.emit(progression)
+
+        self.signals.finished.emit(&#34;Augmentation terminée !&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtCore.QRunnable</li>
+<li>sip.wrapper</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker.augment_data"><code class="name flex">
+<span>def <span class="ident">augment_data</span></span>(<span>self, nb_img=1, img_src='', seg_src='', img_dest='', seg_dest='', size=(10, 10), rotation=90, width=0.25, height=0.25, shear=10, zoom=0.1, fill='reflect')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Data augmentation of imgs and segs using keras ImageDataGenerator</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def augment_data(self, nb_img=1, img_src=&#34;&#34;, seg_src=&#34;&#34;, img_dest=&#34;&#34;,
+                 seg_dest=&#34;&#34;, size=(10, 10),
+                 rotation=90, width=0.25, height=0.25, shear=10, zoom=0.1,
+                 fill=&#39;reflect&#39;):
+    &#34;&#34;&#34;Data augmentation of imgs and segs using keras ImageDataGenerator&#34;&#34;&#34;
+
+    image_gen = ImageDataGenerator(rotation_range=rotation,
+                                   width_shift_range=width,
+                                   height_shift_range=height,
+                                   shear_range=shear,
+                                   zoom_range=zoom,
+                                   horizontal_flip=True,
+                                   vertical_flip=True,
+                                   fill_mode=fill,
+                                   dtype=&#34;uint8&#34;)
+
+    rand_seed = random.randint(1, 9999999)
+
+    classes_path = os.path.basename(img_src)
+    classes_dir = os.path.dirname(img_src)
+    img_generator = image_gen.flow_from_directory(classes_dir,
+                                                  size,
+                                                  &#39;rgb&#39;,
+                                                  classes=[classes_path],
+                                                  class_mode=&#39;categorical&#39;,
+                                                  batch_size=1,
+                                                  shuffle=False,
+                                                  seed=rand_seed,
+                                                  save_to_dir=None,
+                                                  save_prefix=&#39;&#39;,
+                                                  save_format=&#39;png&#39;,
+                                                  follow_links=False,
+                                                  subset=None,
+                                                  interpolation=&#39;nearest&#39;)
+    classes_path = os.path.basename(seg_src)
+    classes_dir = os.path.dirname(seg_src)
+    mask_generator = image_gen.flow_from_directory(classes_dir,
+                                                   size,
+                                                   &#39;rgb&#39;,
+                                                   classes=[classes_path],
+                                                   class_mode=&#39;categorical&#39;,
+                                                   batch_size=1,
+                                                   shuffle=False,
+                                                   seed=rand_seed,
+                                                   save_to_dir=None,
+                                                   save_prefix=&#39;&#39;,
+                                                   save_format=&#39;png&#39;,
+                                                   follow_links=False,
+                                                   subset=None,
+                                                   interpolation=&#39;nearest&#39;)
+
+    file_processed = 0
+
+    # Manual saving for uint8 conversion
+    # Img
+    for i in range(1, nb_img + 1):
+        img = img_generator.next()
+        image = img[0][0].astype(&#39;uint8&#39;)
+        pyplot.imsave(img_dest + &#34;/&#34; + str(i) + &#34;.png&#34;, image)
+        file_processed += 1
+        progression = (100 * file_processed) / (2 * nb_img)
+        self.signals.progressed.emit(progression)
+
+    # Masks
+    for i in range(1, nb_img + 1):
+        img = mask_generator.next()
+        image = img[0][0].astype(&#39;uint8&#39;)
+        pyplot.imsave(seg_dest + &#34;/&#34; + str(i) + &#34;.png&#34;, image)
+        file_processed += 1
+        progression = (100 * file_processed) / (2 * nb_img)
+        self.signals.progressed.emit(progression)
+
+    self.signals.finished.emit(&#34;Augmentation terminée !&#34;)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Run the functionality, triggered by Qt</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def run(self):
+    &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+    try:
+        self.augment_data(**self.kwargs)
+    except Exception as exc:
+        self.signals.error.emit(str(exc))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.MaskFusionWorker"><code class="flex name class">
+<span>class <span class="ident">MaskFusionWorker</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Worker wrapper for the mask fusion func</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MaskFusionWorker(QRunnable):
+    &#34;&#34;&#34;
+        Worker wrapper for the mask fusion func
+    &#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(MaskFusionWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.mask_fusion(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def mask_fusion(self, class_pathes=&#34;&#34;, class_scales=&#34;&#34;, size=(400, 400),
+                    save_to=&#34;&#34;):
+        &#34;&#34;&#34;Fusion of binary masks into a colored unique one&#34;&#34;&#34;
+
+        nb_files = len(os.listdir(class_pathes[0]))
+        file_processed = 0
+
+        for file in os.listdir(class_pathes[0]):
+            print(class_pathes[0] + file)
+            ext = file.split(&#34;.&#34;)[len(file.split(&#34;.&#34;)) - 1]
+            ext = ext.lower()
+            if ext not in (&#39;tif&#39;, &#39;png&#39;, &#39;jpg&#39;, &#39;jpeg&#39;):
+                continue
+
+            mask_array = io.imread(class_pathes[0] + file)
+            new_mask = Image.new(mode=&#39;L&#39;, size=(mask_array.shape[0],
+                                                 mask_array.shape[1]),
+                                 color=&#34;black&#34;)
+            new_mask_array = np.array(np.transpose(new_mask))
+
+            # For each class
+            for path, scale in zip(class_pathes, class_scales):
+                path_file = os.path.join(path, file)
+                mask_array = io.imread(path_file)
+                # For each pixel
+                for coord_x in range(mask_array.shape[0]):  # Width
+                    for coord_y in range(mask_array.shape[1]):  # Height
+                        if mask_array[coord_x, coord_y].all() == 0:  # Black pixel
+                            new_mask_array[coord_x, coord_y] = scale
+
+            new_image = os.path.join(save_to, file.split(&#34;.&#34;)[0] + &#34;.png&#34;)
+            new_mask_array = trans.resize(new_mask_array, size,
+                                          anti_aliasing=False)
+            io.imsave(new_image, img_as_ubyte(new_mask_array))
+            file_processed += 1
+            progression = int(file_processed * 100 / nb_files)
+            self.signals.progressed.emit(progression)
+
+        self.signals.finished.emit(&#34;Création des masques terminée !&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtCore.QRunnable</li>
+<li>sip.wrapper</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="skyeye_segmentation.controller.skyeye_func.MaskFusionWorker.mask_fusion"><code class="name flex">
+<span>def <span class="ident">mask_fusion</span></span>(<span>self, class_pathes='', class_scales='', size=(400, 400), save_to='')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Fusion of binary masks into a colored unique one</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mask_fusion(self, class_pathes=&#34;&#34;, class_scales=&#34;&#34;, size=(400, 400),
+                save_to=&#34;&#34;):
+    &#34;&#34;&#34;Fusion of binary masks into a colored unique one&#34;&#34;&#34;
+
+    nb_files = len(os.listdir(class_pathes[0]))
+    file_processed = 0
+
+    for file in os.listdir(class_pathes[0]):
+        print(class_pathes[0] + file)
+        ext = file.split(&#34;.&#34;)[len(file.split(&#34;.&#34;)) - 1]
+        ext = ext.lower()
+        if ext not in (&#39;tif&#39;, &#39;png&#39;, &#39;jpg&#39;, &#39;jpeg&#39;):
+            continue
+
+        mask_array = io.imread(class_pathes[0] + file)
+        new_mask = Image.new(mode=&#39;L&#39;, size=(mask_array.shape[0],
+                                             mask_array.shape[1]),
+                             color=&#34;black&#34;)
+        new_mask_array = np.array(np.transpose(new_mask))
+
+        # For each class
+        for path, scale in zip(class_pathes, class_scales):
+            path_file = os.path.join(path, file)
+            mask_array = io.imread(path_file)
+            # For each pixel
+            for coord_x in range(mask_array.shape[0]):  # Width
+                for coord_y in range(mask_array.shape[1]):  # Height
+                    if mask_array[coord_x, coord_y].all() == 0:  # Black pixel
+                        new_mask_array[coord_x, coord_y] = scale
+
+        new_image = os.path.join(save_to, file.split(&#34;.&#34;)[0] + &#34;.png&#34;)
+        new_mask_array = trans.resize(new_mask_array, size,
+                                      anti_aliasing=False)
+        io.imsave(new_image, img_as_ubyte(new_mask_array))
+        file_processed += 1
+        progression = int(file_processed * 100 / nb_files)
+        self.signals.progressed.emit(progression)
+
+    self.signals.finished.emit(&#34;Création des masques terminée !&#34;)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.MaskFusionWorker.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Run the functionality, triggered by Qt</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def run(self):
+    &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+    try:
+        self.mask_fusion(**self.kwargs)
+    except Exception as exc:
+        self.signals.error.emit(str(exc))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.PredictWorker"><code class="flex name class">
+<span>class <span class="ident">PredictWorker</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Worker wrapper for the predict func</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PredictWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the predict func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(PredictWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.predict_multiple(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def predict(self, model=None, inp=None, out_fname=None,
+                checkpoints_path=None, clrs=None, out_prob_file=None):
+        &#34;&#34;&#34;Make prediction from an img and loaded model&#34;&#34;&#34;
+
+        if model is None and (checkpoints_path is not None):
+            model = model_from_checkpoint_path(checkpoints_path)
+
+        assert inp is not None
+        assert isinstance(inp, (np.ndarray, six.string_types)), \
+            &#34;Inupt should be the CV image or the input file name&#34;
+
+        if isinstance(inp, six.string_types):
+            inp = cv2.imread(inp)
+
+        assert len(inp.shape) == 3, &#34;Image should be h,w,3 &#34;
+        orininal_h = inp.shape[0]
+        orininal_w = inp.shape[1]
+
+        output_width = model.output_width
+        output_height = model.output_height
+        input_width = model.input_width
+        input_height = model.input_height
+        n_classes = model.n_classes
+
+        img_ar = get_image_array(inp, input_width, input_height,
+                                 ordering=IMAGE_ORDERING)
+        pred = model.predict(np.array([img_ar]))[0]
+
+        # Creating probabilities file
+        if out_prob_file is not None:
+            out_prob_file += &#34;_prob_{}x{}.csv&#34;.format(output_width,
+                                                      output_height)
+
+            with open(out_prob_file, &#39;w+&#39;) as file:
+                # Header
+                header = &#34;x y &#34;
+                for i in range(0, n_classes):
+                    header += &#34;C{} &#34;.format(str(i))
+                header += &#34;class\n&#34;
+                file.write(header)
+
+                # Pixel per pixel
+                coord_x = 0
+                coord_y = 0
+                for pixel in pred:
+                    line = &#34;{} {}&#34;.format(coord_x, coord_y)
+                    for class_prob in pixel:
+                        line += &#34; {}&#34;.format(str(class_prob))
+                    line += &#34; {}&#34;.format(str(np.argmax(pixel))) + &#34;\n&#34;
+
+                    file.write(line)
+
+                    coord_x += 1
+                    if coord_x &gt;= output_width:
+                        coord_x = 0
+                        coord_y += 1
+
+        pred = pred.reshape((output_height, output_width, n_classes)).argmax(axis=2)
+
+        seg_img = np.zeros((output_height, output_width, 3))
+
+        if clrs is None:
+            colors = class_colors
+        else:
+            colors = clrs
+
+        for color in range(n_classes):
+            seg_img[:, :, 0] += ((pred[:, :] == color) * (colors[color][0])) \
+                .astype(&#39;uint8&#39;)
+            seg_img[:, :, 1] += ((pred[:, :] == color) * (colors[color][1])) \
+                .astype(&#39;uint8&#39;)
+            seg_img[:, :, 2] += ((pred[:, :] == color) * (colors[color][2])) \
+                .astype(&#39;uint8&#39;)
+
+        seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
+
+        if out_fname is not None:
+            cv2.imwrite(out_fname, seg_img)
+
+        return pred
+
+    def predict_multiple(self, model=None, inps=None, inp_dir=None,
+                         out_dir=None, checkpoints_path=None, colors=None,
+                         sup_dir=None):
+        &#34;&#34;&#34;Make multiple predictions from an img set&#34;&#34;&#34;
+
+        with self.graph.as_default():
+            with self.session.as_default():
+                if model is None and (checkpoints_path is not None):
+                    try:
+                        checkpoint_nb = checkpoints_path.split(&#39;.&#39;)[-1]
+                        index = -(int)(len(checkpoint_nb) + 1)
+                        existing = checkpoints_path[0:index]
+                        model = model_from_checkpoint_path_nb(existing,
+                                                              checkpoint_nb)
+                        self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                              .format(checkpoints_path))
+                    except Exception as exc:
+                        self.signals.finished.emit(&#34;Impossible de charger le&#34;
+                                                   &#34; modèle existant !\n&#34;
+                                                   + str(exc))
+                        return None
+
+                if inps is None and (inp_dir is not None):
+                    inps = glob.glob(os.path.join(inp_dir, &#34;*.jpg&#34;)) + \
+                           glob.glob(os.path.join(inp_dir, &#34;*.png&#34;)) + \
+                           glob.glob(os.path.join(inp_dir, &#34;*.jpeg&#34;)) + \
+                           glob.glob(os.path.join(inp_dir, &#34;*.tif&#34;))
+
+                assert isinstance(inps, list)
+                all_prs = []
+
+                files_nb = len(inps)
+                file_processed = 0
+                self.signals.log.emit(&#34;Prédiction de {} images...&#34;
+                                      .format(str(files_nb)))
+                for i, inp in enumerate(tqdm(inps)):
+                    if out_dir is None:
+                        out_fname = None
+                    else:
+                        &#34;&#34;&#34;
+                        if isinstance(inp, six.string_types):
+                            out_fname = os.path.join(out_dir,
+                                                     os.path.basename(inp))
+                        else:
+                            out_fname = os.path.join(out_dir, str(i) + &#34;.jpg&#34;)
+                        &#34;&#34;&#34;
+                        out_fname = os.path\
+                            .join(out_dir, os.path
+                                  .splitext(os.path.basename(inp))[0] + &#34;.png&#34;)
+
+                    out_prob = os.path.splitext(out_fname)[0]
+                    pred = self.predict(model, inp, out_fname, clrs=colors,
+                                        out_prob_file=out_prob)
+
+                    all_prs.append(pred)
+
+                    file_processed += 1
+                    progression = 100 * file_processed / (files_nb * 2)
+                    self.signals.progressed.emit(progression)
+                    self.signals.log.emit(&#34;{}&#34;.format(out_fname))
+
+                self.create_superpositions(img_src=inp_dir, seg_src=out_dir,
+                                           save_dir=sup_dir)
+
+                self.signals.log.emit(&#34;&#34;)
+                self.signals.finished.emit(&#34;Prédictions terminées !&#34;)
+                return all_prs
+
+    def create_superpositions(self, img_src, seg_src, save_dir):
+        &#34;&#34;&#34;Creates the superpositions images&#34;&#34;&#34;
+
+        files_nb = len(os.listdir(seg_src))
+        files_processed = 0
+        self.signals.log.emit(&#34;Création des {} superpositions...&#34;
+                              .format(str(files_nb)))
+        files = os.listdir(img_src)
+        for filename in files:
+            imgfile = os.path.join(img_src, filename)
+            pngfile = os.path.join(seg_src, filename)
+            img = cv2.imread(imgfile, 1)
+            img = img[:, :, ::-1]
+            seg_map = cv2.imread(pngfile, 0)
+            seg_image = label_to_color_image(seg_map).astype(np.uint8)
+            saved_img = os.path.join(save_dir, os.path.splitext(filename)[0] +
+                                     &#34;-sup.png&#34;)
+            pyplot.figure()
+            pyplot.imshow(seg_image)
+            pyplot.imshow(img, alpha=0.5)
+            pyplot.axis(&#39;off&#39;)
+            pyplot.savefig(saved_img)
+            self.signals.log.emit(saved_img)
+            progression = 50 + 100 * files_processed / (files_nb * 2)
+            self.signals.progressed.emit(progression)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtCore.QRunnable</li>
+<li>sip.wrapper</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="skyeye_segmentation.controller.skyeye_func.PredictWorker.create_superpositions"><code class="name flex">
+<span>def <span class="ident">create_superpositions</span></span>(<span>self, img_src, seg_src, save_dir)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates the superpositions images</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_superpositions(self, img_src, seg_src, save_dir):
+    &#34;&#34;&#34;Creates the superpositions images&#34;&#34;&#34;
+
+    files_nb = len(os.listdir(seg_src))
+    files_processed = 0
+    self.signals.log.emit(&#34;Création des {} superpositions...&#34;
+                          .format(str(files_nb)))
+    files = os.listdir(img_src)
+    for filename in files:
+        imgfile = os.path.join(img_src, filename)
+        pngfile = os.path.join(seg_src, filename)
+        img = cv2.imread(imgfile, 1)
+        img = img[:, :, ::-1]
+        seg_map = cv2.imread(pngfile, 0)
+        seg_image = label_to_color_image(seg_map).astype(np.uint8)
+        saved_img = os.path.join(save_dir, os.path.splitext(filename)[0] +
+                                 &#34;-sup.png&#34;)
+        pyplot.figure()
+        pyplot.imshow(seg_image)
+        pyplot.imshow(img, alpha=0.5)
+        pyplot.axis(&#39;off&#39;)
+        pyplot.savefig(saved_img)
+        self.signals.log.emit(saved_img)
+        progression = 50 + 100 * files_processed / (files_nb * 2)
+        self.signals.progressed.emit(progression)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.PredictWorker.predict"><code class="name flex">
+<span>def <span class="ident">predict</span></span>(<span>self, model=None, inp=None, out_fname=None, checkpoints_path=None, clrs=None, out_prob_file=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Make prediction from an img and loaded model</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def predict(self, model=None, inp=None, out_fname=None,
+            checkpoints_path=None, clrs=None, out_prob_file=None):
+    &#34;&#34;&#34;Make prediction from an img and loaded model&#34;&#34;&#34;
+
+    if model is None and (checkpoints_path is not None):
+        model = model_from_checkpoint_path(checkpoints_path)
+
+    assert inp is not None
+    assert isinstance(inp, (np.ndarray, six.string_types)), \
+        &#34;Inupt should be the CV image or the input file name&#34;
+
+    if isinstance(inp, six.string_types):
+        inp = cv2.imread(inp)
+
+    assert len(inp.shape) == 3, &#34;Image should be h,w,3 &#34;
+    orininal_h = inp.shape[0]
+    orininal_w = inp.shape[1]
+
+    output_width = model.output_width
+    output_height = model.output_height
+    input_width = model.input_width
+    input_height = model.input_height
+    n_classes = model.n_classes
+
+    img_ar = get_image_array(inp, input_width, input_height,
+                             ordering=IMAGE_ORDERING)
+    pred = model.predict(np.array([img_ar]))[0]
+
+    # Creating probabilities file
+    if out_prob_file is not None:
+        out_prob_file += &#34;_prob_{}x{}.csv&#34;.format(output_width,
+                                                  output_height)
+
+        with open(out_prob_file, &#39;w+&#39;) as file:
+            # Header
+            header = &#34;x y &#34;
+            for i in range(0, n_classes):
+                header += &#34;C{} &#34;.format(str(i))
+            header += &#34;class\n&#34;
+            file.write(header)
+
+            # Pixel per pixel
+            coord_x = 0
+            coord_y = 0
+            for pixel in pred:
+                line = &#34;{} {}&#34;.format(coord_x, coord_y)
+                for class_prob in pixel:
+                    line += &#34; {}&#34;.format(str(class_prob))
+                line += &#34; {}&#34;.format(str(np.argmax(pixel))) + &#34;\n&#34;
+
+                file.write(line)
+
+                coord_x += 1
+                if coord_x &gt;= output_width:
+                    coord_x = 0
+                    coord_y += 1
+
+    pred = pred.reshape((output_height, output_width, n_classes)).argmax(axis=2)
+
+    seg_img = np.zeros((output_height, output_width, 3))
+
+    if clrs is None:
+        colors = class_colors
+    else:
+        colors = clrs
+
+    for color in range(n_classes):
+        seg_img[:, :, 0] += ((pred[:, :] == color) * (colors[color][0])) \
+            .astype(&#39;uint8&#39;)
+        seg_img[:, :, 1] += ((pred[:, :] == color) * (colors[color][1])) \
+            .astype(&#39;uint8&#39;)
+        seg_img[:, :, 2] += ((pred[:, :] == color) * (colors[color][2])) \
+            .astype(&#39;uint8&#39;)
+
+    seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
+
+    if out_fname is not None:
+        cv2.imwrite(out_fname, seg_img)
+
+    return pred</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.PredictWorker.predict_multiple"><code class="name flex">
+<span>def <span class="ident">predict_multiple</span></span>(<span>self, model=None, inps=None, inp_dir=None, out_dir=None, checkpoints_path=None, colors=None, sup_dir=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Make multiple predictions from an img set</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def predict_multiple(self, model=None, inps=None, inp_dir=None,
+                     out_dir=None, checkpoints_path=None, colors=None,
+                     sup_dir=None):
+    &#34;&#34;&#34;Make multiple predictions from an img set&#34;&#34;&#34;
+
+    with self.graph.as_default():
+        with self.session.as_default():
+            if model is None and (checkpoints_path is not None):
+                try:
+                    checkpoint_nb = checkpoints_path.split(&#39;.&#39;)[-1]
+                    index = -(int)(len(checkpoint_nb) + 1)
+                    existing = checkpoints_path[0:index]
+                    model = model_from_checkpoint_path_nb(existing,
+                                                          checkpoint_nb)
+                    self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                          .format(checkpoints_path))
+                except Exception as exc:
+                    self.signals.finished.emit(&#34;Impossible de charger le&#34;
+                                               &#34; modèle existant !\n&#34;
+                                               + str(exc))
+                    return None
+
+            if inps is None and (inp_dir is not None):
+                inps = glob.glob(os.path.join(inp_dir, &#34;*.jpg&#34;)) + \
+                       glob.glob(os.path.join(inp_dir, &#34;*.png&#34;)) + \
+                       glob.glob(os.path.join(inp_dir, &#34;*.jpeg&#34;)) + \
+                       glob.glob(os.path.join(inp_dir, &#34;*.tif&#34;))
+
+            assert isinstance(inps, list)
+            all_prs = []
+
+            files_nb = len(inps)
+            file_processed = 0
+            self.signals.log.emit(&#34;Prédiction de {} images...&#34;
+                                  .format(str(files_nb)))
+            for i, inp in enumerate(tqdm(inps)):
+                if out_dir is None:
+                    out_fname = None
+                else:
+                    &#34;&#34;&#34;
+                    if isinstance(inp, six.string_types):
+                        out_fname = os.path.join(out_dir,
+                                                 os.path.basename(inp))
+                    else:
+                        out_fname = os.path.join(out_dir, str(i) + &#34;.jpg&#34;)
+                    &#34;&#34;&#34;
+                    out_fname = os.path\
+                        .join(out_dir, os.path
+                              .splitext(os.path.basename(inp))[0] + &#34;.png&#34;)
+
+                out_prob = os.path.splitext(out_fname)[0]
+                pred = self.predict(model, inp, out_fname, clrs=colors,
+                                    out_prob_file=out_prob)
+
+                all_prs.append(pred)
+
+                file_processed += 1
+                progression = 100 * file_processed / (files_nb * 2)
+                self.signals.progressed.emit(progression)
+                self.signals.log.emit(&#34;{}&#34;.format(out_fname))
+
+            self.create_superpositions(img_src=inp_dir, seg_src=out_dir,
+                                       save_dir=sup_dir)
+
+            self.signals.log.emit(&#34;&#34;)
+            self.signals.finished.emit(&#34;Prédictions terminées !&#34;)
+            return all_prs</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.PredictWorker.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Run the functionality, triggered by Qt</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def run(self):
+    &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+    try:
+        self.predict_multiple(**self.kwargs)
+    except Exception as exc:
+        self.signals.error.emit(str(exc))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.TrainWorker"><code class="flex name class">
+<span>class <span class="ident">TrainWorker</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Worker wrapper for the train func</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TrainWorker(QRunnable):
+    &#34;&#34;&#34;Worker wrapper for the train func&#34;&#34;&#34;
+
+    def __init__(self, *args, **kwargs):
+        super(TrainWorker, self).__init__()
+
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+        with self.graph.as_default():
+            with self.session.as_default():
+                self.signals.log.emit(&#34;Début de la session d&#39;entrainement&#34;)
+
+    @pyqtSlot()
+    def run(self):
+        &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+        try:
+            self.train(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(str(exc))
+
+    def train(self, existing=&#34;&#34;, new=&#34;&#34;, width=0, height=0, img_src=&#34;&#34;,
+              seg_src=&#34;&#34;, batch=0, steps=0, epochs=0,
+              checkpoint=&#34;&#34;, nb_class=0, validate=False, val_images=None,
+              val_annotations=None, val_batch_size=1,
+              auto_resume_checkpoint=False, load_weights=None,
+              verify_dataset=True, optimizer_name=&#39;adadelta&#39;,
+              do_augment=False):
+        &#34;&#34;&#34;Launches the training process with the train config&#34;&#34;&#34;
+
+        with self.graph.as_default():
+            with self.session.as_default():
+
+                # Getting model
+                if existing:
+                    try:
+                        checkpoint_nb = existing.split(&#39;.&#39;)[-1]
+                        index = -(int)(len(checkpoint_nb) + 1)
+                        existing = existing[0:index]
+                        model = model_from_checkpoint_path_nb(existing,
+                                                              checkpoint_nb)
+                        self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                              .format(existing))
+                    except Exception as exc:
+                        self.signals.error.emit(&#34;Impossible de charger le &#34;
+                                                &#34;modèle existant !\n&#34; + str(exc))
+                        return
+                else:
+                    try:
+                        vgg = new.find(&#34;vgg&#34;)
+                        resnet50 = new.find(&#34;resnet50&#34;)
+                        mobilenet = new.find(&#34;mobilenet&#34;)
+                        pspnet = new.find(&#34;pspnet&#34;)
+                        pspnet_50 = new.find(&#34;pspnet_50&#34;)
+                        pspnet_101 = new.find(&#34;pspnet_101&#34;)
+
+                        # Specifics models constraints
+                        if vgg != -1 or resnet50 != -1:
+                            if height % 32 != 0 or width % 32 != 0:
+                                self.signals.error.emit(&#34;Pour un modèle &#34;
+                                                        &#34;vgg/resnet50/pspnet, &#34;
+                                                        &#34;les dimensions &#34;
+                                                        &#34;d&#39;entrée doivent être &#34;
+                                                        &#34;des multiples de 32.&#34;)
+                                return
+                        if mobilenet != -1:
+                            if height != 224 or width != 224:
+                                self.signals.error.emit(
+                                    &#34;Pour un modèle mobilenet, les dimensions &#34;
+                                    &#34;d&#39;entrée doivent être (224,224).&#34;)
+                                return
+                        if pspnet != -1:
+                            if pspnet_50 != -1 or pspnet_101 != -1:
+                                if not (height == 473 and width == 473) \
+                                        and not (height == 713
+                                                 and width == 713):
+                                    self.signals.error.emit(
+                                        &#34;Pour un modèle pspnet_50 ou &#34;
+                                        &#34;pspnet_101, les dimensions d&#39;entrée &#34;
+                                        &#34;doivent être &#34;
+                                        &#34;(473,473) ou (713,713).&#34;)
+                                    return
+                            else:
+                                if height % 192 != 0 or width % 192 != 0:
+                                    self.signals.error.emit(&#34;Pour un modèle &#34;
+                                                            &#34;pspnet, les &#34;
+                                                            &#34;dimensions &#34;
+                                                            &#34;d&#39;entrée doivent &#34;
+                                                            &#34;être des multiples&#34;
+                                                            &#34; de 192.&#34;)
+                                    return
+
+                        model = model_from_name[new](nb_class,
+                                                     input_height=height,
+                                                     input_width=width)
+                    except Exception as exc:
+                        self.signals.error.emit(&#34;Impossible de créer un nouveau&#34;
+                                                &#34; modèle {} !\n{}&#34;.format(new,
+                                                                          exc))
+                        return
+
+                output_width = model.output_width
+                output_height = model.output_height
+
+                # Model compilation
+                if optimizer_name is not None:
+                    # weights = [0.1, 10, 20]
+                    # loss_func = weighted_categorical_crossentropy(weights)
+                    # print(&#34;Weighted loss : &#34; + str(weights))
+                    loss_func = &#34;categorical_crossentropy&#34;
+                    model.compile(loss=loss_func,
+                                  optimizer=optimizer_name,
+                                  metrics=[&#39;accuracy&#39;])
+
+                if checkpoint is not None:
+                    with open(checkpoint + &#34;_config.json&#34;, &#34;w&#34;) as file:
+                        json.dump({
+                            &#34;model_class&#34;: model.model_name,
+                            &#34;n_classes&#34;: nb_class,
+                            &#34;input_height&#34;: height,
+                            &#34;input_width&#34;: width,
+                            &#34;output_height&#34;: height,
+                            &#34;output_width&#34;: width
+                        }, file)
+
+                if load_weights is not None and len(load_weights) &gt; 0:
+                    print(&#34;Loading weights from &#34;, load_weights)
+                    model.load_weights(load_weights)
+
+                if auto_resume_checkpoint and (checkpoint is not None):
+                    latest_checkpoint = find_latest_checkpoint(checkpoint)
+                    if latest_checkpoint is not None:
+                        print(&#34;Loading the weights from latest checkpoint &#34;,
+                              latest_checkpoint)
+                        model.load_weights(latest_checkpoint)
+
+                if verify_dataset:
+                    print(&#34;Verifying training dataset&#34;)
+                    self.signals.log.emit(&#34;Vérification du jeu d&#39;entrainement&#34;)
+                    verified = verify_segmentation_dataset(img_src, seg_src,
+                                                           nb_class)
+                    assert verified
+                    self.signals.log.emit(&#34;Jeu d&#39;entrainement vérifié !&#34;)
+                    self.signals.log.emit(&#34;&#34;)
+                    if validate:
+                        print(&#34;Verifying validation dataset&#34;)
+                        verified = verify_segmentation_dataset(val_images,
+                                                               val_annotations,
+                                                               nb_class)
+                        assert verified
+
+                train_gen = image_segmentation_generator(
+                    img_src, seg_src, batch, nb_class,
+                    height, width, output_height, output_width,
+                    do_augment=do_augment)
+
+                if validate:
+                    val_gen = image_segmentation_generator(
+                        val_images, val_annotations, val_batch_size,
+                        nb_class, height, width, output_height, output_width)
+
+                if not validate:
+                    for epoch in range(epochs):
+                        print(&#34;Starting Epoch &#34;, epoch)
+                        self.signals.log.emit(&#34;Début de l&#39;époque {}&#34;.format(epoch))
+                        history = model.fit_generator(train_gen, steps,
+                                                      epochs=1)
+                        msg = &#34;&#34;
+                        for key, value in history.history.items():
+                            msg += &#34;{}:{}  &#34;.format(str(key), str(value))
+                        self.signals.log.emit(msg)
+
+                        if checkpoint is not None:
+                            model.save_weights(checkpoint + &#34;.&#34; + str(epoch))
+                            print(&#34;saved &#34;, checkpoint + &#34;.model.&#34; + str(epoch))
+                            self.signals.log.emit(&#34;Modèle sauvegardé : &#34;
+                                                  &#34;{}.model.{}&#34;
+                                                  .format(checkpoint, str(epoch)))
+                        print(&#34;Finished Epoch&#34;, epoch)
+                        self.signals.log.emit(&#34;époque {} terminée&#34;.format(epoch))
+                        self.signals.log.emit(&#34;&#34;)
+                        progression = 100 * (epoch + 1) / epochs
+                        self.signals.progressed.emit(progression)
+                else:
+                    for epoch in range(epochs):
+                        print(&#34;Starting Epoch &#34;, epoch)
+                        self.signals.log.emit(&#34;Début de l&#39;époque {}&#34;.format(epoch))
+                        history = model.fit_generator(train_gen, steps,
+                                                      validation_data=val_gen,
+                                                      validation_steps=200,
+                                                      epochs=1)
+
+                        msg = &#34;&#34;
+                        for key, value in history.history.items():
+                            msg += &#34;{}:{}  &#34;.format(str(key), str(value))
+                        self.signals.log.emit(msg)
+
+                        if checkpoint is not None:
+                            model.save_weights(checkpoint + &#34;.&#34; + str(epoch))
+                            print(&#34;saved &#34;, checkpoint + &#34;.model.&#34; + str(epoch))
+                            self.signals.log.emit(&#34;Modèle sauvegardé : &#34;
+                                                  &#34;{}.model.{}&#34;
+                                                  .format(checkpoint, str(epoch)))
+                        print(&#34;Finished Epoch&#34;, epoch)
+                        self.signals.log.emit(&#34;époque {} terminée\n&#34;.format(epoch))
+                        self.signals.log.emit(&#34;&#34;)
+                        progression = 100 * (epoch + 1) / epochs
+                        self.signals.progressed.emit(progression)
+
+                self.signals.finished.emit(&#34;Entrainement terminé !&#34;)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtCore.QRunnable</li>
+<li>sip.wrapper</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="skyeye_segmentation.controller.skyeye_func.TrainWorker.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Run the functionality, triggered by Qt</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def run(self):
+    &#34;&#34;&#34;Run the functionality, triggered by Qt&#34;&#34;&#34;
+
+    try:
+        self.train(**self.kwargs)
+    except Exception as exc:
+        self.signals.error.emit(str(exc))</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.skyeye_func.TrainWorker.train"><code class="name flex">
+<span>def <span class="ident">train</span></span>(<span>self, existing='', new='', width=0, height=0, img_src='', seg_src='', batch=0, steps=0, epochs=0, checkpoint='', nb_class=0, validate=False, val_images=None, val_annotations=None, val_batch_size=1, auto_resume_checkpoint=False, load_weights=None, verify_dataset=True, optimizer_name='adadelta', do_augment=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Launches the training process with the train config</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train(self, existing=&#34;&#34;, new=&#34;&#34;, width=0, height=0, img_src=&#34;&#34;,
+          seg_src=&#34;&#34;, batch=0, steps=0, epochs=0,
+          checkpoint=&#34;&#34;, nb_class=0, validate=False, val_images=None,
+          val_annotations=None, val_batch_size=1,
+          auto_resume_checkpoint=False, load_weights=None,
+          verify_dataset=True, optimizer_name=&#39;adadelta&#39;,
+          do_augment=False):
+    &#34;&#34;&#34;Launches the training process with the train config&#34;&#34;&#34;
+
+    with self.graph.as_default():
+        with self.session.as_default():
+
+            # Getting model
+            if existing:
+                try:
+                    checkpoint_nb = existing.split(&#39;.&#39;)[-1]
+                    index = -(int)(len(checkpoint_nb) + 1)
+                    existing = existing[0:index]
+                    model = model_from_checkpoint_path_nb(existing,
+                                                          checkpoint_nb)
+                    self.signals.log.emit(&#34;Modèle chargé : {}&#34;
+                                          .format(existing))
+                except Exception as exc:
+                    self.signals.error.emit(&#34;Impossible de charger le &#34;
+                                            &#34;modèle existant !\n&#34; + str(exc))
+                    return
+            else:
+                try:
+                    vgg = new.find(&#34;vgg&#34;)
+                    resnet50 = new.find(&#34;resnet50&#34;)
+                    mobilenet = new.find(&#34;mobilenet&#34;)
+                    pspnet = new.find(&#34;pspnet&#34;)
+                    pspnet_50 = new.find(&#34;pspnet_50&#34;)
+                    pspnet_101 = new.find(&#34;pspnet_101&#34;)
+
+                    # Specifics models constraints
+                    if vgg != -1 or resnet50 != -1:
+                        if height % 32 != 0 or width % 32 != 0:
+                            self.signals.error.emit(&#34;Pour un modèle &#34;
+                                                    &#34;vgg/resnet50/pspnet, &#34;
+                                                    &#34;les dimensions &#34;
+                                                    &#34;d&#39;entrée doivent être &#34;
+                                                    &#34;des multiples de 32.&#34;)
+                            return
+                    if mobilenet != -1:
+                        if height != 224 or width != 224:
+                            self.signals.error.emit(
+                                &#34;Pour un modèle mobilenet, les dimensions &#34;
+                                &#34;d&#39;entrée doivent être (224,224).&#34;)
+                            return
+                    if pspnet != -1:
+                        if pspnet_50 != -1 or pspnet_101 != -1:
+                            if not (height == 473 and width == 473) \
+                                    and not (height == 713
+                                             and width == 713):
+                                self.signals.error.emit(
+                                    &#34;Pour un modèle pspnet_50 ou &#34;
+                                    &#34;pspnet_101, les dimensions d&#39;entrée &#34;
+                                    &#34;doivent être &#34;
+                                    &#34;(473,473) ou (713,713).&#34;)
+                                return
+                        else:
+                            if height % 192 != 0 or width % 192 != 0:
+                                self.signals.error.emit(&#34;Pour un modèle &#34;
+                                                        &#34;pspnet, les &#34;
+                                                        &#34;dimensions &#34;
+                                                        &#34;d&#39;entrée doivent &#34;
+                                                        &#34;être des multiples&#34;
+                                                        &#34; de 192.&#34;)
+                                return
+
+                    model = model_from_name[new](nb_class,
+                                                 input_height=height,
+                                                 input_width=width)
+                except Exception as exc:
+                    self.signals.error.emit(&#34;Impossible de créer un nouveau&#34;
+                                            &#34; modèle {} !\n{}&#34;.format(new,
+                                                                      exc))
+                    return
+
+            output_width = model.output_width
+            output_height = model.output_height
+
+            # Model compilation
+            if optimizer_name is not None:
+                # weights = [0.1, 10, 20]
+                # loss_func = weighted_categorical_crossentropy(weights)
+                # print(&#34;Weighted loss : &#34; + str(weights))
+                loss_func = &#34;categorical_crossentropy&#34;
+                model.compile(loss=loss_func,
+                              optimizer=optimizer_name,
+                              metrics=[&#39;accuracy&#39;])
+
+            if checkpoint is not None:
+                with open(checkpoint + &#34;_config.json&#34;, &#34;w&#34;) as file:
+                    json.dump({
+                        &#34;model_class&#34;: model.model_name,
+                        &#34;n_classes&#34;: nb_class,
+                        &#34;input_height&#34;: height,
+                        &#34;input_width&#34;: width,
+                        &#34;output_height&#34;: height,
+                        &#34;output_width&#34;: width
+                    }, file)
+
+            if load_weights is not None and len(load_weights) &gt; 0:
+                print(&#34;Loading weights from &#34;, load_weights)
+                model.load_weights(load_weights)
+
+            if auto_resume_checkpoint and (checkpoint is not None):
+                latest_checkpoint = find_latest_checkpoint(checkpoint)
+                if latest_checkpoint is not None:
+                    print(&#34;Loading the weights from latest checkpoint &#34;,
+                          latest_checkpoint)
+                    model.load_weights(latest_checkpoint)
+
+            if verify_dataset:
+                print(&#34;Verifying training dataset&#34;)
+                self.signals.log.emit(&#34;Vérification du jeu d&#39;entrainement&#34;)
+                verified = verify_segmentation_dataset(img_src, seg_src,
+                                                       nb_class)
+                assert verified
+                self.signals.log.emit(&#34;Jeu d&#39;entrainement vérifié !&#34;)
+                self.signals.log.emit(&#34;&#34;)
+                if validate:
+                    print(&#34;Verifying validation dataset&#34;)
+                    verified = verify_segmentation_dataset(val_images,
+                                                           val_annotations,
+                                                           nb_class)
+                    assert verified
+
+            train_gen = image_segmentation_generator(
+                img_src, seg_src, batch, nb_class,
+                height, width, output_height, output_width,
+                do_augment=do_augment)
+
+            if validate:
+                val_gen = image_segmentation_generator(
+                    val_images, val_annotations, val_batch_size,
+                    nb_class, height, width, output_height, output_width)
+
+            if not validate:
+                for epoch in range(epochs):
+                    print(&#34;Starting Epoch &#34;, epoch)
+                    self.signals.log.emit(&#34;Début de l&#39;époque {}&#34;.format(epoch))
+                    history = model.fit_generator(train_gen, steps,
+                                                  epochs=1)
+                    msg = &#34;&#34;
+                    for key, value in history.history.items():
+                        msg += &#34;{}:{}  &#34;.format(str(key), str(value))
+                    self.signals.log.emit(msg)
+
+                    if checkpoint is not None:
+                        model.save_weights(checkpoint + &#34;.&#34; + str(epoch))
+                        print(&#34;saved &#34;, checkpoint + &#34;.model.&#34; + str(epoch))
+                        self.signals.log.emit(&#34;Modèle sauvegardé : &#34;
+                                              &#34;{}.model.{}&#34;
+                                              .format(checkpoint, str(epoch)))
+                    print(&#34;Finished Epoch&#34;, epoch)
+                    self.signals.log.emit(&#34;époque {} terminée&#34;.format(epoch))
+                    self.signals.log.emit(&#34;&#34;)
+                    progression = 100 * (epoch + 1) / epochs
+                    self.signals.progressed.emit(progression)
+            else:
+                for epoch in range(epochs):
+                    print(&#34;Starting Epoch &#34;, epoch)
+                    self.signals.log.emit(&#34;Début de l&#39;époque {}&#34;.format(epoch))
+                    history = model.fit_generator(train_gen, steps,
+                                                  validation_data=val_gen,
+                                                  validation_steps=200,
+                                                  epochs=1)
+
+                    msg = &#34;&#34;
+                    for key, value in history.history.items():
+                        msg += &#34;{}:{}  &#34;.format(str(key), str(value))
+                    self.signals.log.emit(msg)
+
+                    if checkpoint is not None:
+                        model.save_weights(checkpoint + &#34;.&#34; + str(epoch))
+                        print(&#34;saved &#34;, checkpoint + &#34;.model.&#34; + str(epoch))
+                        self.signals.log.emit(&#34;Modèle sauvegardé : &#34;
+                                              &#34;{}.model.{}&#34;
+                                              .format(checkpoint, str(epoch)))
+                    print(&#34;Finished Epoch&#34;, epoch)
+                    self.signals.log.emit(&#34;époque {} terminée\n&#34;.format(epoch))
+                    self.signals.log.emit(&#34;&#34;)
+                    progression = 100 * (epoch + 1) / epochs
+                    self.signals.progressed.emit(progression)
+
+            self.signals.finished.emit(&#34;Entrainement terminé !&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="skyeye_segmentation.controller" href="index.html">skyeye_segmentation.controller</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.create_pascal_label_colormap" href="#skyeye_segmentation.controller.skyeye_func.create_pascal_label_colormap">create_pascal_label_colormap</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.find_latest_checkpoint" href="#skyeye_segmentation.controller.skyeye_func.find_latest_checkpoint">find_latest_checkpoint</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.label_to_color_image" href="#skyeye_segmentation.controller.skyeye_func.label_to_color_image">label_to_color_image</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.model_from_checkpoint_path_nb" href="#skyeye_segmentation.controller.skyeye_func.model_from_checkpoint_path_nb">model_from_checkpoint_path_nb</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="skyeye_segmentation.controller.skyeye_func.EvalWorker" href="#skyeye_segmentation.controller.skyeye_func.EvalWorker">EvalWorker</a></code></h4>
+<ul class="">
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.EvalWorker.evaluate" href="#skyeye_segmentation.controller.skyeye_func.EvalWorker.evaluate">evaluate</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.EvalWorker.run" href="#skyeye_segmentation.controller.skyeye_func.EvalWorker.run">run</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker" href="#skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker">ImageAugmentationWorker</a></code></h4>
+<ul class="">
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker.augment_data" href="#skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker.augment_data">augment_data</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker.run" href="#skyeye_segmentation.controller.skyeye_func.ImageAugmentationWorker.run">run</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="skyeye_segmentation.controller.skyeye_func.MaskFusionWorker" href="#skyeye_segmentation.controller.skyeye_func.MaskFusionWorker">MaskFusionWorker</a></code></h4>
+<ul class="">
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.MaskFusionWorker.mask_fusion" href="#skyeye_segmentation.controller.skyeye_func.MaskFusionWorker.mask_fusion">mask_fusion</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.MaskFusionWorker.run" href="#skyeye_segmentation.controller.skyeye_func.MaskFusionWorker.run">run</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="skyeye_segmentation.controller.skyeye_func.PredictWorker" href="#skyeye_segmentation.controller.skyeye_func.PredictWorker">PredictWorker</a></code></h4>
+<ul class="">
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.PredictWorker.create_superpositions" href="#skyeye_segmentation.controller.skyeye_func.PredictWorker.create_superpositions">create_superpositions</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.PredictWorker.predict" href="#skyeye_segmentation.controller.skyeye_func.PredictWorker.predict">predict</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.PredictWorker.predict_multiple" href="#skyeye_segmentation.controller.skyeye_func.PredictWorker.predict_multiple">predict_multiple</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.PredictWorker.run" href="#skyeye_segmentation.controller.skyeye_func.PredictWorker.run">run</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="skyeye_segmentation.controller.skyeye_func.TrainWorker" href="#skyeye_segmentation.controller.skyeye_func.TrainWorker">TrainWorker</a></code></h4>
+<ul class="">
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.TrainWorker.run" href="#skyeye_segmentation.controller.skyeye_func.TrainWorker.run">run</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.skyeye_func.TrainWorker.train" href="#skyeye_segmentation.controller.skyeye_func.TrainWorker.train">train</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

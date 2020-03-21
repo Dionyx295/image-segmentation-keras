@@ -2,7 +2,6 @@ import argparse
 import json
 from .data_utils.data_loader import image_segmentation_generator, \
     verify_segmentation_dataset
-from .weighted_categorical_crossentropy import *
 import os
 import glob
 import six

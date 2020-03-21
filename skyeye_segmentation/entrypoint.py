@@ -1,4 +1,4 @@
-"""Application entrypoint"""
+"""Application entry point."""
 
 import sys
 from PyQt5.QtWidgets import QApplication

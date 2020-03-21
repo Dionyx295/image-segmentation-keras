@@ -1,0 +1,44 @@
+************* Module skyeye_segmentation
+skyeye_segmentation\__init__.py:5:0: C0304: Final newline missing (missing-final-newline)
+************* Module skyeye_segmentation.controller.main_window
+skyeye_segmentation\controller\main_window.py:22:4: R0915: Too many statements (79/50) (too-many-statements)
+skyeye_segmentation\controller\main_window.py:192:4: C0103: Method name "closeEvent" doesn't conform to snake_case naming style (invalid-name)
+skyeye_segmentation\controller\main_window.py:206:4: R0912: Too many branches (15/12) (too-many-branches)
+skyeye_segmentation\controller\main_window.py:206:4: R0915: Too many statements (60/50) (too-many-statements)
+skyeye_segmentation\controller\main_window.py:761:12: R0916: Too many boolean expressions in if statement (13/5) (too-many-boolean-expressions)
+skyeye_segmentation\controller\main_window.py:19:0: R0904: Too many public methods (37/20) (too-many-public-methods)
+************* Module skyeye_segmentation.controller.skyeye_func
+skyeye_segmentation\controller\skyeye_func.py:52:4: R0914: Too many local variables (19/15) (too-many-locals)
+skyeye_segmentation\controller\skyeye_func.py:111:4: R0913: Too many arguments (13/5) (too-many-arguments)
+skyeye_segmentation\controller\skyeye_func.py:111:4: R0914: Too many local variables (24/15) (too-many-locals)
+skyeye_segmentation\controller\skyeye_func.py:225:12: E1129: Context manager 'generator' doesn't implement __enter__ and __exit__. (not-context-manager)
+skyeye_segmentation\controller\skyeye_func.py:237:4: R0913: Too many arguments (21/5) (too-many-arguments)
+skyeye_segmentation\controller\skyeye_func.py:237:4: R0914: Too many local variables (45/15) (too-many-locals)
+skyeye_segmentation\controller\skyeye_func.py:247:12: E1129: Context manager 'generator' doesn't implement __enter__ and __exit__. (not-context-manager)
+skyeye_segmentation\controller\skyeye_func.py:237:4: R0912: Too many branches (28/12) (too-many-branches)
+skyeye_segmentation\controller\skyeye_func.py:237:4: R0915: Too many statements (98/50) (too-many-statements)
+skyeye_segmentation\controller\skyeye_func.py:450:4: R0913: Too many arguments (7/5) (too-many-arguments)
+skyeye_segmentation\controller\skyeye_func.py:450:4: R0914: Too many local variables (28/15) (too-many-locals)
+skyeye_segmentation\controller\skyeye_func.py:456:12: E1129: Context manager 'generator' doesn't implement __enter__ and __exit__. (not-context-manager)
+skyeye_segmentation\controller\skyeye_func.py:450:4: R0915: Too many statements (52/50) (too-many-statements)
+skyeye_segmentation\controller\skyeye_func.py:585:4: R0913: Too many arguments (7/5) (too-many-arguments)
+skyeye_segmentation\controller\skyeye_func.py:585:4: R0914: Too many local variables (27/15) (too-many-locals)
+skyeye_segmentation\controller\skyeye_func.py:597:18: E1101: Module 'cv2' has no 'imread' member (no-member)
+skyeye_segmentation\controller\skyeye_func.py:659:18: E1101: Module 'cv2' has no 'resize' member (no-member)
+skyeye_segmentation\controller\skyeye_func.py:662:12: E1101: Module 'cv2' has no 'imwrite' member (no-member)
+skyeye_segmentation\controller\skyeye_func.py:585:4: R0201: Method could be a function (no-self-use)
+skyeye_segmentation\controller\skyeye_func.py:666:4: R0913: Too many arguments (8/5) (too-many-arguments)
+skyeye_segmentation\controller\skyeye_func.py:666:4: R0914: Too many local variables (21/15) (too-many-locals)
+skyeye_segmentation\controller\skyeye_func.py:672:12: E1129: Context manager 'generator' doesn't implement __enter__ and __exit__. (not-context-manager)
+skyeye_segmentation\controller\skyeye_func.py:711:-1: W0105: String statement has no effect (pointless-string-statement)
+skyeye_segmentation\controller\skyeye_func.py:701:20: W0612: Unused variable 'i' (unused-variable)
+skyeye_segmentation\controller\skyeye_func.py:745:18: E1101: Module 'cv2' has no 'imread' member (no-member)
+skyeye_segmentation\controller\skyeye_func.py:747:22: E1101: Module 'cv2' has no 'imread' member (no-member)
+************* Module skyeye_segmentation.controller.worker_signals
+skyeye_segmentation\controller\worker_signals.py:6:0: R0903: Too few public methods (0/2) (too-few-public-methods)
+************* Module skyeye_segmentation.controller.__init__
+skyeye_segmentation\controller\__init__.py:4:0: C0304: Final newline missing (missing-final-newline)
+
+------------------------------------------------------------------
+Your code has been rated at 9.25/10 (previous run: 9.25/10, +0.00)
+

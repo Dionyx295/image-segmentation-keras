@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>keras_segmentation.cli_interface API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>keras_segmentation.cli_interface</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#!/usr/bin/env python
+
+import sys
+import argparse
+
+from .train import train
+from .predict import predict, predict_multiple , evaluate
+from .data_utils.data_loader import verify_segmentation_dataset
+from .data_utils.visualize_dataset import visualize_segmentation_dataset
+
+
+def train_action(command_parser):
+    parser = command_parser.add_parser(&#39;train&#39;)
+    parser.add_argument(&#34;--model_name&#34;, type=str, required=True)
+    parser.add_argument(&#34;--train_images&#34;, type=str, required=True)
+    parser.add_argument(&#34;--train_annotations&#34;, type=str, required=True)
+
+    parser.add_argument(&#34;--n_classes&#34;, type=int, required=True)
+    parser.add_argument(&#34;--input_height&#34;, type=int, default=None)
+    parser.add_argument(&#34;--input_width&#34;, type=int, default=None)
+
+    parser.add_argument(&#39;--not_verify_dataset&#39;, action=&#39;store_false&#39;)
+    parser.add_argument(&#34;--checkpoints_path&#34;, type=str, default=None)
+    parser.add_argument(&#34;--epochs&#34;, type=int, default=5)
+    parser.add_argument(&#34;--batch_size&#34;, type=int, default=2)
+
+    parser.add_argument(&#39;--validate&#39;, action=&#39;store_true&#39;)
+    parser.add_argument(&#34;--val_images&#34;, type=str, default=&#34;&#34;)
+    parser.add_argument(&#34;--val_annotations&#34;, type=str, default=&#34;&#34;)
+
+    parser.add_argument(&#34;--val_batch_size&#34;, type=int, default=2)
+    parser.add_argument(&#34;--load_weights&#34;, type=str, default=None)
+    parser.add_argument(&#39;--auto_resume_checkpoint&#39;, action=&#39;store_true&#39;)
+
+    parser.add_argument(&#34;--steps_per_epoch&#34;, type=int, default=512)
+    parser.add_argument(&#34;--optimizer_name&#34;, type=str, default=&#34;adadelta&#34;)
+
+    def action(args):
+        return train(model=args.model_name,
+                    train_images=args.train_images,
+                    train_annotations=args.train_annotations,
+                    input_height=args.input_height,
+                    input_width=args.input_width,
+                    n_classes=args.n_classes,
+                    verify_dataset=args.not_verify_dataset,
+                    checkpoints_path=args.checkpoints_path,
+                    epochs=args.epochs,
+                    batch_size=args.batch_size,
+                    validate=args.validate,
+                    val_images=args.val_images,
+                    val_annotations=args.val_annotations,
+                    val_batch_size=args.val_batch_size,
+                    auto_resume_checkpoint=args.auto_resume_checkpoint,
+                    load_weights=args.load_weights,
+                    steps_per_epoch=args.steps_per_epoch,
+                    optimizer_name=args.optimizer_name
+                    )
+
+    parser.set_defaults(func=action)
+
+def predict_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;predict&#39;)
+    parser.add_argument(&#34;--checkpoints_path&#34;, type=str, required=True)
+    parser.add_argument(&#34;--input_path&#34;, type=str, default=&#34;&#34;, required=True)
+    parser.add_argument(&#34;--output_path&#34;, type=str, default=&#34;&#34;, required=True)
+
+    def action(args):
+        input_path_extension = args.input_path.split(&#39;.&#39;)[-1]
+        if input_path_extension in [&#39;jpg&#39;, &#39;jpeg&#39;, &#39;png&#39;]:
+            return predict(inp=args.input_path, out_fname=args.output_path,
+                            checkpoints_path=args.checkpoints_path)
+        else:
+            return predict_multiple(inp_dir=args.input_path,
+                                    out_dir=args.output_path,
+                                    checkpoints_path=args.checkpoints_path)
+
+    parser.set_defaults(func=action)
+
+
+
+def evaluate_model_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;evaluate_model&#39;)
+    parser.add_argument(&#34;--images_path&#34;, type=str, required=True)
+    parser.add_argument(&#34;--segs_path&#34;, type=str, required=True)
+    parser.add_argument(&#34;--checkpoints_path&#34;, type=str, required=True)
+
+    def action(args):
+        evaluate(
+            inp_images_dir=args.images_path, annotations_dir=args.segs_path, checkpoints_path=args.checkpoints_path)
+
+    parser.set_defaults(func=action)
+
+
+
+
+def verify_dataset_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;verify_dataset&#39;)
+    parser.add_argument(&#34;--images_path&#34;, type=str)
+    parser.add_argument(&#34;--segs_path&#34;, type=str)
+    parser.add_argument(&#34;--n_classes&#34;, type=int)
+
+    def action(args):
+        verify_segmentation_dataset(
+            args.images_path, args.segs_path, args.n_classes)
+
+    parser.set_defaults(func=action)
+
+
+def visualize_dataset_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;visualize_dataset&#39;)
+    parser.add_argument(&#34;--images_path&#34;, type=str)
+    parser.add_argument(&#34;--segs_path&#34;, type=str)
+    parser.add_argument(&#34;--n_classes&#34;, type=int)
+    parser.add_argument(&#39;--do_augment&#39;, action=&#39;store_true&#39;)
+
+    def action(args):
+        visualize_segmentation_dataset(args.images_path, args.segs_path,
+                                    args.n_classes, do_augment=args.do_augment)
+
+    parser.set_defaults(func=action)
+
+def main():
+    assert len(sys.argv) &gt;= 2, \
+        &#34;python -m keras_segmentation &lt;command&gt; &lt;arguments&gt;&#34;
+
+    main_parser = argparse.ArgumentParser()
+    command_parser = main_parser.add_subparsers()
+
+    # Add individual commands
+    train_action(command_parser)
+    predict_action(command_parser)
+    verify_dataset_action(command_parser)
+    visualize_dataset_action(command_parser)
+    evaluate_model_action(command_parser)
+
+    args = main_parser.parse_args()
+
+    args.func(args)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="keras_segmentation.cli_interface.evaluate_model_action"><code class="name flex">
+<span>def <span class="ident">evaluate_model_action</span></span>(<span>command_parser)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def evaluate_model_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;evaluate_model&#39;)
+    parser.add_argument(&#34;--images_path&#34;, type=str, required=True)
+    parser.add_argument(&#34;--segs_path&#34;, type=str, required=True)
+    parser.add_argument(&#34;--checkpoints_path&#34;, type=str, required=True)
+
+    def action(args):
+        evaluate(
+            inp_images_dir=args.images_path, annotations_dir=args.segs_path, checkpoints_path=args.checkpoints_path)
+
+    parser.set_defaults(func=action)</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.cli_interface.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main():
+    assert len(sys.argv) &gt;= 2, \
+        &#34;python -m keras_segmentation &lt;command&gt; &lt;arguments&gt;&#34;
+
+    main_parser = argparse.ArgumentParser()
+    command_parser = main_parser.add_subparsers()
+
+    # Add individual commands
+    train_action(command_parser)
+    predict_action(command_parser)
+    verify_dataset_action(command_parser)
+    visualize_dataset_action(command_parser)
+    evaluate_model_action(command_parser)
+
+    args = main_parser.parse_args()
+
+    args.func(args)</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.cli_interface.predict_action"><code class="name flex">
+<span>def <span class="ident">predict_action</span></span>(<span>command_parser)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def predict_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;predict&#39;)
+    parser.add_argument(&#34;--checkpoints_path&#34;, type=str, required=True)
+    parser.add_argument(&#34;--input_path&#34;, type=str, default=&#34;&#34;, required=True)
+    parser.add_argument(&#34;--output_path&#34;, type=str, default=&#34;&#34;, required=True)
+
+    def action(args):
+        input_path_extension = args.input_path.split(&#39;.&#39;)[-1]
+        if input_path_extension in [&#39;jpg&#39;, &#39;jpeg&#39;, &#39;png&#39;]:
+            return predict(inp=args.input_path, out_fname=args.output_path,
+                            checkpoints_path=args.checkpoints_path)
+        else:
+            return predict_multiple(inp_dir=args.input_path,
+                                    out_dir=args.output_path,
+                                    checkpoints_path=args.checkpoints_path)
+
+    parser.set_defaults(func=action)</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.cli_interface.train_action"><code class="name flex">
+<span>def <span class="ident">train_action</span></span>(<span>command_parser)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def train_action(command_parser):
+    parser = command_parser.add_parser(&#39;train&#39;)
+    parser.add_argument(&#34;--model_name&#34;, type=str, required=True)
+    parser.add_argument(&#34;--train_images&#34;, type=str, required=True)
+    parser.add_argument(&#34;--train_annotations&#34;, type=str, required=True)
+
+    parser.add_argument(&#34;--n_classes&#34;, type=int, required=True)
+    parser.add_argument(&#34;--input_height&#34;, type=int, default=None)
+    parser.add_argument(&#34;--input_width&#34;, type=int, default=None)
+
+    parser.add_argument(&#39;--not_verify_dataset&#39;, action=&#39;store_false&#39;)
+    parser.add_argument(&#34;--checkpoints_path&#34;, type=str, default=None)
+    parser.add_argument(&#34;--epochs&#34;, type=int, default=5)
+    parser.add_argument(&#34;--batch_size&#34;, type=int, default=2)
+
+    parser.add_argument(&#39;--validate&#39;, action=&#39;store_true&#39;)
+    parser.add_argument(&#34;--val_images&#34;, type=str, default=&#34;&#34;)
+    parser.add_argument(&#34;--val_annotations&#34;, type=str, default=&#34;&#34;)
+
+    parser.add_argument(&#34;--val_batch_size&#34;, type=int, default=2)
+    parser.add_argument(&#34;--load_weights&#34;, type=str, default=None)
+    parser.add_argument(&#39;--auto_resume_checkpoint&#39;, action=&#39;store_true&#39;)
+
+    parser.add_argument(&#34;--steps_per_epoch&#34;, type=int, default=512)
+    parser.add_argument(&#34;--optimizer_name&#34;, type=str, default=&#34;adadelta&#34;)
+
+    def action(args):
+        return train(model=args.model_name,
+                    train_images=args.train_images,
+                    train_annotations=args.train_annotations,
+                    input_height=args.input_height,
+                    input_width=args.input_width,
+                    n_classes=args.n_classes,
+                    verify_dataset=args.not_verify_dataset,
+                    checkpoints_path=args.checkpoints_path,
+                    epochs=args.epochs,
+                    batch_size=args.batch_size,
+                    validate=args.validate,
+                    val_images=args.val_images,
+                    val_annotations=args.val_annotations,
+                    val_batch_size=args.val_batch_size,
+                    auto_resume_checkpoint=args.auto_resume_checkpoint,
+                    load_weights=args.load_weights,
+                    steps_per_epoch=args.steps_per_epoch,
+                    optimizer_name=args.optimizer_name
+                    )
+
+    parser.set_defaults(func=action)</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.cli_interface.verify_dataset_action"><code class="name flex">
+<span>def <span class="ident">verify_dataset_action</span></span>(<span>command_parser)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def verify_dataset_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;verify_dataset&#39;)
+    parser.add_argument(&#34;--images_path&#34;, type=str)
+    parser.add_argument(&#34;--segs_path&#34;, type=str)
+    parser.add_argument(&#34;--n_classes&#34;, type=int)
+
+    def action(args):
+        verify_segmentation_dataset(
+            args.images_path, args.segs_path, args.n_classes)
+
+    parser.set_defaults(func=action)</code></pre>
+</details>
+</dd>
+<dt id="keras_segmentation.cli_interface.visualize_dataset_action"><code class="name flex">
+<span>def <span class="ident">visualize_dataset_action</span></span>(<span>command_parser)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def visualize_dataset_action(command_parser):
+
+    parser = command_parser.add_parser(&#39;visualize_dataset&#39;)
+    parser.add_argument(&#34;--images_path&#34;, type=str)
+    parser.add_argument(&#34;--segs_path&#34;, type=str)
+    parser.add_argument(&#34;--n_classes&#34;, type=int)
+    parser.add_argument(&#39;--do_augment&#39;, action=&#39;store_true&#39;)
+
+    def action(args):
+        visualize_segmentation_dataset(args.images_path, args.segs_path,
+                                    args.n_classes, do_augment=args.do_augment)
+
+    parser.set_defaults(func=action)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="keras_segmentation" href="index.html">keras_segmentation</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="keras_segmentation.cli_interface.evaluate_model_action" href="#keras_segmentation.cli_interface.evaluate_model_action">evaluate_model_action</a></code></li>
+<li><code><a title="keras_segmentation.cli_interface.main" href="#keras_segmentation.cli_interface.main">main</a></code></li>
+<li><code><a title="keras_segmentation.cli_interface.predict_action" href="#keras_segmentation.cli_interface.predict_action">predict_action</a></code></li>
+<li><code><a title="keras_segmentation.cli_interface.train_action" href="#keras_segmentation.cli_interface.train_action">train_action</a></code></li>
+<li><code><a title="keras_segmentation.cli_interface.verify_dataset_action" href="#keras_segmentation.cli_interface.verify_dataset_action">verify_dataset_action</a></code></li>
+<li><code><a title="keras_segmentation.cli_interface.visualize_dataset_action" href="#keras_segmentation.cli_interface.visualize_dataset_action">visualize_dataset_action</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
