@@ -53,7 +53,7 @@ Le projet est structué de la manière suivante :
 
 Les modules pythons s'organisent de la manière suivante :
 
-![Diagramme des modules](README/Diagramme modules.png "Diagramme de modules")
+![Diagramme des modules](README/Diagramme_modules.png "Diagramme de modules")
 
 Le module **view** contient un fichier .ui généré avec [Qt Designer](https://build-system.fman.io/qt-designer-download), qui a été automatiquement traduit en .py grâce au convertisseur pyuic5 (contenu dans PyQt5) : 
 
