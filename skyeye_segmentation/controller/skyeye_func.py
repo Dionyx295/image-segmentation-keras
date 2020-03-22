@@ -273,7 +273,7 @@ class TrainWorker(QRunnable):
                         if vgg != -1 or resnet50 != -1:
                             if height % 32 != 0 or width % 32 != 0:
                                 self.signals.error.emit("Pour un modèle "
-                                                        "vgg/resnet50/pspnet, "
+                                                        "vgg/resnet50, "
                                                         "les dimensions "
                                                         "d'entrée doivent être "
                                                         "des multiples de 32.")

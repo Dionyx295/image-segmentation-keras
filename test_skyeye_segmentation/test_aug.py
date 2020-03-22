@@ -47,3 +47,4 @@ def test_aug():
         assert im.size[0] == 256
         assert im.size[1] == 256
 
+test_aug()

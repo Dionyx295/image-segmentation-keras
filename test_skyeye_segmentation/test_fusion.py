@@ -40,3 +40,4 @@ def test_fusion():
 
     if os.path.exists(save):
         shutil.rmtree(save)
+
