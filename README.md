@@ -105,4 +105,4 @@ Le rapport PyLint est alors disponible et donne des indications sur la qualité 
 
 ## Manuel d'utilisation
 
-Voir le [manuel d'utilisation](MANUAL/Manuel d'utilisation SkyEye.md)
+Voir le [manuel d'utilisation](MANUAL/Manuel.md)
