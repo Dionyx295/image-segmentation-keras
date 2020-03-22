@@ -131,5 +131,5 @@ La dernière fonctionnalité offerte par l'outil permet d'utiliser un modèle en
 - Le dossier qui contiendra les segmentations générées (et la carte des probabilités au format CSV)
 - Le dossier qui contiendra les superpositions entre les images et segmentations (peut être le même que le dossier précédent)
 
-![Pred](img/Ong3.png "Prédiction")
+![Pred](img/Ong3.PNG "Prediction")
 
