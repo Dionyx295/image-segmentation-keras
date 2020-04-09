@@ -106,3 +106,8 @@ Le rapport PyLint est alors disponible et donne des indications sur la qualité 
 ## Manuel d'utilisation
 
 Voir le [manuel d'utilisation](MANUAL/Manuel.md)
+
+
+## Téléchargement
+
+Télécharger l'archive de la dernière version [ici](https://github.com/Millasta/image-segmentation-keras/releases).
