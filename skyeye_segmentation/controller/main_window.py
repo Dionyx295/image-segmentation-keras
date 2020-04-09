@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
 
         # Creating log file and redirecting stdout
         self.stdout_original = sys.stdout
-        work_dir = os.path.join(Path(os.getcwd()).parent, "log")
+        work_dir = os.path.join(Path(os.getcwd()), "log")
         if not os.path.isdir(work_dir):
             os.mkdir(work_dir)
         now = datetime.now()
