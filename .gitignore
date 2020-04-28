@@ -46,7 +46,7 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Unit test / coverage reports
+# Unit test_keras_segmentation / coverage reports
 htmlcov/
 .tox/
 .coverage

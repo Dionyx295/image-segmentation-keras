@@ -15,9 +15,10 @@ from skyeye_segmentation.view import main_window
 from skyeye_segmentation.controller.skyeye_func import MaskFusionWorker, \
     ImageAugmentationWorker, TrainWorker, EvalWorker, PredictWorker
 
-
 class MainWindow(QMainWindow):
     """Main window controller class"""
+
+    log_file = ""
 
     def __init__(self):
         super().__init__()
@@ -29,9 +30,10 @@ class MainWindow(QMainWindow):
             os.mkdir(work_dir)
         now = datetime.now()
         dt_string = now.strftime("%d-%m-%Y %Hh%Mm%Ss")
-        log_file = os.path.join(work_dir, "logs_" + dt_string + ".txt")
-        sys.stdout = open(log_file, 'a')
-        sys.stderr = open(log_file, 'a')
+
+        MainWindow.log_file = os.path.join(work_dir, "logs_" + dt_string + ".txt")
+        sys.stdout = open(MainWindow.log_file, 'a')
+        sys.stderr = open(MainWindow.log_file, 'a')
 
         self.qt_ui = main_window.Ui_MainWindow()
         self.qt_ui.setupUi(self)

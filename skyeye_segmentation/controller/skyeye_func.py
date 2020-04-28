@@ -4,6 +4,7 @@ import glob
 import os
 import random
 import json
+import traceback
 
 import cv2
 import numpy as np
@@ -28,7 +29,6 @@ from keras_segmentation.predict import model_from_checkpoint_path, \
     get_pairs_from_paths, get_segmentation_array, predict
 from skyeye_segmentation.controller.worker_signals import WorkerSignals
 
-
 class MaskFusionWorker(QRunnable):
     """
         Worker wrapper for the mask fusion func
@@ -47,7 +47,7 @@ class MaskFusionWorker(QRunnable):
         try:
             self.mask_fusion(**self.kwargs)
         except Exception as exc:
-            self.signals.error.emit(str(exc))
+            self.signals.error.emit(traceback.format_exc())
 
     def mask_fusion(self, class_pathes="", class_scales="", size=(400, 400),
                     save_to=""):
@@ -106,7 +106,7 @@ class ImageAugmentationWorker(QRunnable):
         try:
             self.augment_data(**self.kwargs)
         except Exception as exc:
-            self.signals.error.emit(str(exc))
+            self.signals.error.emit(traceback.format_exc())
 
     def augment_data(self, nb_img=1, img_src="", seg_src="", img_dest="",
                      seg_dest="", size=(10, 10),
@@ -221,9 +221,6 @@ class TrainWorker(QRunnable):
 
         self.session = tf.Session()
         self.graph = tf.get_default_graph()
-        with self.graph.as_default():
-            with self.session.as_default():
-                self.signals.log.emit("Début de la session d'entrainement")
 
     @pyqtSlot()
     def run(self):
@@ -232,7 +229,7 @@ class TrainWorker(QRunnable):
         try:
             self.train(**self.kwargs)
         except Exception as exc:
-            self.signals.error.emit(str(exc))
+            self.signals.error.emit(traceback.format_exc())
 
     def train(self, existing="", new="", width=0, height=0, img_src="",
               seg_src="", batch=0, steps=0, epochs=0,
@@ -245,6 +242,7 @@ class TrainWorker(QRunnable):
 
         with self.graph.as_default():
             with self.session.as_default():
+                self.signals.log.emit("Début de la session d'entrainement")
 
                 # Getting model
                 if existing:
@@ -258,7 +256,8 @@ class TrainWorker(QRunnable):
                                               .format(existing))
                     except Exception as exc:
                         self.signals.error.emit("Impossible de charger le "
-                                                "modèle existant !\n" + str(exc))
+                                                "modèle existant !\n" +
+                                                traceback.format_exc())
                         return
                 else:
                     try:
@@ -310,8 +309,9 @@ class TrainWorker(QRunnable):
                                                      input_width=width)
                     except Exception as exc:
                         self.signals.error.emit("Impossible de créer un nouveau"
-                                                " modèle {} !\n{}".format(new,
-                                                                          exc))
+                                                " modèle {} !\n{}".
+                                                format(new, traceback.
+                                                       format_exc()))
                         return
 
                 output_width = model.output_width
@@ -354,7 +354,18 @@ class TrainWorker(QRunnable):
                     self.signals.log.emit("Vérification du jeu d'entrainement")
                     verified = verify_segmentation_dataset(img_src, seg_src,
                                                            nb_class)
-                    assert verified
+                    if not verified:
+                        self.signals.log.emit("Erreur lors de la vérification"
+                                                ", vérifiez le jeu "
+                                                "d'entrainement (correspondance"
+                                                " image/segmentation, nb de"
+                                                " classes, format..).")
+                        self.signals.log.emit("")
+                        self.signals.error.emit("Erreur lors de la "
+                                                "vérification du jeu d'"
+                                                "entrainement.")
+                        return
+
                     self.signals.log.emit("Jeu d'entrainement vérifié !")
                     self.signals.log.emit("")
                     if validate:
@@ -362,7 +373,19 @@ class TrainWorker(QRunnable):
                         verified = verify_segmentation_dataset(val_images,
                                                                val_annotations,
                                                                nb_class)
-                        assert verified
+                        if not verified:
+                            self.signals.log.emit(
+                                "Erreur lors de la vérification"
+                                ", vérifiez le jeu "
+                                "de validation.")
+                            self.signals.log.emit("")
+                            self.signals.error.emit("Erreur lors de la "
+                                                    "vérification du jeu de "
+                                                    "de validation "
+                                                    "(correspondance image/segm"
+                                                    "entation, nb de classes, "
+                                                    "format..).")
+                            return
 
                 train_gen = image_segmentation_generator(
                     img_src, seg_src, batch, nb_class,
@@ -445,7 +468,7 @@ class EvalWorker(QRunnable):
         try:
             self.evaluate(**self.kwargs)
         except Exception as exc:
-            self.signals.error.emit(str(exc))
+            self.signals.error.emit(traceback.format_exc())
 
     def evaluate(self, model=None, inp_images=None, annotations=None,
                  inp_images_dir=None, annotations_dir=None,
@@ -456,10 +479,12 @@ class EvalWorker(QRunnable):
             with self.session.as_default():
                 self.signals.log.emit("Début de la session d'évaluation")
                 if model is None:
-                    assert (checkpoints_path is not None), "Please " \
-                                                           "provide the model" \
-                                                           " or the " \
-                                                           "checkpoints_path"
+                    if checkpoints_path is None:
+                        self.signals.log.emit("Impossible de trouver le modèle"
+                                              " à évaluer.")
+                        self.signals.log.emit("")
+                        self.signals.error.emit("Impossible de trouver le "
+                                                "modèle à évaluer")
                     try:
                         checkpoint_nb = checkpoints_path.split('.')[-1]
                         index = -(int)(len(checkpoint_nb) + 1)
@@ -470,25 +495,16 @@ class EvalWorker(QRunnable):
                                               .format(checkpoints_path))
                     except Exception as exc:
                         self.signals.finished.emit("Impossible de charger le "
-                                                   "modèle existant !" + str(exc))
+                                                   "modèle existant !" +
+                                                   traceback.format_exc())
                         return
 
                 if inp_images is None:
-                    assert (inp_images_dir is not None), "Please privide " \
-                                                         "inp_images or " \
-                                                         "inp_images_dir"
-                    assert (annotations_dir is not None), "Please privide " \
-                                                          "inp_images or " \
-                                                          "inp_images_dir"
-
                     paths = get_pairs_from_paths(inp_images_dir,
                                                  annotations_dir)
                     paths = list(zip(*paths))
                     inp_images = list(paths[0])
                     annotations = list(paths[1])
-
-                assert isinstance(inp_images, list)
-                assert isinstance(annotations, list)
 
                 tpm = np.zeros(model.n_classes)
                 fpm = np.zeros(model.n_classes)
@@ -580,7 +596,7 @@ class PredictWorker(QRunnable):
         try:
             self.predict_multiple(**self.kwargs)
         except Exception as exc:
-            self.signals.error.emit(str(exc))
+            self.signals.error.emit(traceback.format_exc())
 
     def predict(self, model=None, inp=None, out_fname=None,
                 checkpoints_path=None, clrs=None, out_prob_file=None):
@@ -591,7 +607,7 @@ class PredictWorker(QRunnable):
 
         assert inp is not None
         assert isinstance(inp, (np.ndarray, six.string_types)), \
-            "Inupt should be the CV image or the input file name"
+            "Input should be the CV image or the input file name"
 
         if isinstance(inp, six.string_types):
             inp = cv2.imread(inp)
@@ -682,7 +698,7 @@ class PredictWorker(QRunnable):
                     except Exception as exc:
                         self.signals.finished.emit("Impossible de charger le"
                                                    " modèle existant !\n"
-                                                   + str(exc))
+                                                   + traceback.format_exc())
                         return None
 
                 if inps is None and (inp_dir is not None):
