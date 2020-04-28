@@ -12,7 +12,7 @@ L'idée est d'utiliser l'implémentation des modèles et classes utilitaires du 
 
 Le projet a été développé avec une distribution Python 3.6.0 (64bit) sur windows, et nécessite les dépendances suivantes (à retrouver dans requirements.txt) :
 
-- **tensorflow==1.9.0**
+- **tensorflow==1.5.0**
 - **keras==2.2.5**
 - **protobuf==3.6.0**
 - six (1.14.0)
