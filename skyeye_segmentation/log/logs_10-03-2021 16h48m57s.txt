@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "D:/User/Tom/Mes documents/GitHub/image-segmentation-keras-v2/skyeye_segmentation/entrypoint.py", line 10, in <module>
+    W = MainWindow()
+  File "D:\User\Tom\Mes documents\GitHub\image-segmentation-keras-v2\skyeye_segmentation\controller\main_window.py", line 185, in __init__
+    .connect(self.on_charb_extra_seg_browse_button_click)
+AttributeError: 'MainWindow' object has no attribute 'on_charb_extra_seg_browse_button_click'

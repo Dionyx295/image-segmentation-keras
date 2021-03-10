@@ -32,8 +32,9 @@ class MainWindow(QMainWindow):
         dt_string = now.strftime("%d-%m-%Y %Hh%Mm%Ss")
 
         MainWindow.log_file = os.path.join(work_dir, "logs_" + dt_string + ".txt")
-        sys.stdout = open(MainWindow.log_file, 'a')
-        sys.stderr = open(MainWindow.log_file, 'a')
+        # [!] UNCOMMENT TO PRINT IN LOG FILE
+        # sys.stdout = open(MainWindow.log_file, 'a')
+        # sys.stderr = open(MainWindow.log_file, 'a')
 
         self.qt_ui = main_window.Ui_MainWindow()
         self.qt_ui.setupUi(self)
@@ -177,6 +178,75 @@ class MainWindow(QMainWindow):
             .connect(self.check_predict_available)
         self.qt_ui.saved_sup_field.textChanged \
             .connect(self.check_predict_available)
+
+        ###########################################################################
+        ### Connections to slots (tab "Charbonnières")                          ###
+        ###########################################################################
+
+        # Thumbnail extraction
+        self.qt_ui.charb_extra_images_browse_button.clicked \
+            .connect(self.on_charb_extra_images_browse_button_click)
+        self.qt_ui.charb_extra_seg_browse_button.clicked \
+            .connect(self.on_charb_extra_seg_browse_button_click)
+        self.qt_ui.charb_extra_dataset_browse_button.clicked \
+            .connect(self.on_charb_extra_dataset_browse_button_click)
+        self.qt_ui.charb_extra_extract_button.clicked \
+            .connect(self.on_charb_extra_extract_button_click)
+
+        # Training and evaluation
+        self.qt_ui.charb_train_traindata_browse_button.clicked \
+            .connect(self.on_charb_train_traindata_browse_button_click)
+        self.qt_ui.charb_train_evaldata_browse_button.clicked \
+            .connect(self.on_charb_train_evaldata_browse_button_click)
+        self.qt_ui.charb_train_testdata_browse_button.clicked \
+            .connect(self.on_charb_train_testdata_browse_button_click)
+        self.qt_ui.charb_train_loadmodel_browse_button.clicked \
+            .connect(self.on_charb_train_loadmodel_browse_button_click)
+        self.qt_ui.charb_train_savemodel_browse_button.clicked \
+            .connect(self.on_charb_train_savemodel_browse_button_click)
+        self.qt_ui.charb_train_train_button.clicked \
+            .connect(self.on_charb_train_train_button_click)
+        self.qt_ui.charb_train_eval_button.clicked \
+            .connect(self.on_charb_train_eval_button_click)
+
+        # UI Management
+        # Thumbnail extraction
+        self.qt_ui.charb_extra_images_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_seg_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_dataset_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_intervalle_spinbox.valueChanged \
+            .connect(self.charb_check_extract_available)
+        # Training
+        self.qt_ui.charb_train_traindata_field.textChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_evaldata_field.textChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_testdata_field.textChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_model_combobox.currentTextChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_batchsize_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_stepperepoch_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_epochs_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_savemodel_field.textChanged \
+            .connect(self.charb_check_train_available)
+        # Evaluation
+        self.qt_ui.charb_train_loadmodel_field.textChanged \
+            .connect(self.charb_check_eval_available)
+
+        ###########################################################################
+        ###########################################################################
+        ###########################################################################
 
         # Dictionnary to bind classes and their path
         self.classes_folders = {}
@@ -641,10 +711,104 @@ class MainWindow(QMainWindow):
         worker.signals.error.connect(self.error_appened)
         self.thread_pool.start(worker)
 
+    ###########################################################################
+    ### Slots (tab "Charbonnières")                                         ###
+    ###########################################################################
+
+    # Thumbnail extraction
+
+    @pyqtSlot()
+    def on_charb_extra_images_browse_button_click(self):
+        """CHARB - Images for thumbnails generation browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Images",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_images_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_seg_browse_button_click(self):
+        """CHARB - Segmentations for thumbnails generation browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Segmentations",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_seg_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_dataset_browse_button_click(self):
+        """CHARB - Output dataset browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Dataset",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_dataset_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_extract_button_click(self):
+        print("[TODO] on_charb_extra_extract_button_click")
+
+    # Training and evaluation
+
+    @pyqtSlot()
+    def on_charb_train_traindata_browse_button_click(self):
+        """CHARB - Training dataset browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Jeu d'entraînement",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_traindata_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_evaldata_browse_button_click(self):
+        """CHARB - Evaluation dataset browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Jeu d'évaluation",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_evaldata_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_testdata_browse_button_click(self):
+        """CHARB - Test dataset browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Jeu de test",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_testdata_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_loadmodel_browse_button_click(self):
+        """CHARB - Existing model browser"""
+        file_name, _ = QFileDialog.getOpenFileName(self, "Charger un modèle")
+        if file_name:
+            self.qt_ui.charb_train_loadmodel_field.setText(file_name)
+
+    @pyqtSlot()
+    def on_charb_train_savemodel_browse_button_click(self):
+        """CHARB - Save model browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Sauvegarder le modèle dans le dossier suivant",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_savemodel_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_train_button_click(self):
+        print("[TODO] on_charb_train_train_button_click")
+
+    @pyqtSlot()
+    def on_charb_train_eval_button_click(self):
+        print("[TODO] on_charb_train_eval_button_click")
+
+    ###########################################################################
+    ###########################################################################
+    ###########################################################################
+
     # UI management
 
     def update_progress_bar(self, value):
-        """Update the current progression of the progress ba"""
+        """Update the current progression of the progress bar"""
         self.qt_ui.progress_bar.setValue(value)
 
     def treatment_done(self, msg=None):
@@ -680,6 +844,7 @@ class MainWindow(QMainWindow):
         self.check_train_available()
         self.check_eval_available()
         self.check_predict_available()
+        # TODO: ajouter les checks pour l'onglet "Charbonnières"
 
     def set_progress_bar_state(self, enabled):
         """Lock or unlock the progress bar"""
@@ -862,3 +1027,38 @@ class MainWindow(QMainWindow):
             return
 
         self.qt_ui.predict_button.setEnabled(True)
+
+    ###########################################################################
+    ### UI management (tab "Charbonnières")                                 ###
+    ###########################################################################
+
+    def charb_append_extraction_log(self, line):
+        """CHARB - Extraction logging"""
+        self.qt_ui.charb_extra_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_append_train_log(self, line):
+        """CHARB - Train/Eval logging"""
+        self.qt_ui.charb_train_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_append_predict_log(self, line):
+        """CHARB - Predict logging"""
+        self.qt_ui.charb_pred_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_check_extract_available(self):
+        print("[TODO] charb_check_extract_available")
+
+    def charb_check_train_available(self):
+        print("[TODO] charb_check_train_available")
+        self.charb_check_eval_available()
+
+    def charb_check_eval_available(self):
+        print("[TODO] charb_check_eval_available")
+
+    def charb_check_predict_available(self):
+        print("[TODO] charb_check_predict_available")

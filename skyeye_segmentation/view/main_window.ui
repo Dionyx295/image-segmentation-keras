@@ -29,1383 +29,2214 @@
    <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="horizontalLayoutWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>-1</x>
-      <y>-1</y>
-      <width>741</width>
-      <height>571</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_8">
-     <item>
-      <widget class="QTabWidget" name="main_tab">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="autoFillBackground">
-        <bool>true</bool>
-       </property>
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <widget class="QWidget" name="preprocess_tab">
-        <attribute name="title">
-         <string>Préparation des données</string>
-        </attribute>
-        <widget class="QGroupBox" name="groupBox">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0" rowspan="2" colspan="2">
+     <layout class="QHBoxLayout" name="horizontalLayout_8"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QTabWidget" name="main_tab">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LeftToRight</enum>
+      </property>
+      <property name="autoFillBackground">
+       <bool>true</bool>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <widget class="QWidget" name="preprocess_tab">
+       <attribute name="title">
+        <string>Préparation des données</string>
+       </attribute>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>731</width>
+          <height>261</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Prépration des masques</string>
+        </property>
+        <widget class="QGroupBox" name="groupBox_3">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>731</width>
-           <height>261</height>
+           <x>9</x>
+           <y>19</y>
+           <width>391</width>
+           <height>231</height>
           </rect>
          </property>
          <property name="title">
-          <string>Prépration des masques</string>
+          <string>Classes</string>
          </property>
-         <widget class="QGroupBox" name="groupBox_3">
+         <widget class="QWidget" name="horizontalLayoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>371</width>
+            <height>201</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QListWidget" name="classes_list">
+             <property name="selectionMode">
+              <enum>QAbstractItemView::ExtendedSelection</enum>
+             </property>
+             <property name="uniformItemSizes">
+              <bool>true</bool>
+             </property>
+             <property name="selectionRectVisible">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QPushButton" name="add_class_button">
+               <property name="text">
+                <string>+</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="remove_class_button">
+               <property name="text">
+                <string>-</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_4">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>20</y>
+           <width>311</width>
+           <height>121</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Redimensionnement</string>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>291</width>
+            <height>92</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Largeur (px)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="resize_width_spinbox">
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+             <property name="value">
+              <number>400</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Hauteur (px)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="resize_height_spinbox">
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+             <property name="value">
+              <number>400</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QGroupBox" name="groupBox_5">
+         <property name="geometry">
+          <rect>
+           <x>410</x>
+           <y>140</y>
+           <width>311</width>
+           <height>111</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Lancement</string>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget_3">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>291</width>
+            <height>81</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Sauvegarder dans</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLineEdit" name="mask_prep_field"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="mask_prep_browse_button">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QPushButton" name="fusion_button">
+             <property name="text">
+              <string>Fusion</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>270</y>
+          <width>731</width>
+          <height>271</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Augmentation des données</string>
+        </property>
+        <widget class="QGroupBox" name="groupBox_6">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>351</width>
+           <height>121</height>
+          </rect>
+         </property>
+         <property name="title">
+          <string>Source</string>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget_4">
           <property name="geometry">
            <rect>
             <x>9</x>
             <y>19</y>
-            <width>391</width>
-            <height>231</height>
+            <width>331</width>
+            <height>96</height>
            </rect>
           </property>
-          <property name="title">
-           <string>Classes</string>
-          </property>
-          <widget class="QWidget" name="horizontalLayoutWidget">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>371</width>
-             <height>201</height>
-            </rect>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QListWidget" name="classes_list">
-              <property name="selectionMode">
-               <enum>QAbstractItemView::ExtendedSelection</enum>
-              </property>
-              <property name="uniformItemSizes">
-               <bool>true</bool>
-              </property>
-              <property name="selectionRectVisible">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_2">
-              <item>
-               <widget class="QPushButton" name="add_class_button">
-                <property name="text">
-                 <string>+</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="remove_class_button">
-                <property name="text">
-                 <string>-</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-         <widget class="QGroupBox" name="groupBox_4">
-          <property name="geometry">
-           <rect>
-            <x>410</x>
-            <y>20</y>
-            <width>311</width>
-            <height>121</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>Redimensionnement</string>
-          </property>
-          <widget class="QWidget" name="verticalLayoutWidget">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>291</width>
-             <height>91</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Largeur (px)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="resize_width_spinbox">
-              <property name="maximum">
-               <number>99999</number>
-              </property>
-              <property name="value">
-               <number>400</number>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Hauteur (px)</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QSpinBox" name="resize_height_spinbox">
-              <property name="maximum">
-               <number>99999</number>
-              </property>
-              <property name="value">
-               <number>400</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-         <widget class="QGroupBox" name="groupBox_5">
-          <property name="geometry">
-           <rect>
-            <x>410</x>
-            <y>140</y>
-            <width>311</width>
-            <height>111</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>Lancement</string>
-          </property>
-          <widget class="QWidget" name="verticalLayoutWidget_3">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>291</width>
-             <height>81</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_3">
-            <item>
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Sauvegarder dans</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QLineEdit" name="mask_prep_field"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="mask_prep_browse_button">
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QPushButton" name="fusion_button">
-              <property name="text">
-               <string>Fusion</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Images</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLineEdit" name="aug_images_source_field"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="aug_images_source_browse_button">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Segmentations</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLineEdit" name="aug_seg_source_field"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="aug_seg_source_browse_button">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </widget>
-        <widget class="QGroupBox" name="groupBox_2">
+        <widget class="QGroupBox" name="groupBox_8">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>270</y>
-           <width>731</width>
-           <height>271</height>
+           <x>370</x>
+           <y>10</y>
+           <width>261</width>
+           <height>251</height>
           </rect>
          </property>
          <property name="title">
-          <string>Augmentation des données</string>
+          <string>Paramètres</string>
          </property>
-         <widget class="QGroupBox" name="groupBox_6">
+         <widget class="QWidget" name="formLayoutWidget">
           <property name="geometry">
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>351</width>
-            <height>121</height>
+            <width>241</width>
+            <height>256</height>
            </rect>
           </property>
-          <property name="title">
-           <string>Source</string>
-          </property>
-          <widget class="QWidget" name="verticalLayoutWidget_4">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>19</y>
-             <width>331</width>
-             <height>96</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
-            <item>
-             <widget class="QLabel" name="label_4">
+          <layout class="QFormLayout" name="formLayout">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>Nb d'images</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QSpinBox" name="aug_images_nb_spinbox">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>999999</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>Intervalle de rotation (degrès)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>Décalage horizontal (%)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_11">
+             <property name="text">
+              <string>Décalage vertical (%)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_12">
+             <property name="text">
+              <string>Zoom (%)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_13">
+             <property name="text">
+              <string>Déformation/Shear (degrès)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_14">
+             <property name="text">
+              <string>Stratégie de remplissage</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QSpinBox" name="aug_rotation_range_spinbox">
+             <property name="maximum">
+              <number>360</number>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QSpinBox" name="aug_horizontal_spinbox">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QSpinBox" name="aug_vertical_spinbox">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QSpinBox" name="aug_zoom_spinbox">
+             <property name="maximum">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QSpinBox" name="aug_shear_spinbox">
+             <property name="maximum">
+              <number>360</number>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QComboBox" name="aug_fill_combobox">
+             <item>
               <property name="text">
-               <string>Images</string>
+               <string>constant</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="QLineEdit" name="aug_images_source_field"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="aug_images_source_browse_button">
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_5">
+             </item>
+             <item>
               <property name="text">
-               <string>Segmentations</string>
+               <string>nearest</string>
               </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLineEdit" name="aug_seg_source_field"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="aug_seg_source_browse_button">
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-         <widget class="QGroupBox" name="groupBox_8">
-          <property name="geometry">
-           <rect>
-            <x>370</x>
-            <y>10</y>
-            <width>261</width>
-            <height>251</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>Paramètres</string>
-          </property>
-          <widget class="QWidget" name="formLayoutWidget">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>20</y>
-             <width>241</width>
-             <height>230</height>
-            </rect>
-           </property>
-           <layout class="QFormLayout" name="formLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_8">
+             </item>
+             <item>
               <property name="text">
-               <string>Nb d'images</string>
+               <string>reflect</string>
               </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QSpinBox" name="aug_images_nb_spinbox">
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>999999</number>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_9">
+             </item>
+             <item>
               <property name="text">
-               <string>Intervalle de rotation (degrès)</string>
+               <string>wrap</string>
               </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_10">
-              <property name="text">
-               <string>Décalage horizontal (%)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_11">
-              <property name="text">
-               <string>Décalage vertical (%)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_12">
-              <property name="text">
-               <string>Zoom (%)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="label_13">
-              <property name="text">
-               <string>Déformation/Shear (degrès)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="label_14">
-              <property name="text">
-               <string>Stratégie de remplissage</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QSpinBox" name="aug_rotation_range_spinbox">
-              <property name="maximum">
-               <number>360</number>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QSpinBox" name="aug_horizontal_spinbox">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QSpinBox" name="aug_vertical_spinbox">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="1">
-             <widget class="QSpinBox" name="aug_zoom_spinbox">
-              <property name="maximum">
-               <number>100</number>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="1">
-             <widget class="QSpinBox" name="aug_shear_spinbox">
-              <property name="maximum">
-               <number>360</number>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QComboBox" name="aug_fill_combobox">
-              <item>
-               <property name="text">
-                <string>constant</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>nearest</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>reflect</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string>wrap</string>
-               </property>
-              </item>
-             </widget>
-            </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="label_21">
-              <property name="text">
-               <string>Largeur (px)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <widget class="QLabel" name="label_30">
-              <property name="text">
-               <string>Hauteur (px)</string>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="1">
-             <widget class="QSpinBox" name="aug_width_spinbox">
-              <property name="maximum">
-               <number>99999</number>
-              </property>
-              <property name="value">
-               <number>400</number>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QSpinBox" name="aug_height_spinbox">
-              <property name="maximum">
-               <number>99999</number>
-              </property>
-              <property name="value">
-               <number>400</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-         <widget class="QGroupBox" name="groupBox_7">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>140</y>
-            <width>351</width>
-            <height>121</height>
-           </rect>
-          </property>
-          <property name="title">
-           <string>Destination</string>
-          </property>
-          <widget class="QWidget" name="verticalLayoutWidget_5">
-           <property name="geometry">
-            <rect>
-             <x>9</x>
-             <y>19</y>
-             <width>331</width>
-             <height>96</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
-            <item>
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>Images</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <item>
-               <widget class="QLineEdit" name="aug_images_dest_field"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="aug_images_dest_browse_button">
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_7">
-              <property name="text">
-               <string>Segmentations</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QLineEdit" name="aug_seg_dest_field"/>
-              </item>
-              <item>
-               <widget class="QPushButton" name="aug_seg_dest_browse_button">
-                <property name="maximumSize">
-                 <size>
-                  <width>30</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>...</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </widget>
-         <widget class="QPushButton" name="aug_button">
-          <property name="geometry">
-           <rect>
-            <x>640</x>
-            <y>130</y>
-            <width>82</width>
-            <height>23</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Augmentation !</string>
-          </property>
+             </item>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Largeur (px)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_30">
+             <property name="text">
+              <string>Hauteur (px)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QSpinBox" name="aug_width_spinbox">
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+             <property name="value">
+              <number>400</number>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QSpinBox" name="aug_height_spinbox">
+             <property name="maximum">
+              <number>99999</number>
+             </property>
+             <property name="value">
+              <number>400</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
-       </widget>
-       <widget class="QWidget" name="train_tab">
-        <attribute name="title">
-         <string>Entrainement</string>
-        </attribute>
-        <widget class="QWidget" name="verticalLayoutWidget_2">
+        <widget class="QGroupBox" name="groupBox_7">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>731</width>
-           <height>541</height>
+           <x>10</x>
+           <y>140</y>
+           <width>351</width>
+           <height>121</height>
           </rect>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <widget class="QGroupBox" name="groupBox_10">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>320</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>300</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Paramètres</string>
-            </property>
-            <widget class="QWidget" name="horizontalLayoutWidget_2">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>20</y>
-               <width>711</width>
-               <height>291</height>
-              </rect>
+         <property name="title">
+          <string>Destination</string>
+         </property>
+         <widget class="QWidget" name="verticalLayoutWidget_5">
+          <property name="geometry">
+           <rect>
+            <x>9</x>
+            <y>19</y>
+            <width>331</width>
+            <height>96</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Images</string>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_12">
-                <item>
-                 <widget class="QGroupBox" name="groupBox_12">
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>125</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Jeu d'entrainement</string>
-                  </property>
-                  <widget class="QWidget" name="verticalLayoutWidget_7">
-                   <property name="geometry">
-                    <rect>
-                     <x>10</x>
-                     <y>15</y>
-                     <width>211</width>
-                     <height>101</height>
-                    </rect>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_8">
-                    <item>
-                     <widget class="QLabel" name="label_16">
-                      <property name="text">
-                       <string>Images</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_9">
-                      <item>
-                       <widget class="QLineEdit" name="train_images_field"/>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="train_images_browse_button">
-                        <property name="maximumSize">
-                         <size>
-                          <width>30</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>...</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_17">
-                      <property name="text">
-                       <string>Segmentations</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_10">
-                      <item>
-                       <widget class="QLineEdit" name="train_seg_field"/>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="train_seg_browse_button">
-                        <property name="maximumSize">
-                         <size>
-                          <width>30</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>...</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="groupBox_14">
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>125</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Jeu d'évaluation</string>
-                  </property>
-                  <widget class="QWidget" name="verticalLayoutWidget_8">
-                   <property name="geometry">
-                    <rect>
-                     <x>10</x>
-                     <y>15</y>
-                     <width>211</width>
-                     <height>101</height>
-                    </rect>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_9">
-                    <item>
-                     <widget class="QLabel" name="label_18">
-                      <property name="text">
-                       <string>Images</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_11">
-                      <item>
-                       <widget class="QLineEdit" name="eval_images_field"/>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="eval_images_browse_button">
-                        <property name="maximumSize">
-                         <size>
-                          <width>30</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>...</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_19">
-                      <property name="text">
-                       <string>Segmentations</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_12">
-                      <item>
-                       <widget class="QLineEdit" name="eval_seg_field"/>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="eval_seg_browse_button">
-                        <property name="maximumSize">
-                         <size>
-                          <width>30</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>...</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_17">
-                <item>
-                 <widget class="QGroupBox" name="groupBox_18">
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>140</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Nouveau modèle</string>
-                  </property>
-                  <widget class="QWidget" name="verticalLayoutWidget_13">
-                   <property name="geometry">
-                    <rect>
-                     <x>9</x>
-                     <y>19</y>
-                     <width>211</width>
-                     <height>112</height>
-                    </rect>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_18">
-                    <item>
-                     <widget class="QComboBox" name="model_combobox"/>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_33">
-                      <property name="text">
-                       <string>Largeur des images d'entrée</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="width_model_spinbox">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>99999</number>
-                      </property>
-                      <property name="value">
-                       <number>400</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_34">
-                      <property name="text">
-                       <string>Hauteur des images d'entrée</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="height_model_spinbox">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>99999</number>
-                      </property>
-                      <property name="value">
-                       <number>400</number>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="groupBox_19">
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>55</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Modèle existant (vide pour un nouveau modèle)</string>
-                  </property>
-                  <widget class="QWidget" name="layoutWidget_2">
-                   <property name="geometry">
-                    <rect>
-                     <x>10</x>
-                     <y>20</y>
-                     <width>211</width>
-                     <height>25</height>
-                    </rect>
-                   </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_14">
-                    <item>
-                     <widget class="QLineEdit" name="existing_model_path_field"/>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="existing_model_path_browse_button">
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="text">
-                       <string>...</string>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QGroupBox" name="groupBox_21">
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>55</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Nombre de classes</string>
-                  </property>
-                  <widget class="QWidget" name="layoutWidget_3">
-                   <property name="geometry">
-                    <rect>
-                     <x>10</x>
-                     <y>20</y>
-                     <width>211</width>
-                     <height>25</height>
-                    </rect>
-                   </property>
-                   <layout class="QHBoxLayout" name="horizontalLayout_21">
-                    <item>
-                     <widget class="QSpinBox" name="nb_class_spinbox">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>255</number>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_13">
-                <item>
-                 <widget class="QGroupBox" name="groupBox_13">
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>210</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Entrainement</string>
-                  </property>
-                  <widget class="QWidget" name="verticalLayoutWidget_9">
-                   <property name="geometry">
-                    <rect>
-                     <x>10</x>
-                     <y>20</y>
-                     <width>211</width>
-                     <height>181</height>
-                    </rect>
-                   </property>
-                   <layout class="QVBoxLayout" name="verticalLayout_11">
-                    <item>
-                     <widget class="QLabel" name="label_22">
-                      <property name="text">
-                       <string>Taille du batch</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="batch_size_spinbox">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>99999</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_23">
-                      <property name="text">
-                       <string>Nb d'étapes par époque</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="step_epoch_spinbox">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>99999</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_24">
-                      <property name="text">
-                       <string>Nb d'époques</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSpinBox" name="epochs_spinbox">
-                      <property name="minimum">
-                       <number>1</number>
-                      </property>
-                      <property name="maximum">
-                       <number>99999</number>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_29">
-                      <property name="text">
-                       <string>Sauvegarder dans [chemin]/[nom]</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_20">
-                      <item>
-                       <widget class="QLineEdit" name="save_model_path_field"/>
-                      </item>
-                      <item>
-                       <widget class="QPushButton" name="save_model_path_browse_button">
-                        <property name="maximumSize">
-                         <size>
-                          <width>30</width>
-                          <height>16777215</height>
-                         </size>
-                        </property>
-                        <property name="text">
-                         <string>...</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </widget>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="train_button">
-                  <property name="text">
-                   <string>Entrainement</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="eval_button">
-                  <property name="text">
-                   <string>Evaluation</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
             </widget>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_9">
-            <property name="title">
-             <string>Logs</string>
-            </property>
-            <widget class="QScrollArea" name="scrollArea_2">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>20</y>
-               <width>710</width>
-               <height>190</height>
-              </rect>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_2">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>708</width>
-                <height>188</height>
-               </rect>
-              </property>
-              <widget class="QPlainTextEdit" name="train_logs_textedit">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>710</width>
-                 <height>190</height>
-                </rect>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLineEdit" name="aug_images_dest_field"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="aug_images_dest_browse_button">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
                </property>
-               <property name="undoRedoEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
+               <property name="text">
+                <string>...</string>
                </property>
               </widget>
-             </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Segmentations</string>
+             </property>
             </widget>
-           </widget>
-          </item>
-         </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QLineEdit" name="aug_seg_dest_field"/>
+             </item>
+             <item>
+              <widget class="QPushButton" name="aug_seg_dest_browse_button">
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
         </widget>
-       </widget>
-       <widget class="QWidget" name="tab">
-        <attribute name="title">
-         <string>Prédiction</string>
-        </attribute>
-        <widget class="QWidget" name="verticalLayoutWidget_12">
+        <widget class="QPushButton" name="aug_button">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>731</width>
-           <height>541</height>
+           <x>640</x>
+           <y>130</y>
+           <width>82</width>
+           <height>23</height>
           </rect>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_14">
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_15">
-            <item>
-             <widget class="QGroupBox" name="groupBox_15">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>150</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>150</height>
-               </size>
-              </property>
-              <property name="title">
-               <string>Données</string>
-              </property>
-              <widget class="QWidget" name="formLayoutWidget_2">
-               <property name="geometry">
-                <rect>
-                 <x>9</x>
-                 <y>19</y>
-                 <width>601</width>
-                 <height>121</height>
-                </rect>
-               </property>
-               <layout class="QFormLayout" name="formLayout_2">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_25">
-                  <property name="text">
-                   <string>Modèle</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_16">
-                  <item>
-                   <widget class="QLineEdit" name="predict_model_path_field"/>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="predict_model_path_browse_button">
-                    <property name="minimumSize">
-                     <size>
-                      <width>30</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>30</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>...</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="label_26">
-                  <property name="text">
-                   <string>Images à prédire</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="2" column="0">
-                 <widget class="QLabel" name="label_27">
-                  <property name="text">
-                   <string>Enregistrer les segmentations dans</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="3" column="0">
-                 <widget class="QLabel" name="label_28">
-                  <property name="text">
-                   <string>Enregistrer les superpositions dans</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_17">
-                  <item>
-                   <widget class="QLineEdit" name="predict_images_field"/>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="predict_images_browse_button">
-                    <property name="minimumSize">
-                     <size>
-                      <width>30</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>30</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>...</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="2" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_18">
-                  <item>
-                   <widget class="QLineEdit" name="saved_seg_field"/>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="saved_seg_browse_button">
-                    <property name="minimumSize">
-                     <size>
-                      <width>30</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>30</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>...</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="3" column="1">
-                 <layout class="QHBoxLayout" name="horizontalLayout_19">
-                  <item>
-                   <widget class="QLineEdit" name="saved_sup_field"/>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="saved_sup_browse_button">
-                    <property name="minimumSize">
-                     <size>
-                      <width>30</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>30</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>...</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </widget>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="predict_button">
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Prédire</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_20">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>370</height>
-             </size>
-            </property>
-            <property name="title">
-             <string>Logs</string>
-            </property>
-            <widget class="QScrollArea" name="scrollArea_3">
-             <property name="geometry">
-              <rect>
-               <x>10</x>
-               <y>20</y>
-               <width>710</width>
-               <height>340</height>
-              </rect>
-             </property>
-             <property name="widgetResizable">
-              <bool>true</bool>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents_3">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>708</width>
-                <height>338</height>
-               </rect>
-              </property>
-              <widget class="QPlainTextEdit" name="predict_logs_textedit">
-               <property name="geometry">
-                <rect>
-                 <x>0</x>
-                 <y>0</y>
-                 <width>710</width>
-                 <height>340</height>
-                </rect>
-               </property>
-               <property name="undoRedoEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="readOnly">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </widget>
-            </widget>
-           </widget>
-          </item>
-         </layout>
+         <property name="text">
+          <string>Augmentation !</string>
+         </property>
         </widget>
        </widget>
       </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QProgressBar" name="progress_bar">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>570</y>
-      <width>741</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="value">
-     <number>0</number>
-    </property>
-    <property name="textVisible">
-     <bool>true</bool>
-    </property>
-   </widget>
+      <widget class="QWidget" name="train_tab">
+       <attribute name="title">
+        <string>Entrainement</string>
+       </attribute>
+       <widget class="QWidget" name="verticalLayoutWidget_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>731</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QGroupBox" name="groupBox_10">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>320</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>300</height>
+            </size>
+           </property>
+           <property name="title">
+            <string>Paramètres</string>
+           </property>
+           <widget class="QWidget" name="horizontalLayoutWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>711</width>
+              <height>291</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_12">
+               <item>
+                <widget class="QGroupBox" name="groupBox_12">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>125</height>
+                  </size>
+                 </property>
+                 <property name="title">
+                  <string>Jeu d'entrainement</string>
+                 </property>
+                 <widget class="QWidget" name="verticalLayoutWidget_7">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>15</y>
+                    <width>211</width>
+                    <height>101</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_8">
+                   <item>
+                    <widget class="QLabel" name="label_16">
+                     <property name="text">
+                      <string>Images</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_9">
+                     <item>
+                      <widget class="QLineEdit" name="train_images_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="train_images_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>30</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_17">
+                     <property name="text">
+                      <string>Segmentations</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_10">
+                     <item>
+                      <widget class="QLineEdit" name="train_seg_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="train_seg_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>30</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_14">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>125</height>
+                  </size>
+                 </property>
+                 <property name="title">
+                  <string>Jeu d'évaluation</string>
+                 </property>
+                 <widget class="QWidget" name="verticalLayoutWidget_8">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>15</y>
+                    <width>211</width>
+                    <height>101</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_9">
+                   <item>
+                    <widget class="QLabel" name="label_18">
+                     <property name="text">
+                      <string>Images</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_11">
+                     <item>
+                      <widget class="QLineEdit" name="eval_images_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="eval_images_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>30</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_19">
+                     <property name="text">
+                      <string>Segmentations</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_12">
+                     <item>
+                      <widget class="QLineEdit" name="eval_seg_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="eval_seg_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>30</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_17">
+               <item>
+                <widget class="QGroupBox" name="groupBox_18">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>140</height>
+                  </size>
+                 </property>
+                 <property name="title">
+                  <string>Nouveau modèle</string>
+                 </property>
+                 <widget class="QWidget" name="verticalLayoutWidget_13">
+                  <property name="geometry">
+                   <rect>
+                    <x>9</x>
+                    <y>19</y>
+                    <width>211</width>
+                    <height>120</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_18">
+                   <item>
+                    <widget class="QComboBox" name="model_combobox"/>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_33">
+                     <property name="text">
+                      <string>Largeur des images d'entrée</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="width_model_spinbox">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>99999</number>
+                     </property>
+                     <property name="value">
+                      <number>400</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_34">
+                     <property name="text">
+                      <string>Hauteur des images d'entrée</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="height_model_spinbox">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>99999</number>
+                     </property>
+                     <property name="value">
+                      <number>400</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_19">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>55</height>
+                  </size>
+                 </property>
+                 <property name="title">
+                  <string>Modèle existant (vide pour un nouveau modèle)</string>
+                 </property>
+                 <widget class="QWidget" name="layoutWidget_2">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>211</width>
+                    <height>25</height>
+                   </rect>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_14">
+                   <item>
+                    <widget class="QLineEdit" name="existing_model_path_field"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="existing_model_path_browse_button">
+                     <property name="maximumSize">
+                      <size>
+                       <width>30</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+               <item>
+                <widget class="QGroupBox" name="groupBox_21">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>55</height>
+                  </size>
+                 </property>
+                 <property name="title">
+                  <string>Nombre de classes</string>
+                 </property>
+                 <widget class="QWidget" name="layoutWidget_3">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>211</width>
+                    <height>25</height>
+                   </rect>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_21">
+                   <item>
+                    <widget class="QSpinBox" name="nb_class_spinbox">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_13">
+               <item>
+                <widget class="QGroupBox" name="groupBox_13">
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>210</height>
+                  </size>
+                 </property>
+                 <property name="title">
+                  <string>Entrainement</string>
+                 </property>
+                 <widget class="QWidget" name="verticalLayoutWidget_9">
+                  <property name="geometry">
+                   <rect>
+                    <x>10</x>
+                    <y>20</y>
+                    <width>211</width>
+                    <height>189</height>
+                   </rect>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_11">
+                   <item>
+                    <widget class="QLabel" name="label_22">
+                     <property name="text">
+                      <string>Taille du batch</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="batch_size_spinbox">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>99999</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_23">
+                     <property name="text">
+                      <string>Nb d'étapes par époque</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="step_epoch_spinbox">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>99999</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_24">
+                     <property name="text">
+                      <string>Nb d'époques</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="epochs_spinbox">
+                     <property name="minimum">
+                      <number>1</number>
+                     </property>
+                     <property name="maximum">
+                      <number>99999</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_29">
+                     <property name="text">
+                      <string>Sauvegarder dans [chemin]/[nom]</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_20">
+                     <item>
+                      <widget class="QLineEdit" name="save_model_path_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="save_model_path_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>30</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="train_button">
+                 <property name="text">
+                  <string>Entrainement</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="eval_button">
+                 <property name="text">
+                  <string>Evaluation</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_9">
+           <property name="title">
+            <string>Logs</string>
+           </property>
+           <widget class="QScrollArea" name="scrollArea_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>710</width>
+              <height>190</height>
+             </rect>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_2">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>708</width>
+               <height>188</height>
+              </rect>
+             </property>
+             <widget class="QPlainTextEdit" name="train_logs_textedit">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>710</width>
+                <height>190</height>
+               </rect>
+              </property>
+              <property name="undoRedoEnabled">
+               <bool>false</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </widget>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Prédiction</string>
+       </attribute>
+       <widget class="QWidget" name="verticalLayoutWidget_12">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>731</width>
+          <height>541</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_14">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <item>
+            <widget class="QGroupBox" name="groupBox_15">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="title">
+              <string>Données</string>
+             </property>
+             <widget class="QWidget" name="formLayoutWidget_2">
+              <property name="geometry">
+               <rect>
+                <x>9</x>
+                <y>19</y>
+                <width>601</width>
+                <height>121</height>
+               </rect>
+              </property>
+              <layout class="QFormLayout" name="formLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_25">
+                 <property name="text">
+                  <string>Modèle</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_16">
+                 <item>
+                  <widget class="QLineEdit" name="predict_model_path_field"/>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="predict_model_path_browse_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_26">
+                 <property name="text">
+                  <string>Images à prédire</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_27">
+                 <property name="text">
+                  <string>Enregistrer les segmentations dans</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_28">
+                 <property name="text">
+                  <string>Enregistrer les superpositions dans</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_17">
+                 <item>
+                  <widget class="QLineEdit" name="predict_images_field"/>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="predict_images_browse_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="2" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_18">
+                 <item>
+                  <widget class="QLineEdit" name="saved_seg_field"/>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="saved_seg_browse_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item row="3" column="1">
+                <layout class="QHBoxLayout" name="horizontalLayout_19">
+                 <item>
+                  <widget class="QLineEdit" name="saved_sup_field"/>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="saved_sup_browse_button">
+                   <property name="minimumSize">
+                    <size>
+                     <width>30</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>30</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>...</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="predict_button">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Prédire</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_20">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>370</height>
+            </size>
+           </property>
+           <property name="title">
+            <string>Logs</string>
+           </property>
+           <widget class="QScrollArea" name="scrollArea_3">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>710</width>
+              <height>340</height>
+             </rect>
+            </property>
+            <property name="widgetResizable">
+             <bool>true</bool>
+            </property>
+            <widget class="QWidget" name="scrollAreaWidgetContents_3">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>0</y>
+               <width>708</width>
+               <height>338</height>
+              </rect>
+             </property>
+             <widget class="QPlainTextEdit" name="predict_logs_textedit">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>710</width>
+                <height>340</height>
+               </rect>
+              </property>
+              <property name="undoRedoEnabled">
+               <bool>false</bool>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </widget>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="charb_tab">
+       <attribute name="title">
+        <string>Charbonnières</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>3</number>
+        </property>
+        <property name="rightMargin">
+         <number>3</number>
+        </property>
+        <property name="bottomMargin">
+         <number>3</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="0" column="0">
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="currentIndex">
+           <number>1</number>
+          </property>
+          <widget class="QWidget" name="charb_extra_tab">
+           <attribute name="title">
+            <string>Extraction de vignettes</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="0">
+               <widget class="QGroupBox" name="groupBox_11">
+                <property name="title">
+                 <string>Source</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_7">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_15">
+                     <property name="text">
+                      <string>Images</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_20">
+                     <property name="text">
+                      <string>Segmentations</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_31">
+                     <item>
+                      <widget class="QLineEdit" name="charb_extra_images_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_extra_images_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="1" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_32">
+                     <item>
+                      <widget class="QLineEdit" name="charb_extra_seg_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_extra_seg_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QGroupBox" name="groupBox_16">
+                <property name="title">
+                 <string>Destination</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_4">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_6">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_35">
+                     <property name="text">
+                      <string>Dataset           </string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_33">
+                     <item>
+                      <widget class="QLineEdit" name="charb_extra_dataset_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_extra_dataset_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QGroupBox" name="groupBox_17">
+                <property name="title">
+                 <string>Paramètres</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_5">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_4">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_31">
+                     <property name="text">
+                      <string>Taille des vignettes</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_32">
+                     <property name="text">
+                      <string>Intervalle</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_extra_vigsize_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>32.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>128.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>32.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_extra_intervalle_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>128.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QGroupBox" name="groupBox_22">
+                <property name="title">
+                 <string/>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_6">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="charb_extra_extract_button">
+                   <property name="text">
+                    <string>Extraire les vignettes</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="charb_extra_log">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>200</height>
+               </size>
+              </property>
+              <property name="plainText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="charb_extra_progressbar">
+              <property name="value">
+               <number>24</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="charb_train_tab">
+           <attribute name="title">
+            <string>Entraînement</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_10">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_8">
+              <item row="1" column="0">
+               <widget class="QGroupBox" name="groupBox_24">
+                <property name="title">
+                 <string>Modèle</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_10">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_7">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_46">
+                     <property name="text">
+                      <string>Nouveau modèle</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_47">
+                     <property name="text">
+                      <string>Charger modèle pré-entraîné</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QComboBox" name="charb_train_model_combobox">
+                     <item>
+                      <property name="text">
+                       <string>vggCharb</string>
+                      </property>
+                     </item>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_22">
+                     <item>
+                      <widget class="QLineEdit" name="charb_train_loadmodel_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_train_loadmodel_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QGroupBox" name="groupBox_23">
+                <property name="title">
+                 <string>Données</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_9">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_5">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_36">
+                     <property name="text">
+                      <string>Jeu d'entraînement</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_37">
+                     <property name="text">
+                      <string>Jeu d'évaluation</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_38">
+                     <property name="text">
+                      <string>Jeu de tests</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_39">
+                     <property name="text">
+                      <string>Taille des vignettes</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_train_vigsize_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>32.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>128.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>32.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="label_45">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                     <property name="text">
+                      <string>???</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="1">
+                    <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_24">
+                     <item>
+                      <widget class="QLineEdit" name="charb_train_traindata_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_train_traindata_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="1" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_25">
+                     <item>
+                      <widget class="QLineEdit" name="charb_train_evaldata_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_train_evaldata_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="2" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_26">
+                     <item>
+                      <widget class="QLineEdit" name="charb_train_testdata_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_train_testdata_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QGroupBox" name="groupBox_25">
+                <property name="title">
+                 <string>Paramètres</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_11">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_8">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_40">
+                     <property name="text">
+                      <string>Taille du batch</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_41">
+                     <property name="text">
+                      <string>Nombre d'étapes par époque</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_42">
+                     <property name="text">
+                      <string>Nombre d'époques</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_43">
+                     <property name="text">
+                      <string>Mélanger les batchs</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="0">
+                    <widget class="QLabel" name="label_44">
+                     <property name="text">
+                      <string>Sauvegarder le modèle dans...</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_train_batchsize_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>32.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>256.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>32.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_train_stepperepoch_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>9999.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>50.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_train_epochs_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>999.000000000000000</double>
+                     </property>
+                     <property name="value">
+                      <double>100.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <widget class="QCheckBox" name="charb_train_shuffle_checkbox">
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="checked">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="4" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_13">
+                     <item>
+                      <widget class="QLineEdit" name="charb_train_savemodel_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_train_savemodel_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QGroupBox" name="groupBox_26">
+                <property name="title">
+                 <string/>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_12">
+                 <item row="0" column="0">
+                  <widget class="QPushButton" name="charb_train_train_button">
+                   <property name="text">
+                    <string>Entraînement</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="charb_train_eval_button">
+                   <property name="text">
+                    <string>Evaluation</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="charb_train_log">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>200</height>
+               </size>
+              </property>
+              <property name="plainText">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="charb_train_progressbar">
+              <property name="value">
+               <number>24</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="charb_pred_tab">
+           <attribute name="title">
+            <string>Prédiction</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_15">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_13">
+              <item row="0" column="1">
+               <widget class="QGroupBox" name="groupBox_29">
+                <property name="title">
+                 <string>Paramètres</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_15">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_10">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_52">
+                     <property name="text">
+                      <string>Taille du batch</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_53">
+                     <property name="text">
+                      <string>Taille des vignettes</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_54">
+                     <property name="text">
+                      <string>Intervalle</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_pred_batchsize_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>32.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>256.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>32.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_pred_vigsize_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>32.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>128.000000000000000</double>
+                     </property>
+                     <property name="singleStep">
+                      <double>32.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QDoubleSpinBox" name="charb_pred_intervalle_spinbox">
+                     <property name="decimals">
+                      <number>0</number>
+                     </property>
+                     <property name="minimum">
+                      <double>1.000000000000000</double>
+                     </property>
+                     <property name="maximum">
+                      <double>128.000000000000000</double>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QPushButton" name="charb_pred_predict_button">
+                   <property name="text">
+                    <string>Prédire les charbonnières</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QGroupBox" name="groupBox_27">
+                <property name="title">
+                 <string>Fichiers</string>
+                </property>
+                <layout class="QGridLayout" name="gridLayout_14">
+                 <item row="0" column="0">
+                  <layout class="QFormLayout" name="formLayout_9">
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_48">
+                     <property name="text">
+                      <string>Modèle</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_49">
+                     <property name="text">
+                      <string>Images à prédire</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_50">
+                     <property name="text">
+                      <string>Enregistrer les segmentations dans...</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_51">
+                     <property name="text">
+                      <string>Entregistrer les superpositions dans...</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_27">
+                     <item>
+                      <widget class="QLineEdit" name="charb_pred_model_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_pred_model_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="1" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_28">
+                     <item>
+                      <widget class="QLineEdit" name="charb_pred_images_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_pred_images_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="2" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_29">
+                     <item>
+                      <widget class="QLineEdit" name="charb_pred_seg_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_pred_seg_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item row="3" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_30">
+                     <item>
+                      <widget class="QLineEdit" name="charb_pred_sup_field"/>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="charb_pred_sup_browse_button">
+                       <property name="maximumSize">
+                        <size>
+                         <width>25</width>
+                         <height>25</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string>...</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPlainTextEdit" name="charb_pred_log">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>300</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="charb_pred_progressbar">
+              <property name="value">
+               <number>24</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QProgressBar" name="progress_bar">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="value">
+       <number>0</number>
+      </property>
+      <property name="textVisible">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <action name="action_save_conf">
    <property name="text">
