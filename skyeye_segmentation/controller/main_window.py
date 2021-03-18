@@ -15,6 +15,7 @@ from skyeye_segmentation.view import main_window
 from skyeye_segmentation.controller.skyeye_func import MaskFusionWorker, \
     ImageAugmentationWorker, TrainWorker, EvalWorker, PredictWorker
 
+
 class MainWindow(QMainWindow):
     """Main window controller class"""
 
@@ -209,6 +210,18 @@ class MainWindow(QMainWindow):
         self.qt_ui.charb_train_eval_button.clicked \
             .connect(self.on_charb_train_eval_button_click)
 
+        # Predictions
+        self.qt_ui.charb_pred_model_browse_button.clicked \
+            .connect(self.on_charb_pred_model_browse_button_click)
+        self.qt_ui.charb_pred_images_browse_button.clicked \
+            .connect(self.on_charb_pred_images_browse_button_click)
+        self.qt_ui.charb_pred_seg_browse_button.clicked \
+            .connect(self.on_charb_pred_seg_browse_button_click)
+        self.qt_ui.charb_pred_sup_browse_button.clicked \
+            .connect(self.on_charb_pred_sup_browse_button_click)
+        self.qt_ui.charb_pred_predict_button.clicked \
+            .connect(self.on_charb_pred_predict_button_click)
+
         # UI Management
         # Thumbnail extraction
         self.qt_ui.charb_extra_images_field.textChanged \
@@ -243,6 +256,21 @@ class MainWindow(QMainWindow):
         # Evaluation
         self.qt_ui.charb_train_loadmodel_field.textChanged \
             .connect(self.charb_check_eval_available)
+        # Predictions
+        self.qt_ui.charb_pred_model_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_images_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_seg_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_sup_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_batchsize_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_intervalle_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
 
         ###########################################################################
         ###########################################################################
@@ -608,6 +636,7 @@ class MainWindow(QMainWindow):
         fill = self.qt_ui.aug_fill_combobox.currentText()
         size = (self.qt_ui.aug_width_spinbox.value(),
                 self.qt_ui.aug_height_spinbox.value())
+
         worker = ImageAugmentationWorker(nb_img=nb_img, img_src=img_src,
                                          seg_src=seg_src, img_dest=img_dest,
                                          seg_dest=seg_dest, size=size,
@@ -677,6 +706,7 @@ class MainWindow(QMainWindow):
         img_src = self.qt_ui.eval_images_field.text()
         seg_src = self.qt_ui.eval_seg_field.text()
         existing = self.qt_ui.existing_model_path_field.text()
+
         worker = EvalWorker(inp_images_dir=img_src, annotations_dir=seg_src,
                             checkpoints_path=existing)
 
@@ -698,6 +728,7 @@ class MainWindow(QMainWindow):
         img_src = self.qt_ui.predict_images_field.text()
         seg_dest = self.qt_ui.saved_seg_field.text()
         sup_dest = self.qt_ui.saved_sup_field.text()
+
         worker = PredictWorker(inp_dir=img_src, out_dir=seg_dest,
                                checkpoints_path=existing, colors=None,
                                sup_dir=sup_dest)
@@ -801,6 +832,46 @@ class MainWindow(QMainWindow):
     def on_charb_train_eval_button_click(self):
         print("[TODO] on_charb_train_eval_button_click")
 
+    # Predictions
+
+    @pyqtSlot()
+    def on_charb_pred_model_browse_button_click(self):
+        """CHARB - Existing model browser"""
+        file_name, _ = QFileDialog.getOpenFileName(self, "Charger un modèle")
+        if file_name:
+            self.qt_ui.charb_pred_model_field.setText(file_name)
+
+    @pyqtSlot()
+    def on_charb_pred_images_browse_button_click(self):
+        """CHARB - Source images browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Images à prédire",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_images_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_seg_browse_button_click(self):
+        """CHARB - Segmentations browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Sauvegarder les segmentations dans...",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_seg_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_sup_browse_button_click(self):
+        """CHARB - Superpositions browser"""
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, "Sauvegarder les superpositions dans...",
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_sup_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_predict_button_click(self):
+        print("[TODO] on_charb_pred_predict_button_click")
+
     ###########################################################################
     ###########################################################################
     ###########################################################################
@@ -844,7 +915,11 @@ class MainWindow(QMainWindow):
         self.check_train_available()
         self.check_eval_available()
         self.check_predict_available()
-        # TODO: ajouter les checks pour l'onglet "Charbonnières"
+        # Checks for tab "Charbonnières"
+        self.charb_check_extract_available()
+        self.charb_check_train_available()
+        self.charb_check_eval_available()
+        self.charb_check_predict_available()
 
     def set_progress_bar_state(self, enabled):
         """Lock or unlock the progress bar"""
@@ -935,7 +1010,6 @@ class MainWindow(QMainWindow):
             return
 
         self.qt_ui.aug_button.setEnabled(True)
-
 
     def check_train_available(self):
         """
@@ -1051,14 +1125,134 @@ class MainWindow(QMainWindow):
         sys.stdout.flush()
 
     def charb_check_extract_available(self):
-        print("[TODO] charb_check_extract_available")
+        """
+            TODO
+            Check that all the required fields are completed
+            to launch an image augmentation
+        """
+        self.qt_ui.charb_extra_extract_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_extra_images_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_extra_seg_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_extra_dataset_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        vigSize = self.qt_ui.charb_extra_vigsize_spinbox.value()
+        intervalle = self.qt_ui.charb_extra_intervalle_spinbox.value()
+        if vigSize < 32 or vigSize > 128 or vigSize % 16 != 0:
+            return
+        if intervalle < 1 or intervalle > 128:
+            return
+
+        self.qt_ui.charb_extra_extract_button.setEnabled(True)
 
     def charb_check_train_available(self):
-        print("[TODO] charb_check_train_available")
+        """
+            TODO
+            Check that all the required fields are completed
+            to launch an image augmentation
+        """
+        self.qt_ui.charb_train_train_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_train_traindata_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_evaldata_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_testdata_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_savemodel_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        vigSize = self.qt_ui.charb_train_vigsize_spinbox.value()
+        batchSize = self.qt_ui.charb_train_batchsize_spinbox.value()
+        stepsPerEpoch = self.qt_ui.charb_train_stepperepoch_spinbox.value()
+        epochs = self.qt_ui.charb_train_epochs_spinbox.value()
+        if vigSize < 32 or vigSize > 128 or vigSize % 16 != 0:
+            return
+        if batchSize < 32 or batchSize > 256 or batchSize % 32 != 0:
+            return
+        if stepsPerEpoch < 1 or epochs < 1:
+            return
+
+        self.qt_ui.charb_train_train_button.setEnabled(True)
+
         self.charb_check_eval_available()
 
     def charb_check_eval_available(self):
-        print("[TODO] charb_check_eval_available")
+        """
+            TODO
+            Check that all the required fields are completed
+            to launch an image augmentation
+        """
+        self.qt_ui.charb_train_eval_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_train_loadmodel_field.text()
+        if not os.path.exists(path):
+            return
+
+        self.qt_ui.charb_train_eval_button.setEnabled(True)
 
     def charb_check_predict_available(self):
-        print("[TODO] charb_check_predict_available")
+        """
+            TODO
+            Check that all the required fields are completed
+            to launch an image augmentation
+        """
+        self.qt_ui.charb_pred_predict_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_pred_model_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_images_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_seg_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_sup_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        batchSize = self.qt_ui.charb_pred_batchsize_spinbox.value()
+        vigSize = self.qt_ui.charb_pred_vigsize_spinbox.value()
+        intervalle = self.qt_ui.charb_pred_intervalle_spinbox.value()
+        if batchSize < 32 or batchSize > 256 or batchSize % 32 != 0:
+            return
+        if vigSize < 32 or vigSize > 128 or vigSize % 16 != 0:
+            return
+        if intervalle < 1 or intervalle > 128:
+            return
+
+        self.qt_ui.charb_pred_predict_button.setEnabled(True)

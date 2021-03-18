@@ -29,6 +29,7 @@ from keras_segmentation.predict import model_from_checkpoint_path, \
     get_pairs_from_paths, get_segmentation_array, predict
 from skyeye_segmentation.controller.worker_signals import WorkerSignals
 
+
 class MaskFusionWorker(QRunnable):
     """
         Worker wrapper for the mask fusion func
@@ -356,10 +357,10 @@ class TrainWorker(QRunnable):
                                                            nb_class)
                     if not verified:
                         self.signals.log.emit("Erreur lors de la vérification"
-                                                ", vérifiez le jeu "
-                                                "d'entrainement (correspondance"
-                                                " image/segmentation, nb de"
-                                                " classes, format..).")
+                                              ", vérifiez le jeu "
+                                              "d'entrainement (correspondance"
+                                              " image/segmentation, nb de"
+                                              " classes, format..).")
                         self.signals.log.emit("")
                         self.signals.error.emit("Erreur lors de la "
                                                 "vérification du jeu d'"
@@ -725,7 +726,7 @@ class PredictWorker(QRunnable):
                         else:
                             out_fname = os.path.join(out_dir, str(i) + ".jpg")
                         """
-                        out_fname = os.path\
+                        out_fname = os.path \
                             .join(out_dir, os.path
                                   .splitext(os.path.basename(inp))[0] + ".png")
 
