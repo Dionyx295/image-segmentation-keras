@@ -1,10 +1,14 @@
 """Module containing all functionality workers."""
 
 import glob
+import math
 import os
 import random
 import json
+import time
 import traceback
+
+from pathlib import Path
 
 import cv2
 import numpy as np
@@ -18,7 +22,7 @@ from PIL import Image
 from PyQt5.QtCore import QRunnable, pyqtSlot
 from keras.preprocessing.image import ImageDataGenerator
 from tqdm import tqdm
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, classification_report
 
 from keras_segmentation.data_utils.data_loader import \
     verify_segmentation_dataset, image_segmentation_generator, \
@@ -27,7 +31,14 @@ from keras_segmentation.models.all_models import model_from_name
 from keras_segmentation.models.config import IMAGE_ORDERING
 from keras_segmentation.predict import model_from_checkpoint_path, \
     get_pairs_from_paths, get_segmentation_array, predict
+
 from skyeye_segmentation.controller.worker_signals import WorkerSignals
+
+from matplotlib import pyplot as plt
+from keras.callbacks import ModelCheckpoint, EarlyStopping
+from skyeye_segmentation.skyeye_charb import charb_models
+from keras.models import load_model
+from keras.preprocessing import image
 
 
 class MaskFusionWorker(QRunnable):
@@ -791,3 +802,533 @@ def model_from_checkpoint_path_nb(checkpoints_path, checkpoint_nb):
     print("loaded weights ", weights)
     model.load_weights(weights)
     return model
+
+
+###########################################################################
+### Workers (tab "Charbonnières")                                       ###
+###########################################################################
+
+# TODO: increase speed by using a Numpy operation?
+def addBorders(img, vigSize=32):
+    """[CHARB] - Add black borders (=background) to images in order to extract thumbnails in the edges"""
+
+    imgSize = img.shape
+    finalSize = (imgSize[0] + vigSize - 2, imgSize[1] + vigSize - 2, 1)
+    finalImg = np.zeros(finalSize, dtype='uint8')
+
+    for x in range(imgSize[0]):
+        for y in range(imgSize[1]):
+            finalImg[x + vigSize // 2, y + vigSize // 2] = img[x, y]
+
+    return finalImg
+
+
+class ExtractionWorker(QRunnable):
+    """[CHARB] - Worker wrapper for the thumbnail extraction function"""
+
+    def __init__(self, *args, **kwargs):
+        super(ExtractionWorker, self).__init__()
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        """Run the functionality, triggered by Qt"""
+
+        try:
+            self.make_dataset(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(traceback.format_exc())
+
+    def create_vignettes(self, src_img, src_seg, dst, idCharb,
+                         vigSize=32, increment=1, mode='1px'):
+        """[CHARB] - Extract thumbnails of one image"""
+
+        # Variables de stats
+        nbCharb = 0
+        nbBack = 0
+
+        # On lit l'image et sa segmentation
+        try:
+            img = io.imread(src_img)
+            seg = io.imread(src_seg)
+        except:
+            self.signals.log.emit(f'ATTENTION: Impossible d\'ouvrir "{src_img}"')
+            return False
+
+        # Récupération de l'ID de l'image
+        # TODO URGENT: pas très robuste en cas de changement de convention de nommage, à corriger
+        # TODO: de plus récupérer l'id et nommer les images genre "src_img_x_y" ? ou juste un id random?
+        i1 = src_img.index('50cm_')
+        i2 = src_img.index('.png')
+        name = src_img[:i2]
+
+        # On peut garder seulement la première couche de la segmentation
+        seg = seg[:, :, 0]
+
+        # Ajout des bords à l'image et à sa segmentation
+        seg = addBorders(seg, vigSize)
+        img = addBorders(img, vigSize)
+
+        imgSize = img.shape
+
+        for x in range(0, imgSize[0] - vigSize, increment):
+            for y in range(0, imgSize[1] - vigSize, increment):
+
+                # Création des vignettes
+                vig_img = img[x:x + vigSize, y:y + vigSize]
+                vig_seg = seg[x:x + vigSize, y:y + vigSize]
+
+                if mode == '4px':
+                    center = vig_seg[vigSize // 2:vigSize // 2 + 2, vigSize // 2:vigSize // 2 + 2]
+                    isCharb = (np.count_nonzero(center == idCharb) == 4)
+                elif mode == '1px':
+                    isCharb = (vig_seg[vigSize // 2, vigSize // 2] == idCharb)
+                else:
+                    self.signals.error.emit(f'ERREUR: Le mode doit être "1px" ou "4px"')
+                    return False
+
+                # Si c'est une charbonnière
+                if isCharb:
+                    io.imsave(dst + "charb/" + name + "_" + str(x) + "_" + str(y) + ".png", vig_img)
+                    nbCharb += 1
+                # Sinon (on rajoute juste un pourcentage pour limiter le dataset) -> on classifie comme 'back'
+                # TODO: changer ce système d'aléatoire par quelque chose de plus... stable
+                elif np.random.rand() < 0.05 and nbBack < 3 * nbCharb:
+                    io.imsave(dst + "back/" + name + "_" + str(x) + "_" + str(y) + ".png", vig_img)
+                    nbBack += 1
+
+        self.signals.log.emit(f'{src_img} -> {nbCharb} charb, {nbBack} back')
+        return nbBack, nbCharb
+
+    def clear_dir(self, directory):
+        """[CHARB] - Recursively clear directory"""
+
+        for filename in os.listdir(directory):
+            path = os.path.join(directory, filename)
+            if os.path.isdir(path):
+                self.clear_dir(path)
+            else:
+                os.unlink(path)
+
+    def make_dataset(self, src_img, src_seg, dst, idCharb=2, vigSize=32, increment=1, mode='1px'):
+        """[CHARB] - Create a dataset by extracting thumbnails from multiples images"""
+
+        # Vide le dossier destination
+        self.clear_dir(dst)
+        self.signals.log.emit(f'Dataset ({dst}) vidé!')
+
+        # Crée les sous-dossiers "training", "validation" et "test"
+        Path(dst + "/training/charb").mkdir(parents=True, exist_ok=True)
+        Path(dst + "/training/back").mkdir(parents=True, exist_ok=True)
+        Path(dst + "/validation/charb").mkdir(parents=True, exist_ok=True)
+        Path(dst + "/validation/back").mkdir(parents=True, exist_ok=True)
+        Path(dst + "/test/charb").mkdir(parents=True, exist_ok=True)
+        Path(dst + "/test/back").mkdir(parents=True, exist_ok=True)
+
+        images = os.listdir(src_img)
+        nb_images = len(images)
+
+        # TODO: proposer à l'utilisateur de fixer ces paramètres
+        prop_train = 0.6
+        prop_eval = 0.3
+
+        range_train = range(0, int(prop_train * nb_images))
+        range_eval = range(int(prop_train * nb_images), int(prop_train * nb_images) + int(prop_eval * nb_images))
+        range_test = range(int(prop_train * nb_images) + int(prop_eval * nb_images), nb_images)
+
+        stats = {
+            "train": [0, 0],
+            "eval": [0, 0],
+            "test": [0, 0]
+        }
+
+        for i in range(nb_images):
+
+            img = src_img + "/" + images[i]
+            seg = src_seg + "/" + images[i]
+
+            if i in range_train:
+                nbBack, nbCharb = self.create_vignettes(img, seg, dst + "/training/", idCharb=idCharb,
+                                                        vigSize=vigSize, increment=increment, mode=mode)
+                stats["train"][0] += nbBack
+                stats["train"][1] += nbCharb
+            elif i in range_eval:
+                nbBack, nbCharb = self.create_vignettes(img, seg, dst + "/validation/", idCharb=idCharb,
+                                                        vigSize=vigSize, increment=increment, mode=mode)
+                stats["eval"][0] += nbBack
+                stats["eval"][1] += nbCharb
+            elif i in range_test:
+                nbBack, nbCharb = self.create_vignettes(img, seg, dst + "/test/", idCharb=idCharb,
+                                                        vigSize=vigSize, increment=increment, mode=mode)
+                stats["test"][0] += nbBack
+                stats["test"][1] += nbCharb
+
+            progression = int((i * 100) / nb_images)
+            self.signals.progressed.emit(progression)
+
+        self.signals.log.emit(f'\nTraining set: \t {stats["train"][0]} back, {stats["train"][1]} charb')
+        self.signals.log.emit(f'Evaluation set: \t {stats["eval"][0]} back, {stats["eval"][1]} charb')
+        self.signals.log.emit(f'Testing set: \t {stats["test"][0]} back, {stats["test"][1]} charb\n')
+
+        self.signals.finished.emit("Extraction terminée !")
+
+
+class CharbTrainWorker(QRunnable):
+    """[CHARB] - Worker wrapper for the training function"""
+
+    def __init__(self, *args, **kwargs):
+        super(CharbTrainWorker, self).__init__()
+
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        """Run the functionality, triggered by Qt"""
+
+        try:
+            self.train(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(traceback.format_exc())
+
+    def train(self, modelName, trainDataPath, evalDataPath, testDataPath, vigSize,
+              batchSize, steps_per_epoch, validation_steps, epochs, shuffle,
+              saveModelAs):
+        """[CHARB] - Create and train a model using thumbnails in the 'trainDataPath' directory """
+
+        with self.graph.as_default():
+            with self.session.as_default():
+
+                self.signals.log.emit("Chargement des données...")
+
+                imgDataGen = ImageDataGenerator(rescale=1. / 255)
+
+                trainData = imgDataGen.flow_from_directory(directory=trainDataPath,
+                                                           target_size=(vigSize, vigSize),
+                                                           batch_size=batchSize,
+                                                           color_mode='grayscale')
+
+                valData = imgDataGen.flow_from_directory(directory=evalDataPath,
+                                                         target_size=(vigSize, vigSize),
+                                                         batch_size=batchSize,
+                                                         color_mode='grayscale')
+
+                # testData = imgDataGen.flow_from_directory(directory=testDataPath,
+                #                                           target_size=(vigSize, vigSize),
+                #                                           batch_size=batchSize,
+                #                                           color_mode='grayscale')
+
+                self.signals.log.emit(f'Train dataset: {trainData.__len__()} images')
+                self.signals.log.emit(f'Eval dataset: {valData.__len__()} images')
+                # self.signals.log.emit(f'Test dataset: {trainData.__len__()} images\n')
+
+                self.signals.log.emit("Début de la session d'entrainement\n")
+
+                # Crée et compile le modèle renseigné par l'utilisateur
+                if modelName == 'vggCharb':
+                    model = charb_models.vgg4((vigSize, vigSize, 1))
+                else:
+                    self.signals.error.emit(f'ERREUR: Le modèle "{modelName}" n\' existe pas')
+                    return
+
+                # --- Checkpoint et EarlyStopping ---
+                # TODO: possibilité de gérer ces params (earlystopping) depuis l'interface? ou on enlève ça?
+                # NOTE: PC tom = 'val_acc', PC poly = 'val_accuracy'
+                #
+                # # Sauvegarde le modèle si le paramètre 'val_acc' est meilleur que dans la dernière époque
+                # checkpoint = ModelCheckpoint(saveModelAs + "/" + modelName + ".h5", monitor='val_accuracy', verbose=1,
+                #                              save_best_only=True, save_weights_only=False, mode='auto', period=1)
+                #
+                # # Stoppe le training si le paramètre 'val_acc' ne s'améliore pas pendant 'patience' époques
+                # early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=10, verbose=1, mode='auto')
+
+                start = time.time()
+
+                maxAcc = -math.inf  # maxAccuracy
+
+                # Pour chaque époque
+                for epoch in range(epochs):
+                    self.signals.log.emit(f'Début de l\'époque {epoch}')
+
+                    # Entraînement
+                    hist = model.fit_generator(generator=trainData, validation_data=valData,
+                                               steps_per_epoch=steps_per_epoch,
+                                               validation_steps=validation_steps, epochs=1,
+                                               shuffle=shuffle,  # callbacks=[checkpoint, early]
+                                               verbose=1)
+
+                    # Affichage des métriques (loss et accuracy)
+                    msg = ""
+                    for key, value in hist.history.items():
+                        msg += "{}:{}  ".format(str(key), str(value))
+                    self.signals.log.emit(msg)
+
+                    # Si l'accuracy a augmenté, on sauvegarde le modèle
+                    if hist.history["val_acc"][0] > maxAcc:
+                        self.signals.log.emit(
+                            f'La précision a augmenté ({hist.history["val_acc"][0]} > {maxAcc}) => modèle sauvegardé')
+                        maxAcc = hist.history["val_acc"][0]
+                        model.save(saveModelAs + "/" + modelName + ".h5")
+
+                    self.signals.log.emit("")
+
+                    progression = 100 * (epoch + 1) / epochs
+                    self.signals.progressed.emit(progression)
+
+                end = time.time()
+                duration = (end - start) / 60
+
+                self.signals.log.emit(f'Entrainement terminé en {duration:.0f}mn')
+
+                plt.plot(hist.history['acc'])  # [!] Note: PC tom = 'acc' / PC poly = 'accuracy'
+                plt.plot(hist.history['val_acc'])  # [!] Note: idem
+                plt.plot(hist.history['loss'])
+                plt.plot(hist.history['val_loss'])
+                plt.title('Model accuracy')
+                plt.ylabel('Accuracy')
+                plt.xlabel('Epochs')
+                plt.legend(['acc', 'val_acc', 'loss', 'val_loss'])
+                plt.show()
+
+                self.signals.finished.emit(f'Entrainement terminé')
+
+
+class CharbEvalWorker(QRunnable):
+    """[CHARB] - Worker wrapper for the eval function"""
+
+    def __init__(self, *args, **kwargs):
+        super(CharbEvalWorker, self).__init__()
+
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        """Run the functionality, triggered by Qt"""
+
+        try:
+            self.eval(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(traceback.format_exc())
+
+    def eval(self, existingModelPath, testDataPath, vigSize, batchSize):
+        """[CHARB] - Evaluate a model using thumbnails in the 'testDataPath' directory"""
+
+        with self.graph.as_default():
+            with self.session.as_default():
+                self.signals.log.emit("Chargement des données...")
+
+                imgDataGen = ImageDataGenerator(rescale=1. / 255)
+
+                testData = imgDataGen.flow_from_directory(directory=testDataPath,
+                                                          target_size=(vigSize, vigSize),
+                                                          batch_size=batchSize,
+                                                          color_mode='grayscale')
+
+                self.signals.log.emit(f'Test dataset: {testData.__len__()} images\n')
+
+                self.signals.log.emit("Début de la session d'évaluation...\n")
+
+                # Chargement du modèle
+                saved_model = load_model(existingModelPath)
+
+                # Prédictions
+                start = time.time()
+                predictions = saved_model.predict(testData)
+                end = time.time()
+
+                self.signals.log.emit(f'Évaluation terminée en {end - start:.2f}s')
+
+                testLabels = []
+                nbExamples = len(testData.filenames)
+                nbCalls = math.ceil(nbExamples / (1.0 * batchSize))
+                for i in range(0, int(nbCalls)):
+                    testLabels.extend(testData[i][1])
+                testLabels = np.argmax(testLabels, axis=1)
+
+                report = classification_report(y_true=testLabels,
+                                               y_pred=predictions.argmax(axis=1),
+                                               target_names=['back', 'charb'],
+                                               output_dict=False)
+
+                conf_matrix = confusion_matrix(testLabels, predictions.argmax(axis=1))
+
+                self.signals.log.emit(report)
+
+                self.signals.log.emit('_____| GROUND TRUTH  |')
+                self.signals.log.emit('PRED | back  | char  |')
+                self.signals.log.emit(f'back |{conf_matrix[0, 0]:6d} |{conf_matrix[1, 0]:6d} |')
+                self.signals.log.emit(f'char |{conf_matrix[0, 1]:6d} |{conf_matrix[1, 1]:6d} |\n')
+
+                self.signals.finished.emit(f'Évaluation terminée')
+
+
+class CharbPredictWorker(QRunnable):
+    """[CHARB] - Worker wrapper for the predict function"""
+
+    def __init__(self, *args, **kwargs):
+        super(CharbPredictWorker, self).__init__()
+
+        self.args = args
+        self.kwargs = kwargs
+        self.signals = WorkerSignals()
+
+        self.session = tf.Session()
+        self.graph = tf.get_default_graph()
+
+    @pyqtSlot()
+    def run(self):
+        """Run the functionality, triggered by Qt"""
+
+        try:
+            self.predictDataset(**self.kwargs)
+        except Exception as exc:
+            self.signals.error.emit(traceback.format_exc())
+
+    def predict(self, model, imgName, vigSize=32, increment=1, batchSize=32, mode='1px'):
+        """[CHARB] - Predict the segmentation of an image specified by 'imgName'"""
+
+        # On ouvre l'image et on la converit en array
+        img = image.load_img(imgName, color_mode='grayscale')
+        img = image.img_to_array(img)
+
+        # On crée la segmentation (de la même taille)
+        imgSize = img.shape
+        seg = np.zeros((imgSize[0], imgSize[1]), dtype='float')
+
+        # On ajoute des bords noirs à l'image
+        img = addBorders(img, vigSize)
+        imgSize = img.shape
+
+        # Variables de gestion de la boucle
+        finished = False  # True si on a finit de prédire tous les pixels de l'image
+        x = 0
+        y = 0
+
+        # Tant qu'on a pas finit de prédire tous les pixels...
+        while not finished:
+
+            # On créé un batch vide et un tableau de positions
+            batch = []
+            pos = []
+
+            # Et on remplit le batch (tant qu'on a pas atteind batchSize ou qu'on a pas finit)
+            while len(batch) < batchSize and not finished:
+
+                # On extrait la vignette et on l'ajoute au batch (et on se rappelle de sa position)
+                vignette = img[x:x + vigSize, y:y + vigSize]
+                batch.append(vignette)
+                pos.append((x, y))
+
+                # Gestion de la position
+                x += increment                      # à chaque itération, on incrémente x
+                if x >= imgSize[0] - vigSize + 1:   # si x est au bord de l'image...
+                    x = 0                               # on le remet à 0
+                    y += increment                      # et on incrémente y
+                if y >= imgSize[1] - vigSize + 1:   # si y est au bord de l'image...
+                    finished = True                     # on a finit
+
+            # Prédiction du batch
+            batch = np.asarray(batch)
+            output = model.predict_proba(batch)
+
+            # Reconstitution segmentation
+            for j in range(len(pos)):
+                if mode == '1px':
+                    seg[pos[j]] = output[j, 1]
+                elif mode == '4px':
+                    seg[pos[j][0], pos[j][1]] = output[j, 1]
+                    seg[pos[j][0] + 1, pos[j][1]] = output[j, 1]
+                    seg[pos[j][0], pos[j][1] + 1] = output[j, 1]
+                    seg[pos[j][0] + 1, pos[j][1] + 1] = output[j, 1]
+                else:
+                    self.signals.error.emit("ERREUR: mode incorrect (doit être 1px ou 4px)")
+                    return
+
+        return seg
+
+    def binary(self, segmentation, threshold=0.5):
+        """[CHARB] - Return a binary representation of the segmentation (0=background, 1=charb)"""
+
+        imgSize = segmentation.shape
+        binSeg = np.zeros(imgSize, dtype='uint8')
+
+        for x in range(imgSize[0]):
+            for y in range(imgSize[1]):
+                if segmentation[x, y] > threshold:
+                    binSeg[x, y] = 1
+
+        return binSeg
+
+    def superposition(self, segmentation, lidar, threshold=0.5):
+        """[CHARB] - Return a superposition of the segmentation and the source image"""
+
+        imgSize = segmentation.shape
+        final = np.zeros((imgSize[0], imgSize[1], 4), dtype='uint8')
+        lidar = lidar.astype('uint8')
+
+        for x in range(imgSize[0]):
+            for y in range(imgSize[1]):
+                if segmentation[x, y] > threshold:
+                    final[x, y] = (lidar[x, y], min(lidar[x, y] + 70, 255), lidar[x, y], 200)
+                else:
+                    final[x, y] = (lidar[x, y], lidar[x, y], lidar[x, y], 255)
+
+        return final
+
+    def predictDataset(self, modelName, imagesPath, saveSegPath, saveSupPath, vigSize, intervalle, batchSize):
+        """[CHARB] - Predict all images in a directory"""
+
+        with self.graph.as_default():
+            with self.session.as_default():
+                start = time.time()
+
+                # On récupère les images
+                images = os.listdir(imagesPath)
+                self.signals.log.emit(f'Nombre d\'images à prédire : {len(images)}\n')
+
+                # On charge le modèle
+                model = load_model(modelName)
+                self.signals.log.emit("Début de la session de prédictions\n")
+
+                # Pour chaque image
+                for i in range(len(images)):
+                    self.signals.log.emit(f'Prédiction de l\'image {images[i]}...')
+
+                    # On prédit sa segmentation
+                    pred = self.predict(model=model, imgName=imagesPath + "/" + images[i],
+                                        vigSize=vigSize, increment=intervalle, batchSize=batchSize)
+
+                    self.signals.log.emit(f'OK! Création de la segmentation et de la superposition.\n')
+
+                    # On charge l'image source (lidar)
+                    lidar = image.load_img(imagesPath+"/"+images[i], color_mode='grayscale')
+                    lidar = image.img_to_array(lidar)
+
+                    # On créé la segmentation et la superposition
+                    seg = self.binary(pred)
+                    sup = self.superposition(pred, lidar)
+
+                    # Et on les sauvegarde
+                    plt.imsave(saveSegPath+"/"+images[i], seg, vmin=0, vmax=1, cmap='gray')
+                    plt.imsave(saveSupPath+"/"+images[i], sup)
+
+                    progression = int(100 * (i+1) / len(images))
+                    self.signals.progressed.emit(progression)
+
+                end = time.time()
+                self.signals.log.emit(f'Prédictions terminées en {(end-start)/60:.2f}mn!')
+                self.signals.finished.emit(f'Prédictions terminées')

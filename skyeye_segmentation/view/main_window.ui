@@ -1400,7 +1400,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="charb_extra_tab">
            <attribute name="title">
@@ -1471,6 +1471,16 @@
                      </item>
                     </layout>
                    </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_57">
+                     <property name="text">
+                      <string>ID Charbonnière</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <widget class="QSpinBox" name="charb_extra_idcharb_spindbox"/>
+                   </item>
                   </layout>
                  </item>
                 </layout>
@@ -1511,6 +1521,23 @@
                      </item>
                     </layout>
                    </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_45">
+                     <property name="text">
+                      <string>Attention:</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QLabel" name="label_55">
+                     <property name="text">
+                      <string>Le dossier précisé ci-dessus sera entièrement vidé avant l'extraction des vignettes.</string>
+                     </property>
+                     <property name="wordWrap">
+                      <bool>true</bool>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </item>
                 </layout>
@@ -1531,13 +1558,6 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_32">
-                     <property name="text">
-                      <string>Intervalle</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="0" column="1">
                     <widget class="QDoubleSpinBox" name="charb_extra_vigsize_spinbox">
                      <property name="decimals">
@@ -1554,6 +1574,13 @@
                      </property>
                     </widget>
                    </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_32">
+                     <property name="text">
+                      <string>Intervalle</string>
+                     </property>
+                    </widget>
+                   </item>
                    <item row="1" column="1">
                     <widget class="QDoubleSpinBox" name="charb_extra_intervalle_spinbox">
                      <property name="decimals">
@@ -1566,6 +1593,31 @@
                       <double>128.000000000000000</double>
                      </property>
                     </widget>
+                   </item>
+                   <item row="2" column="0">
+                    <widget class="QLabel" name="label_56">
+                     <property name="text">
+                      <string>Mode</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="2" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_23">
+                     <item>
+                      <widget class="QCheckBox" name="charb_extra_1px_checkbox">
+                       <property name="text">
+                        <string>1px</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="charb_extra_4px_checkbox">
+                       <property name="text">
+                        <string>4px</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
                  </item>
@@ -1597,6 +1649,12 @@
                 <width>16777215</width>
                 <height>200</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Source Code Pro</family>
+                <pointsize>8</pointsize>
+               </font>
               </property>
               <property name="plainText">
                <string/>
@@ -1940,6 +1998,12 @@
                 <height>200</height>
                </size>
               </property>
+              <property name="font">
+               <font>
+                <family>Source Code Pro</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
               <property name="plainText">
                <string/>
               </property>
@@ -2170,6 +2234,11 @@
                 <width>16777215</width>
                 <height>300</height>
                </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Source Code Pro</family>
+               </font>
               </property>
              </widget>
             </item>
