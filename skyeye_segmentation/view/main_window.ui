@@ -1400,7 +1400,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="charb_extra_tab">
            <attribute name="title">
@@ -1619,6 +1619,40 @@
                      </item>
                     </layout>
                    </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_58">
+                     <property name="text">
+                      <string>Proportion dataset</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_34">
+                     <item>
+                      <widget class="QSlider" name="charb_extra_proportion_slider">
+                       <property name="minimum">
+                        <number>1</number>
+                       </property>
+                       <property name="maximum">
+                        <number>99</number>
+                       </property>
+                       <property name="value">
+                        <number>70</number>
+                       </property>
+                       <property name="orientation">
+                        <enum>Qt::Horizontal</enum>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="charb_extra_proportion_label">
+                       <property name="text">
+                        <string>70 / 30</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
                   </layout>
                  </item>
                 </layout>
@@ -1630,7 +1664,7 @@
                  <string/>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_6">
-                 <item row="0" column="0">
+                 <item row="1" column="0">
                   <widget class="QPushButton" name="charb_extra_extract_button">
                    <property name="text">
                     <string>Extraire les vignettes</string>
@@ -1787,40 +1821,13 @@
                   </layout>
                  </item>
                  <item row="2" column="0">
-                  <widget class="QLabel" name="label_38">
-                   <property name="text">
-                    <string>Jeu de tests</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <layout class="QHBoxLayout" name="horizontalLayout_26">
-                   <item>
-                    <widget class="QLineEdit" name="charb_train_testdata_field"/>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="charb_train_testdata_browse_button">
-                     <property name="maximumSize">
-                      <size>
-                       <width>25</width>
-                       <height>25</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string>...</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item row="3" column="0">
                   <widget class="QLabel" name="label_39">
                    <property name="text">
                     <string>Taille des vignettes</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="3" column="1">
+                 <item row="2" column="1">
                   <widget class="QDoubleSpinBox" name="charb_train_vigsize_spinbox">
                    <property name="decimals">
                     <number>0</number>
@@ -1835,6 +1842,33 @@
                     <double>32.000000000000000</double>
                    </property>
                   </widget>
+                 </item>
+                 <item row="3" column="0">
+                  <widget class="QLabel" name="label_44">
+                   <property name="text">
+                    <string>Sauvegarder le modèle dans...</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="3" column="1">
+                  <layout class="QHBoxLayout" name="horizontalLayout_13">
+                   <item>
+                    <widget class="QLineEdit" name="charb_train_savemodel_field"/>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="charb_train_savemodel_browse_button">
+                     <property name="maximumSize">
+                      <size>
+                       <width>25</width>
+                       <height>25</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
                  </item>
                 </layout>
                </widget>
@@ -1875,13 +1909,6 @@
                      </property>
                     </widget>
                    </item>
-                   <item row="4" column="0">
-                    <widget class="QLabel" name="label_44">
-                     <property name="text">
-                      <string>Sauvegarder le modèle dans...</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="0" column="1">
                     <widget class="QDoubleSpinBox" name="charb_train_batchsize_spinbox">
                      <property name="decimals">
@@ -1904,7 +1931,7 @@
                       <number>0</number>
                      </property>
                      <property name="minimum">
-                      <double>1.000000000000000</double>
+                      <double>0.000000000000000</double>
                      </property>
                      <property name="maximum">
                       <double>9999.000000000000000</double>
@@ -1939,26 +1966,6 @@
                       <bool>false</bool>
                      </property>
                     </widget>
-                   </item>
-                   <item row="4" column="1">
-                    <layout class="QHBoxLayout" name="horizontalLayout_13">
-                     <item>
-                      <widget class="QLineEdit" name="charb_train_savemodel_field"/>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="charb_train_savemodel_browse_button">
-                       <property name="maximumSize">
-                        <size>
-                         <width>25</width>
-                         <height>25</height>
-                        </size>
-                       </property>
-                       <property name="text">
-                        <string>...</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
                    </item>
                   </layout>
                  </item>
@@ -2091,6 +2098,31 @@
                       <double>128.000000000000000</double>
                      </property>
                     </widget>
+                   </item>
+                   <item row="3" column="0">
+                    <widget class="QLabel" name="label_38">
+                     <property name="text">
+                      <string>Mode</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="3" column="1">
+                    <layout class="QHBoxLayout" name="horizontalLayout_26">
+                     <item>
+                      <widget class="QCheckBox" name="charb_pred_1px_checkbox">
+                       <property name="text">
+                        <string>1px</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QCheckBox" name="charb_pred_4px_checkbox">
+                       <property name="text">
+                        <string>4px</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </item>
                   </layout>
                  </item>

@@ -195,6 +195,8 @@ class MainWindow(QMainWindow):
             .connect(self.on_charb_extra_seg_browse_button_click)
         self.qt_ui.charb_extra_dataset_browse_button.clicked \
             .connect(self.on_charb_extra_dataset_browse_button_click)
+        self.qt_ui.charb_extra_proportion_slider.valueChanged \
+            .connect(self.on_charb_extra_proportion_slider_change)
         self.qt_ui.charb_extra_extract_button.clicked \
             .connect(self.on_charb_extra_extract_button_click)
 
@@ -203,8 +205,6 @@ class MainWindow(QMainWindow):
             .connect(self.on_charb_train_traindata_browse_button_click)
         self.qt_ui.charb_train_evaldata_browse_button.clicked \
             .connect(self.on_charb_train_evaldata_browse_button_click)
-        self.qt_ui.charb_train_testdata_browse_button.clicked \
-            .connect(self.on_charb_train_testdata_browse_button_click)
         self.qt_ui.charb_train_loadmodel_browse_button.clicked \
             .connect(self.on_charb_train_loadmodel_browse_button_click)
         self.qt_ui.charb_train_savemodel_browse_button.clicked \
@@ -247,8 +247,6 @@ class MainWindow(QMainWindow):
             .connect(self.charb_check_train_available)
         self.qt_ui.charb_train_evaldata_field.textChanged \
             .connect(self.charb_check_train_available)
-        self.qt_ui.charb_train_testdata_field.textChanged \
-            .connect(self.charb_check_train_available)
         self.qt_ui.charb_train_vigsize_spinbox.valueChanged \
             .connect(self.charb_check_train_available)
         self.qt_ui.charb_train_model_combobox.currentTextChanged \
@@ -262,6 +260,8 @@ class MainWindow(QMainWindow):
         self.qt_ui.charb_train_savemodel_field.textChanged \
             .connect(self.charb_check_train_available)
         # Evaluation
+        self.qt_ui.charb_train_evaldata_field.textChanged \
+            .connect(self.charb_check_eval_available)
         self.qt_ui.charb_train_loadmodel_field.textChanged \
             .connect(self.charb_check_eval_available)
         # Predictions
@@ -278,6 +278,10 @@ class MainWindow(QMainWindow):
         self.qt_ui.charb_pred_vigsize_spinbox.valueChanged \
             .connect(self.charb_check_predict_available)
         self.qt_ui.charb_pred_intervalle_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_1px_checkbox.stateChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_4px_checkbox.stateChanged \
             .connect(self.charb_check_predict_available)
 
         ###########################################################################
@@ -409,6 +413,11 @@ class MainWindow(QMainWindow):
             .setValue(self.settings.value("charb_common_vigSize", 32))
         self.qt_ui.charb_extra_intervalle_spinbox \
             .setValue(self.settings.value("charb_common_intervalle", 1))
+        self.qt_ui.charb_extra_proportion_slider \
+            .setValue(self.settings.value("charb_extra_propTrain", 70))
+        self.qt_ui.charb_extra_proportion_label \
+            .setText(f'{self.settings.value("charb_extra_propTrain", 70)} '
+                     f'/ {100 - self.settings.value("charb_extra_propTrain", 70)}')
         if self.settings.value("charb_common_mode", "1px") == "1px":
             self.qt_ui.charb_extra_1px_checkbox.setChecked(True)
         else:
@@ -437,8 +446,6 @@ class MainWindow(QMainWindow):
         # Evaluation
         self.qt_ui.charb_train_loadmodel_field \
             .setText(self.settings.value("charb_eval_existingModelPath", ""))
-        self.qt_ui.charb_train_testdata_field \
-            .setText(self.settings.value("charb_eval_testDataPath", ""))
 
         # Prediction
         self.qt_ui.charb_pred_model_field \
@@ -457,10 +464,10 @@ class MainWindow(QMainWindow):
             .setValue(self.settings.value("charb_common_intervalle", 2))
         # self.qt_ui.charb_pred_idCharb_spinbox \
         #     .setText(self.settings.value("charb_common_idCharb", 2"))
-        # if self.settings.value("charb_common_mode", "1px") == "1px":
-        #     self.qt_ui.charb_pred_1px_checkbox.setChecked(True)
-        # else:
-        #     self.qt_ui.charb_pred_4px_checkbox.setChecked(True)
+        if self.settings.value("charb_common_mode", "1px") == "1px":
+            self.qt_ui.charb_pred_1px_checkbox.setChecked(True)
+        else:
+            self.qt_ui.charb_pred_4px_checkbox.setChecked(True)
 
     # Slots
     @pyqtSlot()
@@ -854,6 +861,12 @@ class MainWindow(QMainWindow):
             self.qt_ui.charb_extra_dataset_field.setText(folder_name)
 
     @pyqtSlot()
+    def on_charb_extra_proportion_slider_change(self):
+        trainSize = self.qt_ui.charb_extra_proportion_slider.value()
+        evalSize = 100 - trainSize
+        self.qt_ui.charb_extra_proportion_label.setText(f'{trainSize} / {evalSize}')
+
+    @pyqtSlot()
     def on_charb_extra_extract_button_click(self):
         """[CHARB] - Thumbnails extraction launcher"""
 
@@ -864,6 +877,7 @@ class MainWindow(QMainWindow):
         idCharb = self.qt_ui.charb_extra_idcharb_spindbox.value()
         vigSize = int(self.qt_ui.charb_extra_vigsize_spinbox.value())
         intervalle = int(self.qt_ui.charb_extra_intervalle_spinbox.value())
+        propTrain = self.qt_ui.charb_extra_proportion_slider.value()
         if self.qt_ui.charb_extra_1px_checkbox.isChecked():
             mode = '1px'
         elif self.qt_ui.charb_extra_4px_checkbox.isChecked():
@@ -873,6 +887,7 @@ class MainWindow(QMainWindow):
         self.settings.setValue("charb_extra_imagesPath", imagesPath)
         self.settings.setValue("charb_extra_segmentationsPath", segmentationsPath)
         self.settings.setValue("charb_extra_datasetPath", datasetPath)
+        self.settings.setValue("charb_extra_propTrain", propTrain)
 
         self.settings.setValue("charb_common_idCharb", idCharb)
         self.settings.setValue("charb_common_vigSize", vigSize)
@@ -880,7 +895,7 @@ class MainWindow(QMainWindow):
         self.settings.setValue("charb_common_mode", mode)
 
         # Creating extraction worker
-        worker = ExtractionWorker(src_img=imagesPath, src_seg=segmentationsPath, idCharb=idCharb,
+        worker = ExtractionWorker(src_img=imagesPath, src_seg=segmentationsPath, idCharb=idCharb, propTrain=propTrain,
                                   dst=datasetPath, vigSize=vigSize, increment=intervalle, mode=mode)
 
         # Launching treatment
@@ -913,15 +928,6 @@ class MainWindow(QMainWindow):
             self.qt_ui.charb_train_evaldata_field.setText(folder_name)
 
     @pyqtSlot()
-    def on_charb_train_testdata_browse_button_click(self):
-        """[CHARB] - Test dataset browser"""
-        folder_name = QFileDialog. \
-            getExistingDirectory(self, "Jeu de test",
-                                 options=QFileDialog.ShowDirsOnly)
-        if folder_name:
-            self.qt_ui.charb_train_testdata_field.setText(folder_name)
-
-    @pyqtSlot()
     def on_charb_train_loadmodel_browse_button_click(self):
         """[CHARB] - Existing model browser"""
         file_name, _ = QFileDialog.getOpenFileName(self, "Charger un modèle")
@@ -945,11 +951,10 @@ class MainWindow(QMainWindow):
         modelName = self.qt_ui.charb_train_model_combobox.currentText()
         trainDataPath = self.qt_ui.charb_train_traindata_field.text()
         evalDataPath = self.qt_ui.charb_train_evaldata_field.text()
-        testDataPath = self.qt_ui.charb_train_testdata_field.text()
         vigSize = int(self.qt_ui.charb_train_vigsize_spinbox.value())
         batchSize = int(self.qt_ui.charb_train_batchsize_spinbox.value())
         steps_per_epoch = int(self.qt_ui.charb_train_stepperepoch_spinbox.value())
-        validation_steps = 10   # TODO?
+        validation_steps = 20   # TODO?
         epochs = int(self.qt_ui.charb_train_epochs_spinbox.value())
         shuffle = self.qt_ui.charb_train_shuffle_checkbox.isChecked()
         saveModelAs = self.qt_ui.charb_train_savemodel_field.text()
@@ -969,7 +974,7 @@ class MainWindow(QMainWindow):
 
         # Creating training worker
         worker = CharbTrainWorker(modelName=modelName,
-                                  trainDataPath=trainDataPath, evalDataPath=evalDataPath, testDataPath=testDataPath,
+                                  trainDataPath=trainDataPath, evalDataPath=evalDataPath,
                                   vigSize=vigSize, batchSize=batchSize, steps_per_epoch=steps_per_epoch,
                                   validation_steps=validation_steps, epochs=epochs, shuffle=shuffle,
                                   saveModelAs=saveModelAs)
@@ -989,19 +994,19 @@ class MainWindow(QMainWindow):
 
         # Getting parameters
         existingModelPath = self.qt_ui.charb_train_loadmodel_field.text()
-        testDataPath = self.qt_ui.charb_train_testdata_field.text()
+        evalDataPath = self.qt_ui.charb_train_evaldata_field.text()
         vigSize = int(self.qt_ui.charb_train_vigsize_spinbox.value())
         batchSize = int(self.qt_ui.charb_train_batchsize_spinbox.value())
 
         # Saving settings
         self.settings.setValue("charb_eval_existingModelPath", existingModelPath)
-        self.settings.setValue("charb_eval_testDataPath", testDataPath)
+        self.settings.setValue("charb_eval_evalDataPath", evalDataPath)
 
         self.settings.setValue("charb_common_vigSize", vigSize)
         self.settings.setValue("charb_common_batchSize", batchSize)
 
         # Creating evaluation worker
-        worker = CharbEvalWorker(existingModelPath=existingModelPath, testDataPath=testDataPath,
+        worker = CharbEvalWorker(existingModelPath=existingModelPath, evalDataPath=evalDataPath,
                                  vigSize=vigSize, batchSize=batchSize)
 
         # Launching treatment
@@ -1061,6 +1066,10 @@ class MainWindow(QMainWindow):
         vigSize = int(self.qt_ui.charb_pred_vigsize_spinbox.value())
         intervalle = int(self.qt_ui.charb_pred_intervalle_spinbox.value())
         batchSize = int(self.qt_ui.charb_pred_batchsize_spinbox.value())
+        if self.qt_ui.charb_pred_1px_checkbox.isChecked():
+            mode = '1px'
+        elif self.qt_ui.charb_pred_4px_checkbox.isChecked():
+            mode = '4px'
 
         # Saving settings
         self.settings.setValue("charb_pred_modelName", modelName)
@@ -1071,11 +1080,12 @@ class MainWindow(QMainWindow):
         self.settings.setValue("charb_common_vigSize", vigSize)
         self.settings.setValue("charb_common_intervalle", intervalle)
         self.settings.setValue("charb_common_batchSize", batchSize)
+        self.settings.setValue("charb_common_mode", mode)
 
         # Creating prediction worker
         worker = CharbPredictWorker(modelName=modelName, imagesPath=imagesPath,
                                     saveSegPath=saveSegPath, saveSupPath=saveSupPath,
-                                    vigSize=vigSize, intervalle=intervalle, batchSize=batchSize)
+                                    vigSize=vigSize, intervalle=intervalle, batchSize=batchSize, mode=mode)
 
         # Launching treatment
         self.set_progress_bar_state(True)
@@ -1394,9 +1404,6 @@ class MainWindow(QMainWindow):
         path = self.qt_ui.charb_train_evaldata_field.text()
         if not os.path.exists(path):
             return
-        path = self.qt_ui.charb_train_testdata_field.text()
-        if not os.path.exists(path):
-            return
         path = self.qt_ui.charb_train_savemodel_field.text()
         if not os.path.exists(path):
             return
@@ -1431,7 +1438,7 @@ class MainWindow(QMainWindow):
         path = self.qt_ui.charb_train_loadmodel_field.text()
         if not os.path.exists(path):
             return
-        path = self.qt_ui.charb_train_testdata_field.text()
+        path = self.qt_ui.charb_train_evaldata_field.text()
         if not os.path.exists(path):
             return
 
@@ -1467,11 +1474,15 @@ class MainWindow(QMainWindow):
         batchSize = self.qt_ui.charb_pred_batchsize_spinbox.value()
         vigSize = self.qt_ui.charb_pred_vigsize_spinbox.value()
         intervalle = self.qt_ui.charb_pred_intervalle_spinbox.value()
+        mode1px = self.qt_ui.charb_pred_1px_checkbox.isChecked()
+        mode4px = self.qt_ui.charb_pred_4px_checkbox.isChecked()
         if batchSize < 32 or batchSize > 256 or batchSize % 32 != 0:
             return
         if vigSize < 32 or vigSize > 128 or vigSize % 16 != 0:
             return
         if intervalle < 1 or intervalle > 128:
+            return
+        if (mode1px and mode4px) or (not mode1px and not mode4px):
             return
 
         self.qt_ui.charb_pred_predict_button.setEnabled(True)

@@ -860,12 +860,9 @@ class ExtractionWorker(QRunnable):
             self.signals.log.emit(f'ATTENTION: Impossible d\'ouvrir "{src_img}"')
             return False
 
-        # Récupération de l'ID de l'image
-        # TODO URGENT: pas très robuste en cas de changement de convention de nommage, à corriger
-        # TODO: de plus récupérer l'id et nommer les images genre "src_img_x_y" ? ou juste un id random?
-        i1 = src_img.index('50cm_')
-        i2 = src_img.index('.png')
-        name = src_img[:i2]
+        # Récupération du nom de l'image
+        name = os.path.basename(src_img)
+        name = name[:name.index('.')]
 
         # On peut garder seulement la première couche de la segmentation
         seg = seg[:, :, 0]
@@ -894,12 +891,12 @@ class ExtractionWorker(QRunnable):
 
                 # Si c'est une charbonnière
                 if isCharb:
-                    io.imsave(dst + "charb/" + name + "_" + str(x) + "_" + str(y) + ".png", vig_img)
+                    io.imsave(dst + "charb/" + str(name) + "_" + str(x) + "_" + str(y) + ".png", vig_img)
                     nbCharb += 1
                 # Sinon (on rajoute juste un pourcentage pour limiter le dataset) -> on classifie comme 'back'
                 # TODO: changer ce système d'aléatoire par quelque chose de plus... stable
                 elif np.random.rand() < 0.05 and nbBack < 3 * nbCharb:
-                    io.imsave(dst + "back/" + name + "_" + str(x) + "_" + str(y) + ".png", vig_img)
+                    io.imsave(dst + "back/" + str(name) + "_" + str(x) + "_" + str(y) + ".png", vig_img)
                     nbBack += 1
 
         self.signals.log.emit(f'{src_img} -> {nbCharb} charb, {nbBack} back')
@@ -915,36 +912,30 @@ class ExtractionWorker(QRunnable):
             else:
                 os.unlink(path)
 
-    def make_dataset(self, src_img, src_seg, dst, idCharb=2, vigSize=32, increment=1, mode='1px'):
+    def make_dataset(self, src_img, src_seg, dst, propTrain=70, idCharb=2, vigSize=32, increment=1, mode='1px'):
         """[CHARB] - Create a dataset by extracting thumbnails from multiples images"""
 
         # Vide le dossier destination
         self.clear_dir(dst)
         self.signals.log.emit(f'Dataset ({dst}) vidé!')
 
-        # Crée les sous-dossiers "training", "validation" et "test"
+        # Crée les sous-dossiers "training" et "validation"
         Path(dst + "/training/charb").mkdir(parents=True, exist_ok=True)
         Path(dst + "/training/back").mkdir(parents=True, exist_ok=True)
         Path(dst + "/validation/charb").mkdir(parents=True, exist_ok=True)
         Path(dst + "/validation/back").mkdir(parents=True, exist_ok=True)
-        Path(dst + "/test/charb").mkdir(parents=True, exist_ok=True)
-        Path(dst + "/test/back").mkdir(parents=True, exist_ok=True)
 
         images = os.listdir(src_img)
         nb_images = len(images)
 
-        # TODO: proposer à l'utilisateur de fixer ces paramètres
-        prop_train = 0.6
-        prop_eval = 0.3
+        prop_train = propTrain / 100
 
         range_train = range(0, int(prop_train * nb_images))
-        range_eval = range(int(prop_train * nb_images), int(prop_train * nb_images) + int(prop_eval * nb_images))
-        range_test = range(int(prop_train * nb_images) + int(prop_eval * nb_images), nb_images)
+        range_eval = range(int(prop_train * nb_images), nb_images)
 
         stats = {
             "train": [0, 0],
             "eval": [0, 0],
-            "test": [0, 0]
         }
 
         for i in range(nb_images):
@@ -962,18 +953,12 @@ class ExtractionWorker(QRunnable):
                                                         vigSize=vigSize, increment=increment, mode=mode)
                 stats["eval"][0] += nbBack
                 stats["eval"][1] += nbCharb
-            elif i in range_test:
-                nbBack, nbCharb = self.create_vignettes(img, seg, dst + "/test/", idCharb=idCharb,
-                                                        vigSize=vigSize, increment=increment, mode=mode)
-                stats["test"][0] += nbBack
-                stats["test"][1] += nbCharb
 
             progression = int((i * 100) / nb_images)
             self.signals.progressed.emit(progression)
 
         self.signals.log.emit(f'\nTraining set: \t {stats["train"][0]} back, {stats["train"][1]} charb')
-        self.signals.log.emit(f'Evaluation set: \t {stats["eval"][0]} back, {stats["eval"][1]} charb')
-        self.signals.log.emit(f'Testing set: \t {stats["test"][0]} back, {stats["test"][1]} charb\n')
+        self.signals.log.emit(f'Evaluation set: \t {stats["eval"][0]} back, {stats["eval"][1]} charb\n')
 
         self.signals.finished.emit("Extraction terminée !")
 
@@ -1000,7 +985,7 @@ class CharbTrainWorker(QRunnable):
         except Exception as exc:
             self.signals.error.emit(traceback.format_exc())
 
-    def train(self, modelName, trainDataPath, evalDataPath, testDataPath, vigSize,
+    def train(self, modelName, trainDataPath, evalDataPath, vigSize,
               batchSize, steps_per_epoch, validation_steps, epochs, shuffle,
               saveModelAs):
         """[CHARB] - Create and train a model using thumbnails in the 'trainDataPath' directory """
@@ -1015,21 +1000,17 @@ class CharbTrainWorker(QRunnable):
                 trainData = imgDataGen.flow_from_directory(directory=trainDataPath,
                                                            target_size=(vigSize, vigSize),
                                                            batch_size=batchSize,
-                                                           color_mode='grayscale')
+                                                           color_mode='grayscale',
+                                                           shuffle=True)
 
                 valData = imgDataGen.flow_from_directory(directory=evalDataPath,
                                                          target_size=(vigSize, vigSize),
                                                          batch_size=batchSize,
-                                                         color_mode='grayscale')
+                                                         color_mode='grayscale',
+                                                         shuffle=True)
 
-                # testData = imgDataGen.flow_from_directory(directory=testDataPath,
-                #                                           target_size=(vigSize, vigSize),
-                #                                           batch_size=batchSize,
-                #                                           color_mode='grayscale')
-
-                self.signals.log.emit(f'Train dataset: {trainData.__len__()} images')
-                self.signals.log.emit(f'Eval dataset: {valData.__len__()} images')
-                # self.signals.log.emit(f'Test dataset: {trainData.__len__()} images\n')
+                self.signals.log.emit(f'Train dataset: {len(trainData)*batchSize} images')
+                self.signals.log.emit(f'Evaluation dataset: {len(valData)*batchSize} images')
 
                 self.signals.log.emit("Début de la session d'entrainement\n")
 
@@ -1050,6 +1031,9 @@ class CharbTrainWorker(QRunnable):
                 #
                 # # Stoppe le training si le paramètre 'val_acc' ne s'améliore pas pendant 'patience' époques
                 # early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=10, verbose=1, mode='auto')
+
+                if steps_per_epoch == 0:
+                    steps_per_epoch = len(trainData)
 
                 start = time.time()
 
@@ -1124,7 +1108,7 @@ class CharbEvalWorker(QRunnable):
         except Exception as exc:
             self.signals.error.emit(traceback.format_exc())
 
-    def eval(self, existingModelPath, testDataPath, vigSize, batchSize):
+    def eval(self, existingModelPath, evalDataPath, vigSize, batchSize):
         """[CHARB] - Evaluate a model using thumbnails in the 'testDataPath' directory"""
 
         with self.graph.as_default():
@@ -1133,12 +1117,12 @@ class CharbEvalWorker(QRunnable):
 
                 imgDataGen = ImageDataGenerator(rescale=1. / 255)
 
-                testData = imgDataGen.flow_from_directory(directory=testDataPath,
+                testData = imgDataGen.flow_from_directory(directory=evalDataPath,
                                                           target_size=(vigSize, vigSize),
                                                           batch_size=batchSize,
                                                           color_mode='grayscale')
 
-                self.signals.log.emit(f'Test dataset: {testData.__len__()} images\n')
+                self.signals.log.emit(f'Test dataset: {testData.__len__()*batchSize} images\n')
 
                 self.signals.log.emit("Début de la session d'évaluation...\n")
 
@@ -1289,7 +1273,7 @@ class CharbPredictWorker(QRunnable):
 
         return final
 
-    def predictDataset(self, modelName, imagesPath, saveSegPath, saveSupPath, vigSize, intervalle, batchSize):
+    def predictDataset(self, modelName, imagesPath, saveSegPath, saveSupPath, vigSize, intervalle, batchSize, mode):
         """[CHARB] - Predict all images in a directory"""
 
         with self.graph.as_default():
@@ -1310,7 +1294,7 @@ class CharbPredictWorker(QRunnable):
 
                     # On prédit sa segmentation
                     pred = self.predict(model=model, imgName=imagesPath + "/" + images[i],
-                                        vigSize=vigSize, increment=intervalle, batchSize=batchSize)
+                                        vigSize=vigSize, increment=intervalle, batchSize=batchSize, mode=mode)
 
                     self.signals.log.emit(f'OK! Création de la segmentation et de la superposition.\n')
 

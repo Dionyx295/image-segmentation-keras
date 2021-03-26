@@ -18,7 +18,7 @@ def vgg4(input_shape=(32, 32, 1)):
     model.add(MaxPool2D(pool_size=(2, 2), padding='same'))
 
     model.add(Flatten())
-    model.add(Dense(units=2048, activation='relu'))     # quelle est l'influence du nbr. d'units dans cette couche?
+    model.add(Dense(units=100, activation='relu'))     # quelle est l'influence du nbr. d'units dans cette couche?
     model.add(Dropout(0.5))
     model.add(Dense(units=2, activation='softmax'))
 
