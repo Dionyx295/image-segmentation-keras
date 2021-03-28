@@ -1,18 +1,20 @@
 # Outil de segmentation d'image en Deep Learning : SkyEye :small_airplane::eye::earth_africa:
 
-Ce projet est un *fork* du projet *https://github.com/divamgupta/image-segmentation-keras : Implémentation de Segnet, FCN, UNet, PSPNet et d'autres modèles avec Keras.*
 
-Le projet a été réalisé par Valentin MAURICE dans le cadre du **P**rojet **R**echerche et **D**éveloppement (**P**rojet de **F**in d'**É**tude) de la troisième année du cycle ingénieur au département informatique de l'école Polytech Tours, lors de l'année 2019-20. 
+Ce projet est un *fork* du projet https://github.com/Millasta/image-segmentation-keras, lui-même étant un fork du projet https://github.com/divamgupta/image-segmentation-keras : *Implémentation de Segnet, FCN, UNet, PSPNet et d'autres modèles avec Keras.*
 
-L'idée est d'utiliser l'implémentation des modèles et classes utilitaires du projet forké afin de proposer une interface répondant aux besoins de l'appel d'offre initial : *Interactive Deep Learning : Application à la reconnaissance d’éléments archéologiques dans les images LiDAR*. L'outil proposé peut néanmoins s'apparenter  à un outil de segmentation d'image de toutes sortes, en utilisant des techniques de deep learning basée sur des réseaux CNN.
+Le projet a été réalisé par Tom SUCHEL dans le cadre du **P**rojet **R**echerche et **D**éveloppement (**P**rojet de **F**in d'**É**tude) de la troisième année du cycle ingénieur au département informatique de l'école Polytech Tours, lors de l'année 2020-21. 
 
+L'objectif de ce projet est de rajouter un ensemble de fonctionnalités à l'outil SkyEye, permettant la segmentation automatique des charbonnières sur des images LiDAR.
+Le projet initial a été développé par Valentin MAURICE lors de son PRD sur le même sujet, réalisé en 2019-20.
 
 
 ## Prérequis
 
 Le projet a été développé avec une distribution Python 3.6.0 (64bit) sur windows, et nécessite les dépendances suivantes (à retrouver dans requirements.txt) :
 
-- **tensorflow==1.5.0**
+[TO UPDATE?]
+- **tensorflow==1.9.0**
 - **keras==2.2.5**
 - **protobuf==3.6.0**
 - six (1.14.0)
@@ -27,7 +29,7 @@ Le projet a été développé avec une distribution Python 3.6.0 (64bit) sur win
 - imgaug (0.4.0)
 - sklearn (0.0)
 
-
+**Attention**: Qt 5 doit être installé sur l'ordinateur afin de pouvoir éxécuter le logiciel.
 
 ## Lancement
 
@@ -40,7 +42,7 @@ Il suffit d'éxécuter *skyeye_segmentation/entrypoint.py* avec Python, l'applic
 Le projet est structué de la manière suivante :
 
 - **html/** : contient la documentation générée avec [pdoc](https://pdoc3.github.io/pdoc/) 
-- **keras_segmentation/** : sources du projet forké
+- **keras_segmentation/** : sources du projet initial forké
 - **log/** : fichiers logs
 - **README/** : ressources de ce document
 - **skyeye_segmentation/** : source du projet
@@ -51,9 +53,9 @@ Le projet est structué de la manière suivante :
 
 ### Modules
 
-Les modules pythons s'organisent de la manière suivante :
+Les modules pythons s'organisent de la manière suivante. Les modules en orange sont ceux qui ont été modifiés depuis la version initiale du projet.
 
-![Diagramme des modules](README/Diagramme_modules.png "Diagramme de modules")
+![Diagramme des modules](README/project-uml.png "Diagramme de modules")
 
 Le module **view** contient un fichier .ui généré avec [Qt Designer](https://build-system.fman.io/qt-designer-download), qui a été automatiquement traduit en .py grâce au convertisseur pyuic5 (contenu dans PyQt5) : 
 
@@ -75,12 +77,6 @@ La documentation disponible dans *html/* a été générée avec [pdoc](https://
 
 ## Tests unitaires
 
-Lancer les tests unitaires du module *keras_segmentation* (**se placer dans test_keras_segmentation/**) :
-
-```python
->>> pytest
-```
-
 Lancer les tests unitaires du module *skyeye_segmentation* (**se placer dans test_skyeye_segmentation/**) :
 
 ```python
@@ -99,7 +95,7 @@ Pour lancer une analyse statique du code avec [PyLint](https://www.pylint.org/) 
 
 Le rapport PyLint est alors disponible et donne des indications sur la qualité du code analysé, ainsi qu'une note générale :
 
-![Rapport PyLint](README/Pylint.PNG "Rapport PyLint")
+![Rapport PyLint](README/pylint.PNG "Rapport PyLint")
 
 
 

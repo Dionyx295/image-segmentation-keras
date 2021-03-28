@@ -3,21 +3,20 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
-import numpy as np
 
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+import numpy as np
 from PyQt5.QtCore import QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings, \
     pyqtSlot
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 from keras_segmentation.models.all_models import model_from_name
 from skyeye_segmentation.controller.error_handler import errormsg
-from skyeye_segmentation.view import main_window
-from skyeye_segmentation.controller.skyeye_func import MaskFusionWorker, \
-    ImageAugmentationWorker, TrainWorker, EvalWorker, PredictWorker
-
 # Imports SkyEye "Charbonnières"
 from skyeye_segmentation.controller.skyeye_func import ExtractionWorker, CharbTrainWorker, \
     CharbEvalWorker, CharbPredictWorker
+from skyeye_segmentation.controller.skyeye_func import MaskFusionWorker, \
+    ImageAugmentationWorker, TrainWorker, EvalWorker, PredictWorker
+from skyeye_segmentation.view import main_window
 
 
 class MainWindow(QMainWindow):
@@ -435,7 +434,7 @@ class MainWindow(QMainWindow):
         self.qt_ui.charb_train_epochs_spinbox \
             .setValue(self.settings.value("charb_train_epochs", 100))
         self.qt_ui.charb_train_shuffle_checkbox \
-            .setChecked(self.settings.value("charb_train_shuffle", True))
+            .setChecked(bool(self.settings.value("charb_train_shuffle", True)))
         self.qt_ui.charb_train_vigsize_spinbox \
             .setValue(self.settings.value("charb_common_vigSize", 32))
         self.qt_ui.charb_train_batchsize_spinbox \
@@ -862,41 +861,42 @@ class MainWindow(QMainWindow):
 
     @pyqtSlot()
     def on_charb_extra_proportion_slider_change(self):
-        trainSize = self.qt_ui.charb_extra_proportion_slider.value()
-        evalSize = 100 - trainSize
-        self.qt_ui.charb_extra_proportion_label.setText(f'{trainSize} / {evalSize}')
+        train_size = self.qt_ui.charb_extra_proportion_slider.value()
+        eval_size = 100 - train_size
+        self.qt_ui.charb_extra_proportion_label.setText(f'{train_size} / {eval_size}')
 
     @pyqtSlot()
     def on_charb_extra_extract_button_click(self):
         """[CHARB] - Thumbnails extraction launcher"""
 
         # Getting parameters
-        imagesPath = self.qt_ui.charb_extra_images_field.text()
-        segmentationsPath = self.qt_ui.charb_extra_seg_field.text()
-        datasetPath = self.qt_ui.charb_extra_dataset_field.text()
-        idCharb = self.qt_ui.charb_extra_idcharb_spindbox.value()
-        vigSize = int(self.qt_ui.charb_extra_vigsize_spinbox.value())
+        images_path = self.qt_ui.charb_extra_images_field.text()
+        segmentations_path = self.qt_ui.charb_extra_seg_field.text()
+        dataset_path = self.qt_ui.charb_extra_dataset_field.text()
+        id_charb = self.qt_ui.charb_extra_idcharb_spindbox.value()
+        vig_size = int(self.qt_ui.charb_extra_vigsize_spinbox.value())
         intervalle = int(self.qt_ui.charb_extra_intervalle_spinbox.value())
-        propTrain = self.qt_ui.charb_extra_proportion_slider.value()
+        prop_train = self.qt_ui.charb_extra_proportion_slider.value()
         if self.qt_ui.charb_extra_1px_checkbox.isChecked():
             mode = '1px'
         elif self.qt_ui.charb_extra_4px_checkbox.isChecked():
             mode = '4px'
 
         # Saving settings
-        self.settings.setValue("charb_extra_imagesPath", imagesPath)
-        self.settings.setValue("charb_extra_segmentationsPath", segmentationsPath)
-        self.settings.setValue("charb_extra_datasetPath", datasetPath)
-        self.settings.setValue("charb_extra_propTrain", propTrain)
+        self.settings.setValue("charb_extra_imagesPath", images_path)
+        self.settings.setValue("charb_extra_segmentationsPath", segmentations_path)
+        self.settings.setValue("charb_extra_datasetPath", dataset_path)
+        self.settings.setValue("charb_extra_propTrain", prop_train)
 
-        self.settings.setValue("charb_common_idCharb", idCharb)
-        self.settings.setValue("charb_common_vigSize", vigSize)
+        self.settings.setValue("charb_common_idCharb", id_charb)
+        self.settings.setValue("charb_common_vigSize", vig_size)
         self.settings.setValue("charb_common_intervalle", intervalle)
         self.settings.setValue("charb_common_mode", mode)
 
         # Creating extraction worker
-        worker = ExtractionWorker(src_img=imagesPath, src_seg=segmentationsPath, idCharb=idCharb, propTrain=propTrain,
-                                  dst=datasetPath, vigSize=vigSize, increment=intervalle, mode=mode)
+        worker = ExtractionWorker(src_img=images_path, src_seg=segmentations_path, id_charb=id_charb,
+                                  prop_train=prop_train,
+                                  dst=dataset_path, vig_size=vig_size, increment=intervalle, mode=mode)
 
         # Launching treatment
         self.set_progress_bar_state(True)
@@ -948,36 +948,36 @@ class MainWindow(QMainWindow):
         """[CHARB] - Training launcher"""
 
         # Parameters
-        modelName = self.qt_ui.charb_train_model_combobox.currentText()
-        trainDataPath = self.qt_ui.charb_train_traindata_field.text()
-        evalDataPath = self.qt_ui.charb_train_evaldata_field.text()
-        vigSize = int(self.qt_ui.charb_train_vigsize_spinbox.value())
-        batchSize = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+        model_name = self.qt_ui.charb_train_model_combobox.currentText()
+        train_data_path = self.qt_ui.charb_train_traindata_field.text()
+        eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+        vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+        batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
         steps_per_epoch = int(self.qt_ui.charb_train_stepperepoch_spinbox.value())
-        validation_steps = 20   # TODO?
+        validation_steps = 20  # TODO?
         epochs = int(self.qt_ui.charb_train_epochs_spinbox.value())
         shuffle = self.qt_ui.charb_train_shuffle_checkbox.isChecked()
-        saveModelAs = self.qt_ui.charb_train_savemodel_field.text()
+        save_model_in = self.qt_ui.charb_train_savemodel_field.text()
 
         # Saving settings
-        self.settings.setValue("charb_train_modelName", modelName)
-        self.settings.setValue("charb_train_trainDataPath", trainDataPath)
-        self.settings.setValue("charb_train_evalDataPath", evalDataPath)
+        self.settings.setValue("charb_train_modelName", model_name)
+        self.settings.setValue("charb_train_trainDataPath", train_data_path)
+        self.settings.setValue("charb_train_evalDataPath", eval_data_path)
         self.settings.setValue("charb_train_stepsPerEpoch", steps_per_epoch)
         self.settings.setValue("charb_train_validationSteps", validation_steps)
         self.settings.setValue("charb_train_epochs", epochs)
         self.settings.setValue("charb_train_shuffle", shuffle)
-        self.settings.setValue("charb_train_saveModelAs", saveModelAs)
+        self.settings.setValue("charb_train_saveModelAs", save_model_in)
 
-        self.settings.setValue("charb_common_vigSize", vigSize)
-        self.settings.setValue("charb_common_batchSize", batchSize)
+        self.settings.setValue("charb_common_vigSize", vig_size)
+        self.settings.setValue("charb_common_batchSize", batch_size)
 
         # Creating training worker
-        worker = CharbTrainWorker(modelName=modelName,
-                                  trainDataPath=trainDataPath, evalDataPath=evalDataPath,
-                                  vigSize=vigSize, batchSize=batchSize, steps_per_epoch=steps_per_epoch,
+        worker = CharbTrainWorker(model_name=model_name,
+                                  train_data_path=train_data_path, eval_data_path=eval_data_path,
+                                  vig_size=vig_size, batch_size=batch_size, steps_per_epoch=steps_per_epoch,
                                   validation_steps=validation_steps, epochs=epochs, shuffle=shuffle,
-                                  saveModelAs=saveModelAs)
+                                  save_model_in=save_model_in)
 
         # Launching treatment
         self.set_progress_bar_state(True)
@@ -993,21 +993,21 @@ class MainWindow(QMainWindow):
         """[CHARB] - Evaluation launcher"""
 
         # Getting parameters
-        existingModelPath = self.qt_ui.charb_train_loadmodel_field.text()
-        evalDataPath = self.qt_ui.charb_train_evaldata_field.text()
-        vigSize = int(self.qt_ui.charb_train_vigsize_spinbox.value())
-        batchSize = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+        existing_model_path = self.qt_ui.charb_train_loadmodel_field.text()
+        eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+        vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+        batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
 
         # Saving settings
-        self.settings.setValue("charb_eval_existingModelPath", existingModelPath)
-        self.settings.setValue("charb_eval_evalDataPath", evalDataPath)
+        self.settings.setValue("charb_eval_existingModelPath", existing_model_path)
+        self.settings.setValue("charb_eval_evalDataPath", eval_data_path)
 
-        self.settings.setValue("charb_common_vigSize", vigSize)
-        self.settings.setValue("charb_common_batchSize", batchSize)
+        self.settings.setValue("charb_common_vigSize", vig_size)
+        self.settings.setValue("charb_common_batchSize", batch_size)
 
         # Creating evaluation worker
-        worker = CharbEvalWorker(existingModelPath=existingModelPath, evalDataPath=evalDataPath,
-                                 vigSize=vigSize, batchSize=batchSize)
+        worker = CharbEvalWorker(existing_model_path=existing_model_path, eval_data_path=eval_data_path,
+                                 vig_size=vig_size, batch_size=batch_size)
 
         # Launching treatment
         self.set_progress_bar_state(True)
@@ -1059,33 +1059,33 @@ class MainWindow(QMainWindow):
         """[CHARB] - Predictions launcher"""
 
         # Getting parameters
-        modelName = self.qt_ui.charb_pred_model_field.text()
-        imagesPath = self.qt_ui.charb_pred_images_field.text()
-        saveSegPath = self.qt_ui.charb_pred_seg_field.text()
-        saveSupPath = self.qt_ui.charb_pred_sup_field.text()
-        vigSize = int(self.qt_ui.charb_pred_vigsize_spinbox.value())
+        model_name = self.qt_ui.charb_pred_model_field.text()
+        images_path = self.qt_ui.charb_pred_images_field.text()
+        save_seg_path = self.qt_ui.charb_pred_seg_field.text()
+        save_sup_path = self.qt_ui.charb_pred_sup_field.text()
+        vig_size = int(self.qt_ui.charb_pred_vigsize_spinbox.value())
         intervalle = int(self.qt_ui.charb_pred_intervalle_spinbox.value())
-        batchSize = int(self.qt_ui.charb_pred_batchsize_spinbox.value())
+        batch_size = int(self.qt_ui.charb_pred_batchsize_spinbox.value())
         if self.qt_ui.charb_pred_1px_checkbox.isChecked():
             mode = '1px'
         elif self.qt_ui.charb_pred_4px_checkbox.isChecked():
             mode = '4px'
 
         # Saving settings
-        self.settings.setValue("charb_pred_modelName", modelName)
-        self.settings.setValue("charb_pred_imagesPath", imagesPath)
-        self.settings.setValue("charb_pred_saveSegPath", saveSegPath)
-        self.settings.setValue("charb_pred_saveSupPath", saveSupPath)
+        self.settings.setValue("charb_pred_modelName", model_name)
+        self.settings.setValue("charb_pred_imagesPath", images_path)
+        self.settings.setValue("charb_pred_saveSegPath", save_seg_path)
+        self.settings.setValue("charb_pred_saveSupPath", save_sup_path)
 
-        self.settings.setValue("charb_common_vigSize", vigSize)
+        self.settings.setValue("charb_common_vigSize", vig_size)
         self.settings.setValue("charb_common_intervalle", intervalle)
-        self.settings.setValue("charb_common_batchSize", batchSize)
+        self.settings.setValue("charb_common_batchSize", batch_size)
         self.settings.setValue("charb_common_mode", mode)
 
         # Creating prediction worker
-        worker = CharbPredictWorker(modelName=modelName, imagesPath=imagesPath,
-                                    saveSegPath=saveSegPath, saveSupPath=saveSupPath,
-                                    vigSize=vigSize, intervalle=intervalle, batchSize=batchSize, mode=mode)
+        worker = CharbPredictWorker(model_name=model_name, images_path=images_path,
+                                    save_seg_path=save_seg_path, save_sup_path=save_sup_path,
+                                    vig_size=vig_size, intervalle=intervalle, batch_size=batch_size, mode=mode)
 
         # Launching treatment
         self.set_progress_bar_state(True)
@@ -1372,11 +1372,11 @@ class MainWindow(QMainWindow):
             return
 
         # Parameters are OK
-        vigSize = self.qt_ui.charb_extra_vigsize_spinbox.value()
+        vig_size = self.qt_ui.charb_extra_vigsize_spinbox.value()
         intervalle = self.qt_ui.charb_extra_intervalle_spinbox.value()
         mode1px = self.qt_ui.charb_extra_1px_checkbox.isChecked()
         mode4px = self.qt_ui.charb_extra_4px_checkbox.isChecked()
-        if vigSize < 32 or vigSize > 128 or vigSize % 16 != 0:
+        if vig_size < 32 or vig_size > 128 or vig_size % 16 != 0:
             return
         if intervalle < 1 or intervalle > 128:
             return
@@ -1409,15 +1409,15 @@ class MainWindow(QMainWindow):
             return
 
         # Parameters are OK
-        vigSize = self.qt_ui.charb_train_vigsize_spinbox.value()
-        batchSize = self.qt_ui.charb_train_batchsize_spinbox.value()
-        stepsPerEpoch = self.qt_ui.charb_train_stepperepoch_spinbox.value()
+        vig_size = self.qt_ui.charb_train_vigsize_spinbox.value()
+        batch_size = self.qt_ui.charb_train_batchsize_spinbox.value()
+        steps_per_epoch = self.qt_ui.charb_train_stepperepoch_spinbox.value()
         epochs = self.qt_ui.charb_train_epochs_spinbox.value()
-        if vigSize < 32 or vigSize > 128 or vigSize % 16 != 0:
+        if vig_size < 32 or vig_size > 128 or vig_size % 16 != 0:
             return
-        if batchSize < 32 or batchSize > 256 or batchSize % 32 != 0:
+        if batch_size < 32 or batch_size > 256 or batch_size % 32 != 0:
             return
-        if stepsPerEpoch < 1 or epochs < 1:
+        if steps_per_epoch < 1 or epochs < 1:
             return
 
         self.qt_ui.charb_train_train_button.setEnabled(True)
@@ -1471,14 +1471,14 @@ class MainWindow(QMainWindow):
             return
 
         # Parameters are OK
-        batchSize = self.qt_ui.charb_pred_batchsize_spinbox.value()
-        vigSize = self.qt_ui.charb_pred_vigsize_spinbox.value()
+        batch_size = self.qt_ui.charb_pred_batchsize_spinbox.value()
+        vig_size = self.qt_ui.charb_pred_vigsize_spinbox.value()
         intervalle = self.qt_ui.charb_pred_intervalle_spinbox.value()
         mode1px = self.qt_ui.charb_pred_1px_checkbox.isChecked()
         mode4px = self.qt_ui.charb_pred_4px_checkbox.isChecked()
-        if batchSize < 32 or batchSize > 256 or batchSize % 32 != 0:
+        if batch_size < 32 or batch_size > 256 or batch_size % 32 != 0:
             return
-        if vigSize < 32 or vigSize > 128 or vigSize % 16 != 0:
+        if vig_size < 32 or vig_size > 128 or vig_size % 16 != 0:
             return
         if intervalle < 1 or intervalle > 128:
             return

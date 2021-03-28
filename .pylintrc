@@ -2,6 +2,9 @@
 ignore=view,keras_segmentation,log,test,venv
 
 [MESSAGES CONTROL]
-disable=E0611,W0703
+disable=E0611,W0703,E0401,W0511
+
+[FORMAT]
+max-line-length=150
 
 
