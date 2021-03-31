@@ -11,9 +11,8 @@ Le projet initial a été développé par Valentin MAURICE lors de son PRD sur l
 
 ## Prérequis
 
-Le projet a été développé avec une distribution Python 3.6.0 (64bit) sur windows, et nécessite les dépendances suivantes (à retrouver dans requirements.txt) :
+Le projet a été développé avec une distribution Python 3.6.5 (64bit) sur windows, et nécessite les dépendances suivantes (à retrouver dans requirements.txt) :
 
-[TO UPDATE?]
 - **tensorflow==1.9.0**
 - **keras==2.2.5**
 - **protobuf==3.6.0**
@@ -29,7 +28,7 @@ Le projet a été développé avec une distribution Python 3.6.0 (64bit) sur win
 - imgaug (0.4.0)
 - sklearn (0.0)
 
-**Attention**: Qt 5 doit être installé sur l'ordinateur afin de pouvoir éxécuter le logiciel.
+**Attention**: Qt 5.15 doit être installé sur l'ordinateur afin de pouvoir éxécuter le logiciel.
 
 ## Lancement
 
@@ -70,14 +69,14 @@ Le module **view** contient un fichier .ui généré avec [Qt Designer](https://
 La documentation disponible dans *html/* a été générée avec [pdoc](https://pdoc3.github.io/pdoc/) : 
 
 ```python
->>> pdoc skyeye_segmentation
+>>> pdoc skyeye_segmentation --html
 ```
 
 
 
 ## Tests unitaires
 
-Lancer les tests unitaires du module *skyeye_segmentation* (**se placer dans test_skyeye_segmentation/**) :
+Lancer les tests unitaires des nouvelles fonctions du module *skyeye_segmentation* (**se placer dans test_charb_segmentation/**) :
 
 ```python
 >>> pytest
