@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.5" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>skyeye_segmentation.controller.main_window API documentation</title>
 <meta name="description" content="Main controller, handles connections, ui management." />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -30,35 +32,42 @@ import os
 import sys
 from datetime import datetime
 from pathlib import Path
-import numpy as np
 
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+import numpy as np
 from PyQt5.QtCore import QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings, \
     pyqtSlot
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
 
 from keras_segmentation.models.all_models import model_from_name
 from skyeye_segmentation.controller.error_handler import errormsg
-from skyeye_segmentation.view import main_window
+# Imports SkyEye &#34;Charbonnières&#34;
+from skyeye_segmentation.controller.skyeye_func import ExtractionWorker, CharbTrainWorker, \
+    CharbEvalWorker, CharbPredictWorker
 from skyeye_segmentation.controller.skyeye_func import MaskFusionWorker, \
     ImageAugmentationWorker, TrainWorker, EvalWorker, PredictWorker
+from skyeye_segmentation.view import main_window
 
 
 class MainWindow(QMainWindow):
     &#34;&#34;&#34;Main window controller class&#34;&#34;&#34;
+
+    log_file = &#34;&#34;
 
     def __init__(self):
         super().__init__()
 
         # Creating log file and redirecting stdout
         self.stdout_original = sys.stdout
-        work_dir = os.path.join(Path(os.getcwd()).parent, &#34;log&#34;)
+        work_dir = os.path.join(Path(os.getcwd()), &#34;log&#34;)
         if not os.path.isdir(work_dir):
             os.mkdir(work_dir)
         now = datetime.now()
         dt_string = now.strftime(&#34;%d-%m-%Y %Hh%Mm%Ss&#34;)
-        log_file = os.path.join(work_dir, &#34;logs_&#34; + dt_string + &#34;.txt&#34;)
-        sys.stdout = open(log_file, &#39;a&#39;)
-        sys.stderr = open(log_file, &#39;a&#39;)
+
+        MainWindow.log_file = os.path.join(work_dir, &#34;logs_&#34; + dt_string + &#34;.txt&#34;)
+        # [!] UNCOMMENT TO PRINT IN LOG FILE
+        # sys.stdout = open(MainWindow.log_file, &#39;a&#39;)
+        # sys.stderr = open(MainWindow.log_file, &#39;a&#39;)
 
         self.qt_ui = main_window.Ui_MainWindow()
         self.qt_ui.setupUi(self)
@@ -203,6 +212,110 @@ class MainWindow(QMainWindow):
         self.qt_ui.saved_sup_field.textChanged \
             .connect(self.check_predict_available)
 
+        ###########################################################################
+        ### Connections to slots (tab &#34;Charbonnières&#34;)                          ###
+        ###########################################################################
+
+        # Thumbnail extraction
+        self.qt_ui.charb_extra_images_browse_button.clicked \
+            .connect(self.on_charb_extra_images_browse_button_click)
+        self.qt_ui.charb_extra_seg_browse_button.clicked \
+            .connect(self.on_charb_extra_seg_browse_button_click)
+        self.qt_ui.charb_extra_dataset_browse_button.clicked \
+            .connect(self.on_charb_extra_dataset_browse_button_click)
+        self.qt_ui.charb_extra_proportion_slider.valueChanged \
+            .connect(self.on_charb_extra_proportion_slider_change)
+        self.qt_ui.charb_extra_extract_button.clicked \
+            .connect(self.on_charb_extra_extract_button_click)
+
+        # Training and evaluation
+        self.qt_ui.charb_train_traindata_browse_button.clicked \
+            .connect(self.on_charb_train_traindata_browse_button_click)
+        self.qt_ui.charb_train_evaldata_browse_button.clicked \
+            .connect(self.on_charb_train_evaldata_browse_button_click)
+        self.qt_ui.charb_train_loadmodel_browse_button.clicked \
+            .connect(self.on_charb_train_loadmodel_browse_button_click)
+        self.qt_ui.charb_train_savemodel_browse_button.clicked \
+            .connect(self.on_charb_train_savemodel_browse_button_click)
+        self.qt_ui.charb_train_train_button.clicked \
+            .connect(self.on_charb_train_train_button_click)
+        self.qt_ui.charb_train_eval_button.clicked \
+            .connect(self.on_charb_train_eval_button_click)
+
+        # Predictions
+        self.qt_ui.charb_pred_model_browse_button.clicked \
+            .connect(self.on_charb_pred_model_browse_button_click)
+        self.qt_ui.charb_pred_images_browse_button.clicked \
+            .connect(self.on_charb_pred_images_browse_button_click)
+        self.qt_ui.charb_pred_seg_browse_button.clicked \
+            .connect(self.on_charb_pred_seg_browse_button_click)
+        self.qt_ui.charb_pred_sup_browse_button.clicked \
+            .connect(self.on_charb_pred_sup_browse_button_click)
+        self.qt_ui.charb_pred_predict_button.clicked \
+            .connect(self.on_charb_pred_predict_button_click)
+
+        # UI Management
+        # Thumbnail extraction
+        self.qt_ui.charb_extra_images_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_seg_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_dataset_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_intervalle_spinbox.valueChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_1px_checkbox.stateChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_4px_checkbox.stateChanged \
+            .connect(self.charb_check_extract_available)
+        # Training
+        self.qt_ui.charb_train_traindata_field.textChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_evaldata_field.textChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_model_combobox.currentTextChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_batchsize_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_stepperepoch_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_epochs_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_savemodel_field.textChanged \
+            .connect(self.charb_check_train_available)
+        # Evaluation
+        self.qt_ui.charb_train_evaldata_field.textChanged \
+            .connect(self.charb_check_eval_available)
+        self.qt_ui.charb_train_loadmodel_field.textChanged \
+            .connect(self.charb_check_eval_available)
+        # Predictions
+        self.qt_ui.charb_pred_model_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_images_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_seg_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_sup_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_batchsize_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_intervalle_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_1px_checkbox.stateChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_4px_checkbox.stateChanged \
+            .connect(self.charb_check_predict_available)
+
+        ###########################################################################
+        ###########################################################################
+        ###########################################################################
+
         # Dictionnary to bind classes and their path
         self.classes_folders = {}
 
@@ -310,6 +423,79 @@ class MainWindow(QMainWindow):
         value = self.settings.value(&#34;nb_class_spinbox&#34;)
         if value:
             self.qt_ui.nb_class_spinbox.setValue(value)
+
+        ###########################################################################
+        ### Load settings (tab &#34;Charbonnières&#34;)                                 ###
+        ###########################################################################
+
+        # Thumbnails extraction
+        self.qt_ui.charb_extra_images_field \
+            .setText(self.settings.value(&#34;charb_extra_imagesPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_extra_seg_field \
+            .setText(self.settings.value(&#34;charb_extra_segmentationsPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_extra_dataset_field \
+            .setText(self.settings.value(&#34;charb_extra_datasetPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_extra_idcharb_spindbox \
+            .setValue(self.settings.value(&#34;charb_common_idCharb&#34;, 2))
+        self.qt_ui.charb_extra_vigsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+        self.qt_ui.charb_extra_intervalle_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_intervalle&#34;, 1))
+        self.qt_ui.charb_extra_proportion_slider \
+            .setValue(self.settings.value(&#34;charb_extra_propTrain&#34;, 70))
+        self.qt_ui.charb_extra_proportion_label \
+            .setText(f&#39;{self.settings.value(&#34;charb_extra_propTrain&#34;, 70)} &#39;
+                     f&#39;/ {100 - self.settings.value(&#34;charb_extra_propTrain&#34;, 70)}&#39;)
+        if self.settings.value(&#34;charb_common_mode&#34;, &#34;1px&#34;) == &#34;1px&#34;:
+            self.qt_ui.charb_extra_1px_checkbox.setChecked(True)
+        else:
+            self.qt_ui.charb_extra_4px_checkbox.setChecked(True)
+
+        # Training
+        self.qt_ui.charb_train_model_combobox \
+            .setCurrentText(self.settings.value(&#34;charb_train_modelName&#34;, &#34;vgg4&#34;))
+        self.qt_ui.charb_train_traindata_field \
+            .setText(self.settings.value(&#34;charb_train_trainDataPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_train_evaldata_field \
+            .setText(self.settings.value(&#34;charb_train_evalDataPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_train_stepperepoch_spinbox \
+            .setValue(self.settings.value(&#34;charb_train_stepsPerEpoch&#34;, 100))
+        self.qt_ui.charb_train_epochs_spinbox \
+            .setValue(self.settings.value(&#34;charb_train_epochs&#34;, 100))
+        self.qt_ui.charb_train_shuffle_checkbox \
+            .setChecked(bool(self.settings.value(&#34;charb_train_shuffle&#34;, True)))
+        self.qt_ui.charb_train_vigsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+        self.qt_ui.charb_train_batchsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_batchSize&#34;, 32))
+        self.qt_ui.charb_train_savemodel_field \
+            .setText(self.settings.value(&#34;charb_train_saveModelAs&#34;, &#34;&#34;))
+
+        # Evaluation
+        self.qt_ui.charb_train_loadmodel_field \
+            .setText(self.settings.value(&#34;charb_eval_existingModelPath&#34;, &#34;&#34;))
+
+        # Prediction
+        self.qt_ui.charb_pred_model_field \
+            .setText(self.settings.value(&#34;charb_pred_modelName&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_images_field \
+            .setText(self.settings.value(&#34;charb_pred_imagesPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_seg_field \
+            .setText(self.settings.value(&#34;charb_pred_saveSegPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_sup_field \
+            .setText(self.settings.value(&#34;charb_pred_saveSupPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_vigsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+        self.qt_ui.charb_pred_batchsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_batchSize&#34;, 32))
+        self.qt_ui.charb_pred_intervalle_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_intervalle&#34;, 2))
+        # self.qt_ui.charb_pred_idCharb_spinbox \
+        #     .setText(self.settings.value(&#34;charb_common_idCharb&#34;, 2&#34;))
+        if self.settings.value(&#34;charb_common_mode&#34;, &#34;1px&#34;) == &#34;1px&#34;:
+            self.qt_ui.charb_pred_1px_checkbox.setChecked(True)
+        else:
+            self.qt_ui.charb_pred_4px_checkbox.setChecked(True)
 
     # Slots
     @pyqtSlot()
@@ -563,6 +749,7 @@ class MainWindow(QMainWindow):
         fill = self.qt_ui.aug_fill_combobox.currentText()
         size = (self.qt_ui.aug_width_spinbox.value(),
                 self.qt_ui.aug_height_spinbox.value())
+
         worker = ImageAugmentationWorker(nb_img=nb_img, img_src=img_src,
                                          seg_src=seg_src, img_dest=img_dest,
                                          seg_dest=seg_dest, size=size,
@@ -632,6 +819,7 @@ class MainWindow(QMainWindow):
         img_src = self.qt_ui.eval_images_field.text()
         seg_src = self.qt_ui.eval_seg_field.text()
         existing = self.qt_ui.existing_model_path_field.text()
+
         worker = EvalWorker(inp_images_dir=img_src, annotations_dir=seg_src,
                             checkpoints_path=existing)
 
@@ -653,6 +841,7 @@ class MainWindow(QMainWindow):
         img_src = self.qt_ui.predict_images_field.text()
         seg_dest = self.qt_ui.saved_seg_field.text()
         sup_dest = self.qt_ui.saved_sup_field.text()
+
         worker = PredictWorker(inp_dir=img_src, out_dir=seg_dest,
                                checkpoints_path=existing, colors=None,
                                sup_dir=sup_dest)
@@ -666,10 +855,284 @@ class MainWindow(QMainWindow):
         worker.signals.error.connect(self.error_appened)
         self.thread_pool.start(worker)
 
+    ###########################################################################
+    ### Slots (tab &#34;Charbonnières&#34;)                                         ###
+    ###########################################################################
+
+    # Thumbnail extraction
+
+    @pyqtSlot()
+    def on_charb_extra_images_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Images for thumbnails generation browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Images&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_images_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_seg_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Segmentations for thumbnails generation browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Segmentations&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_seg_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_dataset_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Output dataset browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Dataset&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_dataset_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_proportion_slider_change(self):
+        train_size = self.qt_ui.charb_extra_proportion_slider.value()
+        eval_size = 100 - train_size
+        self.qt_ui.charb_extra_proportion_label.setText(f&#39;{train_size} / {eval_size}&#39;)
+
+    @pyqtSlot()
+    def on_charb_extra_extract_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Thumbnails extraction launcher&#34;&#34;&#34;
+
+        # Getting parameters
+        images_path = self.qt_ui.charb_extra_images_field.text()
+        segmentations_path = self.qt_ui.charb_extra_seg_field.text()
+        dataset_path = self.qt_ui.charb_extra_dataset_field.text()
+        id_charb = self.qt_ui.charb_extra_idcharb_spindbox.value()
+        vig_size = int(self.qt_ui.charb_extra_vigsize_spinbox.value())
+        intervalle = int(self.qt_ui.charb_extra_intervalle_spinbox.value())
+        prop_train = self.qt_ui.charb_extra_proportion_slider.value()
+        if self.qt_ui.charb_extra_1px_checkbox.isChecked():
+            mode = &#39;1px&#39;
+        elif self.qt_ui.charb_extra_4px_checkbox.isChecked():
+            mode = &#39;4px&#39;
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_extra_imagesPath&#34;, images_path)
+        self.settings.setValue(&#34;charb_extra_segmentationsPath&#34;, segmentations_path)
+        self.settings.setValue(&#34;charb_extra_datasetPath&#34;, dataset_path)
+        self.settings.setValue(&#34;charb_extra_propTrain&#34;, prop_train)
+
+        self.settings.setValue(&#34;charb_common_idCharb&#34;, id_charb)
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_intervalle&#34;, intervalle)
+        self.settings.setValue(&#34;charb_common_mode&#34;, mode)
+
+        # Creating extraction worker
+        worker = ExtractionWorker(src_img=images_path, src_seg=segmentations_path, id_charb=id_charb,
+                                  prop_train=prop_train,
+                                  dst=dataset_path, vig_size=vig_size, increment=intervalle, mode=mode)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_extraction_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    # Training and evaluation
+
+    @pyqtSlot()
+    def on_charb_train_traindata_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Training dataset browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Jeu d&#39;entraînement&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_traindata_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_evaldata_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Evaluation dataset browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Jeu d&#39;évaluation&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_evaldata_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_loadmodel_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Existing model browser&#34;&#34;&#34;
+        file_name, _ = QFileDialog.getOpenFileName(self, &#34;Charger un modèle&#34;)
+        if file_name:
+            self.qt_ui.charb_train_loadmodel_field.setText(file_name)
+
+    @pyqtSlot()
+    def on_charb_train_savemodel_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Save model browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Sauvegarder le modèle dans le dossier suivant&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_savemodel_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_train_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Training launcher&#34;&#34;&#34;
+
+        # Parameters
+        model_name = self.qt_ui.charb_train_model_combobox.currentText()
+        train_data_path = self.qt_ui.charb_train_traindata_field.text()
+        eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+        vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+        batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+        steps_per_epoch = int(self.qt_ui.charb_train_stepperepoch_spinbox.value())
+        validation_steps = 20  # TODO?
+        epochs = int(self.qt_ui.charb_train_epochs_spinbox.value())
+        shuffle = self.qt_ui.charb_train_shuffle_checkbox.isChecked()
+        save_model_in = self.qt_ui.charb_train_savemodel_field.text()
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_train_modelName&#34;, model_name)
+        self.settings.setValue(&#34;charb_train_trainDataPath&#34;, train_data_path)
+        self.settings.setValue(&#34;charb_train_evalDataPath&#34;, eval_data_path)
+        self.settings.setValue(&#34;charb_train_stepsPerEpoch&#34;, steps_per_epoch)
+        self.settings.setValue(&#34;charb_train_validationSteps&#34;, validation_steps)
+        self.settings.setValue(&#34;charb_train_epochs&#34;, epochs)
+        self.settings.setValue(&#34;charb_train_shuffle&#34;, shuffle)
+        self.settings.setValue(&#34;charb_train_saveModelAs&#34;, save_model_in)
+
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+
+        # Creating training worker
+        worker = CharbTrainWorker(model_name=model_name,
+                                  train_data_path=train_data_path, eval_data_path=eval_data_path,
+                                  vig_size=vig_size, batch_size=batch_size, steps_per_epoch=steps_per_epoch,
+                                  validation_steps=validation_steps, epochs=epochs, shuffle=shuffle,
+                                  save_model_in=save_model_in)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_train_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    @pyqtSlot()
+    def on_charb_train_eval_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Evaluation launcher&#34;&#34;&#34;
+
+        # Getting parameters
+        existing_model_path = self.qt_ui.charb_train_loadmodel_field.text()
+        eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+        vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+        batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_eval_existingModelPath&#34;, existing_model_path)
+        self.settings.setValue(&#34;charb_eval_evalDataPath&#34;, eval_data_path)
+
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+
+        # Creating evaluation worker
+        worker = CharbEvalWorker(existing_model_path=existing_model_path, eval_data_path=eval_data_path,
+                                 vig_size=vig_size, batch_size=batch_size)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_train_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    # Predictions
+
+    @pyqtSlot()
+    def on_charb_pred_model_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Existing model browser&#34;&#34;&#34;
+        file_name, _ = QFileDialog.getOpenFileName(self, &#34;Charger un modèle&#34;)
+        if file_name:
+            self.qt_ui.charb_pred_model_field.setText(file_name)
+
+    @pyqtSlot()
+    def on_charb_pred_images_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Source images browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Images à prédire&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_images_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_seg_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Segmentations browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Sauvegarder les segmentations dans...&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_seg_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_sup_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Superpositions browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Sauvegarder les superpositions dans...&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_sup_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_predict_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Predictions launcher&#34;&#34;&#34;
+
+        # Getting parameters
+        model_name = self.qt_ui.charb_pred_model_field.text()
+        images_path = self.qt_ui.charb_pred_images_field.text()
+        save_seg_path = self.qt_ui.charb_pred_seg_field.text()
+        save_sup_path = self.qt_ui.charb_pred_sup_field.text()
+        vig_size = int(self.qt_ui.charb_pred_vigsize_spinbox.value())
+        intervalle = int(self.qt_ui.charb_pred_intervalle_spinbox.value())
+        batch_size = int(self.qt_ui.charb_pred_batchsize_spinbox.value())
+        if self.qt_ui.charb_pred_1px_checkbox.isChecked():
+            mode = &#39;1px&#39;
+        elif self.qt_ui.charb_pred_4px_checkbox.isChecked():
+            mode = &#39;4px&#39;
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_pred_modelName&#34;, model_name)
+        self.settings.setValue(&#34;charb_pred_imagesPath&#34;, images_path)
+        self.settings.setValue(&#34;charb_pred_saveSegPath&#34;, save_seg_path)
+        self.settings.setValue(&#34;charb_pred_saveSupPath&#34;, save_sup_path)
+
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_intervalle&#34;, intervalle)
+        self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+        self.settings.setValue(&#34;charb_common_mode&#34;, mode)
+
+        # Creating prediction worker
+        worker = CharbPredictWorker(model_name=model_name, images_path=images_path,
+                                    save_seg_path=save_seg_path, save_sup_path=save_sup_path,
+                                    vig_size=vig_size, intervalle=intervalle, batch_size=batch_size, mode=mode)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_predict_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    ###########################################################################
+    ###########################################################################
+    ###########################################################################
+
     # UI management
 
     def update_progress_bar(self, value):
-        &#34;&#34;&#34;Update the current progression of the progress ba&#34;&#34;&#34;
+        &#34;&#34;&#34;Update the current progression of the progress bar&#34;&#34;&#34;
         self.qt_ui.progress_bar.setValue(value)
 
     def treatment_done(self, msg=None):
@@ -705,6 +1168,11 @@ class MainWindow(QMainWindow):
         self.check_train_available()
         self.check_eval_available()
         self.check_predict_available()
+        # Checks for tab &#34;Charbonnières&#34;
+        self.charb_check_extract_available()
+        self.charb_check_train_available()
+        self.charb_check_eval_available()
+        self.charb_check_predict_available()
 
     def set_progress_bar_state(self, enabled):
         &#34;&#34;&#34;Lock or unlock the progress bar&#34;&#34;&#34;
@@ -796,7 +1264,6 @@ class MainWindow(QMainWindow):
 
         self.qt_ui.aug_button.setEnabled(True)
 
-
     def check_train_available(self):
         &#34;&#34;&#34;
             Check that all the required fields are completed
@@ -886,7 +1353,168 @@ class MainWindow(QMainWindow):
         if not os.path.exists(path):
             return
 
-        self.qt_ui.predict_button.setEnabled(True)</code></pre>
+        self.qt_ui.predict_button.setEnabled(True)
+
+    ###########################################################################
+    ### UI management (tab &#34;Charbonnières&#34;)                                 ###
+    ###########################################################################
+
+    def charb_append_extraction_log(self, line):
+        &#34;&#34;&#34;[CHARB] - Extraction logging&#34;&#34;&#34;
+        self.qt_ui.charb_extra_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_append_train_log(self, line):
+        &#34;&#34;&#34;[CHARB] - Train/Eval logging&#34;&#34;&#34;
+        self.qt_ui.charb_train_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_append_predict_log(self, line):
+        &#34;&#34;&#34;[CHARB] - Predict logging&#34;&#34;&#34;
+        self.qt_ui.charb_pred_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_check_extract_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch thumbnail extraction
+        &#34;&#34;&#34;
+        self.qt_ui.charb_extra_extract_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_extra_images_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_extra_seg_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_extra_dataset_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        vig_size = self.qt_ui.charb_extra_vigsize_spinbox.value()
+        intervalle = self.qt_ui.charb_extra_intervalle_spinbox.value()
+        mode1px = self.qt_ui.charb_extra_1px_checkbox.isChecked()
+        mode4px = self.qt_ui.charb_extra_4px_checkbox.isChecked()
+        if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+            return
+        if intervalle &lt; 1 or intervalle &gt; 128:
+            return
+        if (mode1px and mode4px) or (not mode1px and not mode4px):
+            return
+
+        self.qt_ui.charb_extra_extract_button.setEnabled(True)
+
+    def charb_check_train_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch a training session
+        &#34;&#34;&#34;
+        self.qt_ui.charb_train_train_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_train_traindata_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_evaldata_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_savemodel_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        vig_size = self.qt_ui.charb_train_vigsize_spinbox.value()
+        batch_size = self.qt_ui.charb_train_batchsize_spinbox.value()
+        steps_per_epoch = self.qt_ui.charb_train_stepperepoch_spinbox.value()
+        epochs = self.qt_ui.charb_train_epochs_spinbox.value()
+        if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+            return
+        if batch_size &lt; 32 or batch_size &gt; 256 or batch_size % 32 != 0:
+            return
+        if steps_per_epoch &lt; 1 or epochs &lt; 1:
+            return
+
+        self.qt_ui.charb_train_train_button.setEnabled(True)
+
+    def charb_check_eval_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch an evaluation session
+        &#34;&#34;&#34;
+        self.qt_ui.charb_train_eval_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_train_loadmodel_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_evaldata_field.text()
+        if not os.path.exists(path):
+            return
+
+        self.qt_ui.charb_train_eval_button.setEnabled(True)
+
+    def charb_check_predict_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch predictions
+        &#34;&#34;&#34;
+        self.qt_ui.charb_pred_predict_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_pred_model_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_images_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_seg_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_sup_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        batch_size = self.qt_ui.charb_pred_batchsize_spinbox.value()
+        vig_size = self.qt_ui.charb_pred_vigsize_spinbox.value()
+        intervalle = self.qt_ui.charb_pred_intervalle_spinbox.value()
+        mode1px = self.qt_ui.charb_pred_1px_checkbox.isChecked()
+        mode4px = self.qt_ui.charb_pred_4px_checkbox.isChecked()
+        if batch_size &lt; 32 or batch_size &gt; 256 or batch_size % 32 != 0:
+            return
+        if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+            return
+        if intervalle &lt; 1 or intervalle &gt; 128:
+            return
+        if (mode1px and mode4px) or (not mode1px and not mode4px):
+            return
+
+        self.qt_ui.charb_pred_predict_button.setEnabled(True)</code></pre>
 </details>
 </section>
 <section>
@@ -902,7 +1530,7 @@ class MainWindow(QMainWindow):
 <span>class <span class="ident">MainWindow</span></span>
 </code></dt>
 <dd>
-<section class="desc"><p>Main window controller class</p></section>
+<div class="desc"><p>Main window controller class</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -910,19 +1538,23 @@ class MainWindow(QMainWindow):
 <pre><code class="python">class MainWindow(QMainWindow):
     &#34;&#34;&#34;Main window controller class&#34;&#34;&#34;
 
+    log_file = &#34;&#34;
+
     def __init__(self):
         super().__init__()
 
         # Creating log file and redirecting stdout
         self.stdout_original = sys.stdout
-        work_dir = os.path.join(Path(os.getcwd()).parent, &#34;log&#34;)
+        work_dir = os.path.join(Path(os.getcwd()), &#34;log&#34;)
         if not os.path.isdir(work_dir):
             os.mkdir(work_dir)
         now = datetime.now()
         dt_string = now.strftime(&#34;%d-%m-%Y %Hh%Mm%Ss&#34;)
-        log_file = os.path.join(work_dir, &#34;logs_&#34; + dt_string + &#34;.txt&#34;)
-        sys.stdout = open(log_file, &#39;a&#39;)
-        sys.stderr = open(log_file, &#39;a&#39;)
+
+        MainWindow.log_file = os.path.join(work_dir, &#34;logs_&#34; + dt_string + &#34;.txt&#34;)
+        # [!] UNCOMMENT TO PRINT IN LOG FILE
+        # sys.stdout = open(MainWindow.log_file, &#39;a&#39;)
+        # sys.stderr = open(MainWindow.log_file, &#39;a&#39;)
 
         self.qt_ui = main_window.Ui_MainWindow()
         self.qt_ui.setupUi(self)
@@ -1067,6 +1699,110 @@ class MainWindow(QMainWindow):
         self.qt_ui.saved_sup_field.textChanged \
             .connect(self.check_predict_available)
 
+        ###########################################################################
+        ### Connections to slots (tab &#34;Charbonnières&#34;)                          ###
+        ###########################################################################
+
+        # Thumbnail extraction
+        self.qt_ui.charb_extra_images_browse_button.clicked \
+            .connect(self.on_charb_extra_images_browse_button_click)
+        self.qt_ui.charb_extra_seg_browse_button.clicked \
+            .connect(self.on_charb_extra_seg_browse_button_click)
+        self.qt_ui.charb_extra_dataset_browse_button.clicked \
+            .connect(self.on_charb_extra_dataset_browse_button_click)
+        self.qt_ui.charb_extra_proportion_slider.valueChanged \
+            .connect(self.on_charb_extra_proportion_slider_change)
+        self.qt_ui.charb_extra_extract_button.clicked \
+            .connect(self.on_charb_extra_extract_button_click)
+
+        # Training and evaluation
+        self.qt_ui.charb_train_traindata_browse_button.clicked \
+            .connect(self.on_charb_train_traindata_browse_button_click)
+        self.qt_ui.charb_train_evaldata_browse_button.clicked \
+            .connect(self.on_charb_train_evaldata_browse_button_click)
+        self.qt_ui.charb_train_loadmodel_browse_button.clicked \
+            .connect(self.on_charb_train_loadmodel_browse_button_click)
+        self.qt_ui.charb_train_savemodel_browse_button.clicked \
+            .connect(self.on_charb_train_savemodel_browse_button_click)
+        self.qt_ui.charb_train_train_button.clicked \
+            .connect(self.on_charb_train_train_button_click)
+        self.qt_ui.charb_train_eval_button.clicked \
+            .connect(self.on_charb_train_eval_button_click)
+
+        # Predictions
+        self.qt_ui.charb_pred_model_browse_button.clicked \
+            .connect(self.on_charb_pred_model_browse_button_click)
+        self.qt_ui.charb_pred_images_browse_button.clicked \
+            .connect(self.on_charb_pred_images_browse_button_click)
+        self.qt_ui.charb_pred_seg_browse_button.clicked \
+            .connect(self.on_charb_pred_seg_browse_button_click)
+        self.qt_ui.charb_pred_sup_browse_button.clicked \
+            .connect(self.on_charb_pred_sup_browse_button_click)
+        self.qt_ui.charb_pred_predict_button.clicked \
+            .connect(self.on_charb_pred_predict_button_click)
+
+        # UI Management
+        # Thumbnail extraction
+        self.qt_ui.charb_extra_images_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_seg_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_dataset_field.textChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_intervalle_spinbox.valueChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_1px_checkbox.stateChanged \
+            .connect(self.charb_check_extract_available)
+        self.qt_ui.charb_extra_4px_checkbox.stateChanged \
+            .connect(self.charb_check_extract_available)
+        # Training
+        self.qt_ui.charb_train_traindata_field.textChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_evaldata_field.textChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_model_combobox.currentTextChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_batchsize_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_stepperepoch_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_epochs_spinbox.valueChanged \
+            .connect(self.charb_check_train_available)
+        self.qt_ui.charb_train_savemodel_field.textChanged \
+            .connect(self.charb_check_train_available)
+        # Evaluation
+        self.qt_ui.charb_train_evaldata_field.textChanged \
+            .connect(self.charb_check_eval_available)
+        self.qt_ui.charb_train_loadmodel_field.textChanged \
+            .connect(self.charb_check_eval_available)
+        # Predictions
+        self.qt_ui.charb_pred_model_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_images_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_seg_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_sup_field.textChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_batchsize_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_vigsize_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_intervalle_spinbox.valueChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_1px_checkbox.stateChanged \
+            .connect(self.charb_check_predict_available)
+        self.qt_ui.charb_pred_4px_checkbox.stateChanged \
+            .connect(self.charb_check_predict_available)
+
+        ###########################################################################
+        ###########################################################################
+        ###########################################################################
+
         # Dictionnary to bind classes and their path
         self.classes_folders = {}
 
@@ -1174,6 +1910,79 @@ class MainWindow(QMainWindow):
         value = self.settings.value(&#34;nb_class_spinbox&#34;)
         if value:
             self.qt_ui.nb_class_spinbox.setValue(value)
+
+        ###########################################################################
+        ### Load settings (tab &#34;Charbonnières&#34;)                                 ###
+        ###########################################################################
+
+        # Thumbnails extraction
+        self.qt_ui.charb_extra_images_field \
+            .setText(self.settings.value(&#34;charb_extra_imagesPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_extra_seg_field \
+            .setText(self.settings.value(&#34;charb_extra_segmentationsPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_extra_dataset_field \
+            .setText(self.settings.value(&#34;charb_extra_datasetPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_extra_idcharb_spindbox \
+            .setValue(self.settings.value(&#34;charb_common_idCharb&#34;, 2))
+        self.qt_ui.charb_extra_vigsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+        self.qt_ui.charb_extra_intervalle_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_intervalle&#34;, 1))
+        self.qt_ui.charb_extra_proportion_slider \
+            .setValue(self.settings.value(&#34;charb_extra_propTrain&#34;, 70))
+        self.qt_ui.charb_extra_proportion_label \
+            .setText(f&#39;{self.settings.value(&#34;charb_extra_propTrain&#34;, 70)} &#39;
+                     f&#39;/ {100 - self.settings.value(&#34;charb_extra_propTrain&#34;, 70)}&#39;)
+        if self.settings.value(&#34;charb_common_mode&#34;, &#34;1px&#34;) == &#34;1px&#34;:
+            self.qt_ui.charb_extra_1px_checkbox.setChecked(True)
+        else:
+            self.qt_ui.charb_extra_4px_checkbox.setChecked(True)
+
+        # Training
+        self.qt_ui.charb_train_model_combobox \
+            .setCurrentText(self.settings.value(&#34;charb_train_modelName&#34;, &#34;vgg4&#34;))
+        self.qt_ui.charb_train_traindata_field \
+            .setText(self.settings.value(&#34;charb_train_trainDataPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_train_evaldata_field \
+            .setText(self.settings.value(&#34;charb_train_evalDataPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_train_stepperepoch_spinbox \
+            .setValue(self.settings.value(&#34;charb_train_stepsPerEpoch&#34;, 100))
+        self.qt_ui.charb_train_epochs_spinbox \
+            .setValue(self.settings.value(&#34;charb_train_epochs&#34;, 100))
+        self.qt_ui.charb_train_shuffle_checkbox \
+            .setChecked(bool(self.settings.value(&#34;charb_train_shuffle&#34;, True)))
+        self.qt_ui.charb_train_vigsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+        self.qt_ui.charb_train_batchsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_batchSize&#34;, 32))
+        self.qt_ui.charb_train_savemodel_field \
+            .setText(self.settings.value(&#34;charb_train_saveModelAs&#34;, &#34;&#34;))
+
+        # Evaluation
+        self.qt_ui.charb_train_loadmodel_field \
+            .setText(self.settings.value(&#34;charb_eval_existingModelPath&#34;, &#34;&#34;))
+
+        # Prediction
+        self.qt_ui.charb_pred_model_field \
+            .setText(self.settings.value(&#34;charb_pred_modelName&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_images_field \
+            .setText(self.settings.value(&#34;charb_pred_imagesPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_seg_field \
+            .setText(self.settings.value(&#34;charb_pred_saveSegPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_sup_field \
+            .setText(self.settings.value(&#34;charb_pred_saveSupPath&#34;, &#34;&#34;))
+        self.qt_ui.charb_pred_vigsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+        self.qt_ui.charb_pred_batchsize_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_batchSize&#34;, 32))
+        self.qt_ui.charb_pred_intervalle_spinbox \
+            .setValue(self.settings.value(&#34;charb_common_intervalle&#34;, 2))
+        # self.qt_ui.charb_pred_idCharb_spinbox \
+        #     .setText(self.settings.value(&#34;charb_common_idCharb&#34;, 2&#34;))
+        if self.settings.value(&#34;charb_common_mode&#34;, &#34;1px&#34;) == &#34;1px&#34;:
+            self.qt_ui.charb_pred_1px_checkbox.setChecked(True)
+        else:
+            self.qt_ui.charb_pred_4px_checkbox.setChecked(True)
 
     # Slots
     @pyqtSlot()
@@ -1427,6 +2236,7 @@ class MainWindow(QMainWindow):
         fill = self.qt_ui.aug_fill_combobox.currentText()
         size = (self.qt_ui.aug_width_spinbox.value(),
                 self.qt_ui.aug_height_spinbox.value())
+
         worker = ImageAugmentationWorker(nb_img=nb_img, img_src=img_src,
                                          seg_src=seg_src, img_dest=img_dest,
                                          seg_dest=seg_dest, size=size,
@@ -1496,6 +2306,7 @@ class MainWindow(QMainWindow):
         img_src = self.qt_ui.eval_images_field.text()
         seg_src = self.qt_ui.eval_seg_field.text()
         existing = self.qt_ui.existing_model_path_field.text()
+
         worker = EvalWorker(inp_images_dir=img_src, annotations_dir=seg_src,
                             checkpoints_path=existing)
 
@@ -1517,6 +2328,7 @@ class MainWindow(QMainWindow):
         img_src = self.qt_ui.predict_images_field.text()
         seg_dest = self.qt_ui.saved_seg_field.text()
         sup_dest = self.qt_ui.saved_sup_field.text()
+
         worker = PredictWorker(inp_dir=img_src, out_dir=seg_dest,
                                checkpoints_path=existing, colors=None,
                                sup_dir=sup_dest)
@@ -1530,10 +2342,284 @@ class MainWindow(QMainWindow):
         worker.signals.error.connect(self.error_appened)
         self.thread_pool.start(worker)
 
+    ###########################################################################
+    ### Slots (tab &#34;Charbonnières&#34;)                                         ###
+    ###########################################################################
+
+    # Thumbnail extraction
+
+    @pyqtSlot()
+    def on_charb_extra_images_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Images for thumbnails generation browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Images&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_images_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_seg_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Segmentations for thumbnails generation browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Segmentations&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_seg_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_dataset_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Output dataset browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Dataset&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_extra_dataset_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_extra_proportion_slider_change(self):
+        train_size = self.qt_ui.charb_extra_proportion_slider.value()
+        eval_size = 100 - train_size
+        self.qt_ui.charb_extra_proportion_label.setText(f&#39;{train_size} / {eval_size}&#39;)
+
+    @pyqtSlot()
+    def on_charb_extra_extract_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Thumbnails extraction launcher&#34;&#34;&#34;
+
+        # Getting parameters
+        images_path = self.qt_ui.charb_extra_images_field.text()
+        segmentations_path = self.qt_ui.charb_extra_seg_field.text()
+        dataset_path = self.qt_ui.charb_extra_dataset_field.text()
+        id_charb = self.qt_ui.charb_extra_idcharb_spindbox.value()
+        vig_size = int(self.qt_ui.charb_extra_vigsize_spinbox.value())
+        intervalle = int(self.qt_ui.charb_extra_intervalle_spinbox.value())
+        prop_train = self.qt_ui.charb_extra_proportion_slider.value()
+        if self.qt_ui.charb_extra_1px_checkbox.isChecked():
+            mode = &#39;1px&#39;
+        elif self.qt_ui.charb_extra_4px_checkbox.isChecked():
+            mode = &#39;4px&#39;
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_extra_imagesPath&#34;, images_path)
+        self.settings.setValue(&#34;charb_extra_segmentationsPath&#34;, segmentations_path)
+        self.settings.setValue(&#34;charb_extra_datasetPath&#34;, dataset_path)
+        self.settings.setValue(&#34;charb_extra_propTrain&#34;, prop_train)
+
+        self.settings.setValue(&#34;charb_common_idCharb&#34;, id_charb)
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_intervalle&#34;, intervalle)
+        self.settings.setValue(&#34;charb_common_mode&#34;, mode)
+
+        # Creating extraction worker
+        worker = ExtractionWorker(src_img=images_path, src_seg=segmentations_path, id_charb=id_charb,
+                                  prop_train=prop_train,
+                                  dst=dataset_path, vig_size=vig_size, increment=intervalle, mode=mode)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_extraction_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    # Training and evaluation
+
+    @pyqtSlot()
+    def on_charb_train_traindata_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Training dataset browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Jeu d&#39;entraînement&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_traindata_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_evaldata_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Evaluation dataset browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Jeu d&#39;évaluation&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_evaldata_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_loadmodel_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Existing model browser&#34;&#34;&#34;
+        file_name, _ = QFileDialog.getOpenFileName(self, &#34;Charger un modèle&#34;)
+        if file_name:
+            self.qt_ui.charb_train_loadmodel_field.setText(file_name)
+
+    @pyqtSlot()
+    def on_charb_train_savemodel_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Save model browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Sauvegarder le modèle dans le dossier suivant&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_train_savemodel_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_train_train_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Training launcher&#34;&#34;&#34;
+
+        # Parameters
+        model_name = self.qt_ui.charb_train_model_combobox.currentText()
+        train_data_path = self.qt_ui.charb_train_traindata_field.text()
+        eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+        vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+        batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+        steps_per_epoch = int(self.qt_ui.charb_train_stepperepoch_spinbox.value())
+        validation_steps = 20  # TODO?
+        epochs = int(self.qt_ui.charb_train_epochs_spinbox.value())
+        shuffle = self.qt_ui.charb_train_shuffle_checkbox.isChecked()
+        save_model_in = self.qt_ui.charb_train_savemodel_field.text()
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_train_modelName&#34;, model_name)
+        self.settings.setValue(&#34;charb_train_trainDataPath&#34;, train_data_path)
+        self.settings.setValue(&#34;charb_train_evalDataPath&#34;, eval_data_path)
+        self.settings.setValue(&#34;charb_train_stepsPerEpoch&#34;, steps_per_epoch)
+        self.settings.setValue(&#34;charb_train_validationSteps&#34;, validation_steps)
+        self.settings.setValue(&#34;charb_train_epochs&#34;, epochs)
+        self.settings.setValue(&#34;charb_train_shuffle&#34;, shuffle)
+        self.settings.setValue(&#34;charb_train_saveModelAs&#34;, save_model_in)
+
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+
+        # Creating training worker
+        worker = CharbTrainWorker(model_name=model_name,
+                                  train_data_path=train_data_path, eval_data_path=eval_data_path,
+                                  vig_size=vig_size, batch_size=batch_size, steps_per_epoch=steps_per_epoch,
+                                  validation_steps=validation_steps, epochs=epochs, shuffle=shuffle,
+                                  save_model_in=save_model_in)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_train_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    @pyqtSlot()
+    def on_charb_train_eval_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Evaluation launcher&#34;&#34;&#34;
+
+        # Getting parameters
+        existing_model_path = self.qt_ui.charb_train_loadmodel_field.text()
+        eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+        vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+        batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_eval_existingModelPath&#34;, existing_model_path)
+        self.settings.setValue(&#34;charb_eval_evalDataPath&#34;, eval_data_path)
+
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+
+        # Creating evaluation worker
+        worker = CharbEvalWorker(existing_model_path=existing_model_path, eval_data_path=eval_data_path,
+                                 vig_size=vig_size, batch_size=batch_size)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_train_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    # Predictions
+
+    @pyqtSlot()
+    def on_charb_pred_model_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Existing model browser&#34;&#34;&#34;
+        file_name, _ = QFileDialog.getOpenFileName(self, &#34;Charger un modèle&#34;)
+        if file_name:
+            self.qt_ui.charb_pred_model_field.setText(file_name)
+
+    @pyqtSlot()
+    def on_charb_pred_images_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Source images browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Images à prédire&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_images_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_seg_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Segmentations browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Sauvegarder les segmentations dans...&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_seg_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_sup_browse_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Superpositions browser&#34;&#34;&#34;
+        folder_name = QFileDialog. \
+            getExistingDirectory(self, &#34;Sauvegarder les superpositions dans...&#34;,
+                                 options=QFileDialog.ShowDirsOnly)
+        if folder_name:
+            self.qt_ui.charb_pred_sup_field.setText(folder_name)
+
+    @pyqtSlot()
+    def on_charb_pred_predict_button_click(self):
+        &#34;&#34;&#34;[CHARB] - Predictions launcher&#34;&#34;&#34;
+
+        # Getting parameters
+        model_name = self.qt_ui.charb_pred_model_field.text()
+        images_path = self.qt_ui.charb_pred_images_field.text()
+        save_seg_path = self.qt_ui.charb_pred_seg_field.text()
+        save_sup_path = self.qt_ui.charb_pred_sup_field.text()
+        vig_size = int(self.qt_ui.charb_pred_vigsize_spinbox.value())
+        intervalle = int(self.qt_ui.charb_pred_intervalle_spinbox.value())
+        batch_size = int(self.qt_ui.charb_pred_batchsize_spinbox.value())
+        if self.qt_ui.charb_pred_1px_checkbox.isChecked():
+            mode = &#39;1px&#39;
+        elif self.qt_ui.charb_pred_4px_checkbox.isChecked():
+            mode = &#39;4px&#39;
+
+        # Saving settings
+        self.settings.setValue(&#34;charb_pred_modelName&#34;, model_name)
+        self.settings.setValue(&#34;charb_pred_imagesPath&#34;, images_path)
+        self.settings.setValue(&#34;charb_pred_saveSegPath&#34;, save_seg_path)
+        self.settings.setValue(&#34;charb_pred_saveSupPath&#34;, save_sup_path)
+
+        self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+        self.settings.setValue(&#34;charb_common_intervalle&#34;, intervalle)
+        self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+        self.settings.setValue(&#34;charb_common_mode&#34;, mode)
+
+        # Creating prediction worker
+        worker = CharbPredictWorker(model_name=model_name, images_path=images_path,
+                                    save_seg_path=save_seg_path, save_sup_path=save_sup_path,
+                                    vig_size=vig_size, intervalle=intervalle, batch_size=batch_size, mode=mode)
+
+        # Launching treatment
+        self.set_progress_bar_state(True)
+        self.check_all_available()  # Lock other buttons
+        worker.signals.progressed.connect(self.update_progress_bar)
+        worker.signals.log.connect(self.charb_append_predict_log)
+        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.error.connect(self.error_appened)
+        self.thread_pool.start(worker)
+
+    ###########################################################################
+    ###########################################################################
+    ###########################################################################
+
     # UI management
 
     def update_progress_bar(self, value):
-        &#34;&#34;&#34;Update the current progression of the progress ba&#34;&#34;&#34;
+        &#34;&#34;&#34;Update the current progression of the progress bar&#34;&#34;&#34;
         self.qt_ui.progress_bar.setValue(value)
 
     def treatment_done(self, msg=None):
@@ -1569,6 +2655,11 @@ class MainWindow(QMainWindow):
         self.check_train_available()
         self.check_eval_available()
         self.check_predict_available()
+        # Checks for tab &#34;Charbonnières&#34;
+        self.charb_check_extract_available()
+        self.charb_check_train_available()
+        self.charb_check_eval_available()
+        self.charb_check_predict_available()
 
     def set_progress_bar_state(self, enabled):
         &#34;&#34;&#34;Lock or unlock the progress bar&#34;&#34;&#34;
@@ -1660,7 +2751,6 @@ class MainWindow(QMainWindow):
 
         self.qt_ui.aug_button.setEnabled(True)
 
-
     def check_train_available(self):
         &#34;&#34;&#34;
             Check that all the required fields are completed
@@ -1750,7 +2840,168 @@ class MainWindow(QMainWindow):
         if not os.path.exists(path):
             return
 
-        self.qt_ui.predict_button.setEnabled(True)</code></pre>
+        self.qt_ui.predict_button.setEnabled(True)
+
+    ###########################################################################
+    ### UI management (tab &#34;Charbonnières&#34;)                                 ###
+    ###########################################################################
+
+    def charb_append_extraction_log(self, line):
+        &#34;&#34;&#34;[CHARB] - Extraction logging&#34;&#34;&#34;
+        self.qt_ui.charb_extra_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_append_train_log(self, line):
+        &#34;&#34;&#34;[CHARB] - Train/Eval logging&#34;&#34;&#34;
+        self.qt_ui.charb_train_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_append_predict_log(self, line):
+        &#34;&#34;&#34;[CHARB] - Predict logging&#34;&#34;&#34;
+        self.qt_ui.charb_pred_log.appendPlainText(str(line))
+        print(line)
+        sys.stdout.flush()
+
+    def charb_check_extract_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch thumbnail extraction
+        &#34;&#34;&#34;
+        self.qt_ui.charb_extra_extract_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_extra_images_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_extra_seg_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_extra_dataset_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        vig_size = self.qt_ui.charb_extra_vigsize_spinbox.value()
+        intervalle = self.qt_ui.charb_extra_intervalle_spinbox.value()
+        mode1px = self.qt_ui.charb_extra_1px_checkbox.isChecked()
+        mode4px = self.qt_ui.charb_extra_4px_checkbox.isChecked()
+        if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+            return
+        if intervalle &lt; 1 or intervalle &gt; 128:
+            return
+        if (mode1px and mode4px) or (not mode1px and not mode4px):
+            return
+
+        self.qt_ui.charb_extra_extract_button.setEnabled(True)
+
+    def charb_check_train_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch a training session
+        &#34;&#34;&#34;
+        self.qt_ui.charb_train_train_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_train_traindata_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_evaldata_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_savemodel_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        vig_size = self.qt_ui.charb_train_vigsize_spinbox.value()
+        batch_size = self.qt_ui.charb_train_batchsize_spinbox.value()
+        steps_per_epoch = self.qt_ui.charb_train_stepperepoch_spinbox.value()
+        epochs = self.qt_ui.charb_train_epochs_spinbox.value()
+        if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+            return
+        if batch_size &lt; 32 or batch_size &gt; 256 or batch_size % 32 != 0:
+            return
+        if steps_per_epoch &lt; 1 or epochs &lt; 1:
+            return
+
+        self.qt_ui.charb_train_train_button.setEnabled(True)
+
+    def charb_check_eval_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch an evaluation session
+        &#34;&#34;&#34;
+        self.qt_ui.charb_train_eval_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_train_loadmodel_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_train_evaldata_field.text()
+        if not os.path.exists(path):
+            return
+
+        self.qt_ui.charb_train_eval_button.setEnabled(True)
+
+    def charb_check_predict_available(self):
+        &#34;&#34;&#34;
+            [CHARB]
+            Check that all the required fields are completed
+            to launch predictions
+        &#34;&#34;&#34;
+        self.qt_ui.charb_pred_predict_button.setEnabled(False)
+
+        # A treatment is in progress
+        if self.qt_ui.progress_bar.isEnabled():
+            return
+
+        # Paths are accessibles
+        path = self.qt_ui.charb_pred_model_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_images_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_seg_field.text()
+        if not os.path.exists(path):
+            return
+        path = self.qt_ui.charb_pred_sup_field.text()
+        if not os.path.exists(path):
+            return
+
+        # Parameters are OK
+        batch_size = self.qt_ui.charb_pred_batchsize_spinbox.value()
+        vig_size = self.qt_ui.charb_pred_vigsize_spinbox.value()
+        intervalle = self.qt_ui.charb_pred_intervalle_spinbox.value()
+        mode1px = self.qt_ui.charb_pred_1px_checkbox.isChecked()
+        mode4px = self.qt_ui.charb_pred_4px_checkbox.isChecked()
+        if batch_size &lt; 32 or batch_size &gt; 256 or batch_size % 32 != 0:
+            return
+        if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+            return
+        if intervalle &lt; 1 or intervalle &gt; 128:
+            return
+        if (mode1px and mode4px) or (not mode1px and not mode4px):
+            return
+
+        self.qt_ui.charb_pred_predict_button.setEnabled(True)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1761,13 +3012,20 @@ class MainWindow(QMainWindow):
 <li>PyQt5.QtGui.QPaintDevice</li>
 <li>sip.simplewrapper</li>
 </ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.log_file"><code class="name">var <span class="ident">log_file</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
 <h3>Methods</h3>
 <dl>
 <dt id="skyeye_segmentation.controller.main_window.MainWindow.append_predict_log"><code class="name flex">
 <span>def <span class="ident">append_predict_log</span></span>(<span>self, line)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Predict logging</p></section>
+<div class="desc"><p>Predict logging</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1783,7 +3041,7 @@ class MainWindow(QMainWindow):
 <span>def <span class="ident">append_train_log</span></span>(<span>self, line)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Train logging</p></section>
+<div class="desc"><p>Train logging</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1795,11 +3053,246 @@ class MainWindow(QMainWindow):
     sys.stdout.flush()</code></pre>
 </details>
 </dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.charb_append_extraction_log"><code class="name flex">
+<span>def <span class="ident">charb_append_extraction_log</span></span>(<span>self, line)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Extraction logging</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def charb_append_extraction_log(self, line):
+    &#34;&#34;&#34;[CHARB] - Extraction logging&#34;&#34;&#34;
+    self.qt_ui.charb_extra_log.appendPlainText(str(line))
+    print(line)
+    sys.stdout.flush()</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.charb_append_predict_log"><code class="name flex">
+<span>def <span class="ident">charb_append_predict_log</span></span>(<span>self, line)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Predict logging</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def charb_append_predict_log(self, line):
+    &#34;&#34;&#34;[CHARB] - Predict logging&#34;&#34;&#34;
+    self.qt_ui.charb_pred_log.appendPlainText(str(line))
+    print(line)
+    sys.stdout.flush()</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.charb_append_train_log"><code class="name flex">
+<span>def <span class="ident">charb_append_train_log</span></span>(<span>self, line)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Train/Eval logging</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def charb_append_train_log(self, line):
+    &#34;&#34;&#34;[CHARB] - Train/Eval logging&#34;&#34;&#34;
+    self.qt_ui.charb_train_log.appendPlainText(str(line))
+    print(line)
+    sys.stdout.flush()</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.charb_check_eval_available"><code class="name flex">
+<span>def <span class="ident">charb_check_eval_available</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB]
+Check that all the required fields are completed
+to launch an evaluation session</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def charb_check_eval_available(self):
+    &#34;&#34;&#34;
+        [CHARB]
+        Check that all the required fields are completed
+        to launch an evaluation session
+    &#34;&#34;&#34;
+    self.qt_ui.charb_train_eval_button.setEnabled(False)
+
+    # A treatment is in progress
+    if self.qt_ui.progress_bar.isEnabled():
+        return
+
+    # Paths are accessibles
+    path = self.qt_ui.charb_train_loadmodel_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_train_evaldata_field.text()
+    if not os.path.exists(path):
+        return
+
+    self.qt_ui.charb_train_eval_button.setEnabled(True)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.charb_check_extract_available"><code class="name flex">
+<span>def <span class="ident">charb_check_extract_available</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB]
+Check that all the required fields are completed
+to launch thumbnail extraction</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def charb_check_extract_available(self):
+    &#34;&#34;&#34;
+        [CHARB]
+        Check that all the required fields are completed
+        to launch thumbnail extraction
+    &#34;&#34;&#34;
+    self.qt_ui.charb_extra_extract_button.setEnabled(False)
+
+    # A treatment is in progress
+    if self.qt_ui.progress_bar.isEnabled():
+        return
+
+    # Paths are accessibles
+    path = self.qt_ui.charb_extra_images_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_extra_seg_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_extra_dataset_field.text()
+    if not os.path.exists(path):
+        return
+
+    # Parameters are OK
+    vig_size = self.qt_ui.charb_extra_vigsize_spinbox.value()
+    intervalle = self.qt_ui.charb_extra_intervalle_spinbox.value()
+    mode1px = self.qt_ui.charb_extra_1px_checkbox.isChecked()
+    mode4px = self.qt_ui.charb_extra_4px_checkbox.isChecked()
+    if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+        return
+    if intervalle &lt; 1 or intervalle &gt; 128:
+        return
+    if (mode1px and mode4px) or (not mode1px and not mode4px):
+        return
+
+    self.qt_ui.charb_extra_extract_button.setEnabled(True)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.charb_check_predict_available"><code class="name flex">
+<span>def <span class="ident">charb_check_predict_available</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB]
+Check that all the required fields are completed
+to launch predictions</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def charb_check_predict_available(self):
+    &#34;&#34;&#34;
+        [CHARB]
+        Check that all the required fields are completed
+        to launch predictions
+    &#34;&#34;&#34;
+    self.qt_ui.charb_pred_predict_button.setEnabled(False)
+
+    # A treatment is in progress
+    if self.qt_ui.progress_bar.isEnabled():
+        return
+
+    # Paths are accessibles
+    path = self.qt_ui.charb_pred_model_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_pred_images_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_pred_seg_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_pred_sup_field.text()
+    if not os.path.exists(path):
+        return
+
+    # Parameters are OK
+    batch_size = self.qt_ui.charb_pred_batchsize_spinbox.value()
+    vig_size = self.qt_ui.charb_pred_vigsize_spinbox.value()
+    intervalle = self.qt_ui.charb_pred_intervalle_spinbox.value()
+    mode1px = self.qt_ui.charb_pred_1px_checkbox.isChecked()
+    mode4px = self.qt_ui.charb_pred_4px_checkbox.isChecked()
+    if batch_size &lt; 32 or batch_size &gt; 256 or batch_size % 32 != 0:
+        return
+    if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+        return
+    if intervalle &lt; 1 or intervalle &gt; 128:
+        return
+    if (mode1px and mode4px) or (not mode1px and not mode4px):
+        return
+
+    self.qt_ui.charb_pred_predict_button.setEnabled(True)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.charb_check_train_available"><code class="name flex">
+<span>def <span class="ident">charb_check_train_available</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB]
+Check that all the required fields are completed
+to launch a training session</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def charb_check_train_available(self):
+    &#34;&#34;&#34;
+        [CHARB]
+        Check that all the required fields are completed
+        to launch a training session
+    &#34;&#34;&#34;
+    self.qt_ui.charb_train_train_button.setEnabled(False)
+
+    # A treatment is in progress
+    if self.qt_ui.progress_bar.isEnabled():
+        return
+
+    # Paths are accessibles
+    path = self.qt_ui.charb_train_traindata_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_train_evaldata_field.text()
+    if not os.path.exists(path):
+        return
+    path = self.qt_ui.charb_train_savemodel_field.text()
+    if not os.path.exists(path):
+        return
+
+    # Parameters are OK
+    vig_size = self.qt_ui.charb_train_vigsize_spinbox.value()
+    batch_size = self.qt_ui.charb_train_batchsize_spinbox.value()
+    steps_per_epoch = self.qt_ui.charb_train_stepperepoch_spinbox.value()
+    epochs = self.qt_ui.charb_train_epochs_spinbox.value()
+    if vig_size &lt; 32 or vig_size &gt; 128 or vig_size % 16 != 0:
+        return
+    if batch_size &lt; 32 or batch_size &gt; 256 or batch_size % 32 != 0:
+        return
+    if steps_per_epoch &lt; 1 or epochs &lt; 1:
+        return
+
+    self.qt_ui.charb_train_train_button.setEnabled(True)</code></pre>
+</details>
+</dd>
 <dt id="skyeye_segmentation.controller.main_window.MainWindow.check_all_available"><code class="name flex">
 <span>def <span class="ident">check_all_available</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Lock or unlock the treatment starting buttons</p></section>
+<div class="desc"><p>Lock or unlock the treatment starting buttons</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1810,15 +3303,20 @@ class MainWindow(QMainWindow):
     self.check_aug_available()
     self.check_train_available()
     self.check_eval_available()
-    self.check_predict_available()</code></pre>
+    self.check_predict_available()
+    # Checks for tab &#34;Charbonnières&#34;
+    self.charb_check_extract_available()
+    self.charb_check_train_available()
+    self.charb_check_eval_available()
+    self.charb_check_predict_available()</code></pre>
 </details>
 </dd>
 <dt id="skyeye_segmentation.controller.main_window.MainWindow.check_aug_available"><code class="name flex">
 <span>def <span class="ident">check_aug_available</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Check that all the required fields are completed
-to launch an image augmentation</p></section>
+<div class="desc"><p>Check that all the required fields are completed
+to launch an image augmentation</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1873,8 +3371,8 @@ to launch an image augmentation</p></section>
 <span>def <span class="ident">check_eval_available</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Check that all the required fields are completed
-to launch an evaluation</p></section>
+<div class="desc"><p>Check that all the required fields are completed
+to launch an evaluation</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1912,8 +3410,8 @@ to launch an evaluation</p></section>
 <span>def <span class="ident">check_fusion_available</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Check that all the required fields are completed
-to launch a mask fusion</p></section>
+<div class="desc"><p>Check that all the required fields are completed
+to launch a mask fusion</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1951,8 +3449,8 @@ to launch a mask fusion</p></section>
 <span>def <span class="ident">check_predict_available</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Check that all the required fields are completed
-to launch a prediction</p></section>
+<div class="desc"><p>Check that all the required fields are completed
+to launch a prediction</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1989,8 +3487,8 @@ to launch a prediction</p></section>
 <span>def <span class="ident">check_train_available</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Check that all the required fields are completed
-to launch a training</p></section>
+<div class="desc"><p>Check that all the required fields are completed
+to launch a training</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2036,8 +3534,8 @@ to launch a training</p></section>
 <span>def <span class="ident">clear_existing_model</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Called when settings parameters for a new model,
-clears the existing model field to avoid confusion</p></section>
+<div class="desc"><p>Called when settings parameters for a new model,
+clears the existing model field to avoid confusion</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2054,7 +3552,7 @@ clears the existing model field to avoid confusion</p></section>
 <span>def <span class="ident">closeEvent</span></span>(<span>self, event)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>QMainWindow closeEvent override</p></section>
+<div class="desc"><p>QMainWindow closeEvent override</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2078,7 +3576,7 @@ clears the existing model field to avoid confusion</p></section>
 <span>def <span class="ident">error_appened</span></span>(<span>self, msg='')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Called when an error happens</p></section>
+<div class="desc"><p>Called when an error happens</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2094,7 +3592,7 @@ clears the existing model field to avoid confusion</p></section>
 <span>def <span class="ident">load_settings</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Settings loader</p></section>
+<div class="desc"><p>Settings loader</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2178,14 +3676,87 @@ clears the existing model field to avoid confusion</p></section>
         self.qt_ui.epochs_spinbox.setValue(value)
     value = self.settings.value(&#34;nb_class_spinbox&#34;)
     if value:
-        self.qt_ui.nb_class_spinbox.setValue(value)</code></pre>
+        self.qt_ui.nb_class_spinbox.setValue(value)
+
+    ###########################################################################
+    ### Load settings (tab &#34;Charbonnières&#34;)                                 ###
+    ###########################################################################
+
+    # Thumbnails extraction
+    self.qt_ui.charb_extra_images_field \
+        .setText(self.settings.value(&#34;charb_extra_imagesPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_extra_seg_field \
+        .setText(self.settings.value(&#34;charb_extra_segmentationsPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_extra_dataset_field \
+        .setText(self.settings.value(&#34;charb_extra_datasetPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_extra_idcharb_spindbox \
+        .setValue(self.settings.value(&#34;charb_common_idCharb&#34;, 2))
+    self.qt_ui.charb_extra_vigsize_spinbox \
+        .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+    self.qt_ui.charb_extra_intervalle_spinbox \
+        .setValue(self.settings.value(&#34;charb_common_intervalle&#34;, 1))
+    self.qt_ui.charb_extra_proportion_slider \
+        .setValue(self.settings.value(&#34;charb_extra_propTrain&#34;, 70))
+    self.qt_ui.charb_extra_proportion_label \
+        .setText(f&#39;{self.settings.value(&#34;charb_extra_propTrain&#34;, 70)} &#39;
+                 f&#39;/ {100 - self.settings.value(&#34;charb_extra_propTrain&#34;, 70)}&#39;)
+    if self.settings.value(&#34;charb_common_mode&#34;, &#34;1px&#34;) == &#34;1px&#34;:
+        self.qt_ui.charb_extra_1px_checkbox.setChecked(True)
+    else:
+        self.qt_ui.charb_extra_4px_checkbox.setChecked(True)
+
+    # Training
+    self.qt_ui.charb_train_model_combobox \
+        .setCurrentText(self.settings.value(&#34;charb_train_modelName&#34;, &#34;vgg4&#34;))
+    self.qt_ui.charb_train_traindata_field \
+        .setText(self.settings.value(&#34;charb_train_trainDataPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_train_evaldata_field \
+        .setText(self.settings.value(&#34;charb_train_evalDataPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_train_stepperepoch_spinbox \
+        .setValue(self.settings.value(&#34;charb_train_stepsPerEpoch&#34;, 100))
+    self.qt_ui.charb_train_epochs_spinbox \
+        .setValue(self.settings.value(&#34;charb_train_epochs&#34;, 100))
+    self.qt_ui.charb_train_shuffle_checkbox \
+        .setChecked(bool(self.settings.value(&#34;charb_train_shuffle&#34;, True)))
+    self.qt_ui.charb_train_vigsize_spinbox \
+        .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+    self.qt_ui.charb_train_batchsize_spinbox \
+        .setValue(self.settings.value(&#34;charb_common_batchSize&#34;, 32))
+    self.qt_ui.charb_train_savemodel_field \
+        .setText(self.settings.value(&#34;charb_train_saveModelAs&#34;, &#34;&#34;))
+
+    # Evaluation
+    self.qt_ui.charb_train_loadmodel_field \
+        .setText(self.settings.value(&#34;charb_eval_existingModelPath&#34;, &#34;&#34;))
+
+    # Prediction
+    self.qt_ui.charb_pred_model_field \
+        .setText(self.settings.value(&#34;charb_pred_modelName&#34;, &#34;&#34;))
+    self.qt_ui.charb_pred_images_field \
+        .setText(self.settings.value(&#34;charb_pred_imagesPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_pred_seg_field \
+        .setText(self.settings.value(&#34;charb_pred_saveSegPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_pred_sup_field \
+        .setText(self.settings.value(&#34;charb_pred_saveSupPath&#34;, &#34;&#34;))
+    self.qt_ui.charb_pred_vigsize_spinbox \
+        .setValue(self.settings.value(&#34;charb_common_vigSize&#34;, 32))
+    self.qt_ui.charb_pred_batchsize_spinbox \
+        .setValue(self.settings.value(&#34;charb_common_batchSize&#34;, 32))
+    self.qt_ui.charb_pred_intervalle_spinbox \
+        .setValue(self.settings.value(&#34;charb_common_intervalle&#34;, 2))
+    # self.qt_ui.charb_pred_idCharb_spinbox \
+    #     .setText(self.settings.value(&#34;charb_common_idCharb&#34;, 2&#34;))
+    if self.settings.value(&#34;charb_common_mode&#34;, &#34;1px&#34;) == &#34;1px&#34;:
+        self.qt_ui.charb_pred_1px_checkbox.setChecked(True)
+    else:
+        self.qt_ui.charb_pred_4px_checkbox.setChecked(True)</code></pre>
 </details>
 </dd>
 <dt id="skyeye_segmentation.controller.main_window.MainWindow.on_add_class_button_click"><code class="name flex">
 <span>def <span class="ident">on_add_class_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Adding a class to fusion</p></section>
+<div class="desc"><p>Adding a class to fusion</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2213,7 +3784,7 @@ def on_add_class_button_click(self):
 <span>def <span class="ident">on_aug_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Image augmentation launcher</p></section>
+<div class="desc"><p>Image augmentation launcher</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2256,6 +3827,7 @@ def on_aug_button_click(self):
     fill = self.qt_ui.aug_fill_combobox.currentText()
     size = (self.qt_ui.aug_width_spinbox.value(),
             self.qt_ui.aug_height_spinbox.value())
+
     worker = ImageAugmentationWorker(nb_img=nb_img, img_src=img_src,
                                      seg_src=seg_src, img_dest=img_dest,
                                      seg_dest=seg_dest, size=size,
@@ -2276,7 +3848,7 @@ def on_aug_button_click(self):
 <span>def <span class="ident">on_aug_images_dest_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Aug images destination browser</p></section>
+<div class="desc"><p>Aug images destination browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2298,7 +3870,7 @@ def on_aug_images_dest_browse_button_click(self):
 <span>def <span class="ident">on_aug_images_source_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Images to aug browser</p></section>
+<div class="desc"><p>Images to aug browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2319,7 +3891,7 @@ def on_aug_images_source_browse_button_click(self):
 <span>def <span class="ident">on_aug_seg_dest_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Aug segs destination browser</p></section>
+<div class="desc"><p>Aug segs destination browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2341,7 +3913,7 @@ def on_aug_seg_dest_browse_button_click(self):
 <span>def <span class="ident">on_aug_seg_source_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Segs to aug browser</p></section>
+<div class="desc"><p>Segs to aug browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2358,11 +3930,431 @@ def on_aug_seg_source_browse_button_click(self):
         self.settings.sync()</code></pre>
 </details>
 </dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_dataset_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_extra_dataset_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Output dataset browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_extra_dataset_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Output dataset browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Dataset&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_extra_dataset_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_extract_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_extra_extract_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Thumbnails extraction launcher</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_extra_extract_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Thumbnails extraction launcher&#34;&#34;&#34;
+
+    # Getting parameters
+    images_path = self.qt_ui.charb_extra_images_field.text()
+    segmentations_path = self.qt_ui.charb_extra_seg_field.text()
+    dataset_path = self.qt_ui.charb_extra_dataset_field.text()
+    id_charb = self.qt_ui.charb_extra_idcharb_spindbox.value()
+    vig_size = int(self.qt_ui.charb_extra_vigsize_spinbox.value())
+    intervalle = int(self.qt_ui.charb_extra_intervalle_spinbox.value())
+    prop_train = self.qt_ui.charb_extra_proportion_slider.value()
+    if self.qt_ui.charb_extra_1px_checkbox.isChecked():
+        mode = &#39;1px&#39;
+    elif self.qt_ui.charb_extra_4px_checkbox.isChecked():
+        mode = &#39;4px&#39;
+
+    # Saving settings
+    self.settings.setValue(&#34;charb_extra_imagesPath&#34;, images_path)
+    self.settings.setValue(&#34;charb_extra_segmentationsPath&#34;, segmentations_path)
+    self.settings.setValue(&#34;charb_extra_datasetPath&#34;, dataset_path)
+    self.settings.setValue(&#34;charb_extra_propTrain&#34;, prop_train)
+
+    self.settings.setValue(&#34;charb_common_idCharb&#34;, id_charb)
+    self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+    self.settings.setValue(&#34;charb_common_intervalle&#34;, intervalle)
+    self.settings.setValue(&#34;charb_common_mode&#34;, mode)
+
+    # Creating extraction worker
+    worker = ExtractionWorker(src_img=images_path, src_seg=segmentations_path, id_charb=id_charb,
+                              prop_train=prop_train,
+                              dst=dataset_path, vig_size=vig_size, increment=intervalle, mode=mode)
+
+    # Launching treatment
+    self.set_progress_bar_state(True)
+    self.check_all_available()  # Lock other buttons
+    worker.signals.progressed.connect(self.update_progress_bar)
+    worker.signals.log.connect(self.charb_append_extraction_log)
+    worker.signals.finished.connect(self.treatment_done)
+    worker.signals.error.connect(self.error_appened)
+    self.thread_pool.start(worker)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_images_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_extra_images_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Images for thumbnails generation browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_extra_images_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Images for thumbnails generation browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Images&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_extra_images_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_proportion_slider_change"><code class="name flex">
+<span>def <span class="ident">on_charb_extra_proportion_slider_change</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_extra_proportion_slider_change(self):
+    train_size = self.qt_ui.charb_extra_proportion_slider.value()
+    eval_size = 100 - train_size
+    self.qt_ui.charb_extra_proportion_label.setText(f&#39;{train_size} / {eval_size}&#39;)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_seg_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_extra_seg_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Segmentations for thumbnails generation browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_extra_seg_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Segmentations for thumbnails generation browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Segmentations&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_extra_seg_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_images_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_pred_images_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Source images browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_pred_images_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Source images browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Images à prédire&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_pred_images_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_model_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_pred_model_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Existing model browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_pred_model_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Existing model browser&#34;&#34;&#34;
+    file_name, _ = QFileDialog.getOpenFileName(self, &#34;Charger un modèle&#34;)
+    if file_name:
+        self.qt_ui.charb_pred_model_field.setText(file_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_predict_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_pred_predict_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Predictions launcher</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_pred_predict_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Predictions launcher&#34;&#34;&#34;
+
+    # Getting parameters
+    model_name = self.qt_ui.charb_pred_model_field.text()
+    images_path = self.qt_ui.charb_pred_images_field.text()
+    save_seg_path = self.qt_ui.charb_pred_seg_field.text()
+    save_sup_path = self.qt_ui.charb_pred_sup_field.text()
+    vig_size = int(self.qt_ui.charb_pred_vigsize_spinbox.value())
+    intervalle = int(self.qt_ui.charb_pred_intervalle_spinbox.value())
+    batch_size = int(self.qt_ui.charb_pred_batchsize_spinbox.value())
+    if self.qt_ui.charb_pred_1px_checkbox.isChecked():
+        mode = &#39;1px&#39;
+    elif self.qt_ui.charb_pred_4px_checkbox.isChecked():
+        mode = &#39;4px&#39;
+
+    # Saving settings
+    self.settings.setValue(&#34;charb_pred_modelName&#34;, model_name)
+    self.settings.setValue(&#34;charb_pred_imagesPath&#34;, images_path)
+    self.settings.setValue(&#34;charb_pred_saveSegPath&#34;, save_seg_path)
+    self.settings.setValue(&#34;charb_pred_saveSupPath&#34;, save_sup_path)
+
+    self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+    self.settings.setValue(&#34;charb_common_intervalle&#34;, intervalle)
+    self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+    self.settings.setValue(&#34;charb_common_mode&#34;, mode)
+
+    # Creating prediction worker
+    worker = CharbPredictWorker(model_name=model_name, images_path=images_path,
+                                save_seg_path=save_seg_path, save_sup_path=save_sup_path,
+                                vig_size=vig_size, intervalle=intervalle, batch_size=batch_size, mode=mode)
+
+    # Launching treatment
+    self.set_progress_bar_state(True)
+    self.check_all_available()  # Lock other buttons
+    worker.signals.progressed.connect(self.update_progress_bar)
+    worker.signals.log.connect(self.charb_append_predict_log)
+    worker.signals.finished.connect(self.treatment_done)
+    worker.signals.error.connect(self.error_appened)
+    self.thread_pool.start(worker)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_seg_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_pred_seg_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Segmentations browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_pred_seg_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Segmentations browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Sauvegarder les segmentations dans...&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_pred_seg_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_sup_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_pred_sup_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Superpositions browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_pred_sup_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Superpositions browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Sauvegarder les superpositions dans...&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_pred_sup_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_eval_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_train_eval_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Evaluation launcher</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_train_eval_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Evaluation launcher&#34;&#34;&#34;
+
+    # Getting parameters
+    existing_model_path = self.qt_ui.charb_train_loadmodel_field.text()
+    eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+    vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+    batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+
+    # Saving settings
+    self.settings.setValue(&#34;charb_eval_existingModelPath&#34;, existing_model_path)
+    self.settings.setValue(&#34;charb_eval_evalDataPath&#34;, eval_data_path)
+
+    self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+    self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+
+    # Creating evaluation worker
+    worker = CharbEvalWorker(existing_model_path=existing_model_path, eval_data_path=eval_data_path,
+                             vig_size=vig_size, batch_size=batch_size)
+
+    # Launching treatment
+    self.set_progress_bar_state(True)
+    self.check_all_available()  # Lock other buttons
+    worker.signals.progressed.connect(self.update_progress_bar)
+    worker.signals.log.connect(self.charb_append_train_log)
+    worker.signals.finished.connect(self.treatment_done)
+    worker.signals.error.connect(self.error_appened)
+    self.thread_pool.start(worker)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_evaldata_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_train_evaldata_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Evaluation dataset browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_train_evaldata_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Evaluation dataset browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Jeu d&#39;évaluation&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_train_evaldata_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_loadmodel_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_train_loadmodel_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Existing model browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_train_loadmodel_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Existing model browser&#34;&#34;&#34;
+    file_name, _ = QFileDialog.getOpenFileName(self, &#34;Charger un modèle&#34;)
+    if file_name:
+        self.qt_ui.charb_train_loadmodel_field.setText(file_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_savemodel_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_train_savemodel_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Save model browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_train_savemodel_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Save model browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Sauvegarder le modèle dans le dossier suivant&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_train_savemodel_field.setText(folder_name)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_train_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_train_train_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Training launcher</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_train_train_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Training launcher&#34;&#34;&#34;
+
+    # Parameters
+    model_name = self.qt_ui.charb_train_model_combobox.currentText()
+    train_data_path = self.qt_ui.charb_train_traindata_field.text()
+    eval_data_path = self.qt_ui.charb_train_evaldata_field.text()
+    vig_size = int(self.qt_ui.charb_train_vigsize_spinbox.value())
+    batch_size = int(self.qt_ui.charb_train_batchsize_spinbox.value())
+    steps_per_epoch = int(self.qt_ui.charb_train_stepperepoch_spinbox.value())
+    validation_steps = 20  # TODO?
+    epochs = int(self.qt_ui.charb_train_epochs_spinbox.value())
+    shuffle = self.qt_ui.charb_train_shuffle_checkbox.isChecked()
+    save_model_in = self.qt_ui.charb_train_savemodel_field.text()
+
+    # Saving settings
+    self.settings.setValue(&#34;charb_train_modelName&#34;, model_name)
+    self.settings.setValue(&#34;charb_train_trainDataPath&#34;, train_data_path)
+    self.settings.setValue(&#34;charb_train_evalDataPath&#34;, eval_data_path)
+    self.settings.setValue(&#34;charb_train_stepsPerEpoch&#34;, steps_per_epoch)
+    self.settings.setValue(&#34;charb_train_validationSteps&#34;, validation_steps)
+    self.settings.setValue(&#34;charb_train_epochs&#34;, epochs)
+    self.settings.setValue(&#34;charb_train_shuffle&#34;, shuffle)
+    self.settings.setValue(&#34;charb_train_saveModelAs&#34;, save_model_in)
+
+    self.settings.setValue(&#34;charb_common_vigSize&#34;, vig_size)
+    self.settings.setValue(&#34;charb_common_batchSize&#34;, batch_size)
+
+    # Creating training worker
+    worker = CharbTrainWorker(model_name=model_name,
+                              train_data_path=train_data_path, eval_data_path=eval_data_path,
+                              vig_size=vig_size, batch_size=batch_size, steps_per_epoch=steps_per_epoch,
+                              validation_steps=validation_steps, epochs=epochs, shuffle=shuffle,
+                              save_model_in=save_model_in)
+
+    # Launching treatment
+    self.set_progress_bar_state(True)
+    self.check_all_available()  # Lock other buttons
+    worker.signals.progressed.connect(self.update_progress_bar)
+    worker.signals.log.connect(self.charb_append_train_log)
+    worker.signals.finished.connect(self.treatment_done)
+    worker.signals.error.connect(self.error_appened)
+    self.thread_pool.start(worker)</code></pre>
+</details>
+</dd>
+<dt id="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_traindata_browse_button_click"><code class="name flex">
+<span>def <span class="ident">on_charb_train_traindata_browse_button_click</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[CHARB] - Training dataset browser</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@pyqtSlot()
+def on_charb_train_traindata_browse_button_click(self):
+    &#34;&#34;&#34;[CHARB] - Training dataset browser&#34;&#34;&#34;
+    folder_name = QFileDialog. \
+        getExistingDirectory(self, &#34;Jeu d&#39;entraînement&#34;,
+                             options=QFileDialog.ShowDirsOnly)
+    if folder_name:
+        self.qt_ui.charb_train_traindata_field.setText(folder_name)</code></pre>
+</details>
+</dd>
 <dt id="skyeye_segmentation.controller.main_window.MainWindow.on_eval_button_click"><code class="name flex">
 <span>def <span class="ident">on_eval_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Evaluation launcher</p></section>
+<div class="desc"><p>Evaluation launcher</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2375,6 +4367,7 @@ def on_eval_button_click(self):
     img_src = self.qt_ui.eval_images_field.text()
     seg_src = self.qt_ui.eval_seg_field.text()
     existing = self.qt_ui.existing_model_path_field.text()
+
     worker = EvalWorker(inp_images_dir=img_src, annotations_dir=seg_src,
                         checkpoints_path=existing)
 
@@ -2392,7 +4385,7 @@ def on_eval_button_click(self):
 <span>def <span class="ident">on_eval_images_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Img to eval browser</p></section>
+<div class="desc"><p>Img to eval browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2413,7 +4406,7 @@ def on_eval_images_browse_button_click(self):
 <span>def <span class="ident">on_eval_seg_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Segs to eval browser</p></section>
+<div class="desc"><p>Segs to eval browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2434,7 +4427,7 @@ def on_eval_seg_browse_button_click(self):
 <span>def <span class="ident">on_existing_model_path_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Existing model browser</p></section>
+<div class="desc"><p>Existing model browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2453,7 +4446,7 @@ def on_existing_model_path_browse_button_click(self):
 <span>def <span class="ident">on_fusion_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Fusion launcher</p></section>
+<div class="desc"><p>Fusion launcher</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2488,7 +4481,7 @@ def on_fusion_button_click(self):
 <span>def <span class="ident">on_mask_prep_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>File and folder browsers</p></section>
+<div class="desc"><p>File and folder browsers</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2507,7 +4500,7 @@ def on_mask_prep_browse_button_click(self):
 <span>def <span class="ident">on_predict_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Prediction launcher</p></section>
+<div class="desc"><p>Prediction launcher</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2521,6 +4514,7 @@ def on_predict_button_click(self):
     img_src = self.qt_ui.predict_images_field.text()
     seg_dest = self.qt_ui.saved_seg_field.text()
     sup_dest = self.qt_ui.saved_sup_field.text()
+
     worker = PredictWorker(inp_dir=img_src, out_dir=seg_dest,
                            checkpoints_path=existing, colors=None,
                            sup_dir=sup_dest)
@@ -2539,7 +4533,7 @@ def on_predict_button_click(self):
 <span>def <span class="ident">on_predict_images_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Img to predict browser</p></section>
+<div class="desc"><p>Img to predict browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2560,7 +4554,7 @@ def on_predict_images_browse_button_click(self):
 <span>def <span class="ident">on_predict_model_path_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Existing model to predict browser</p></section>
+<div class="desc"><p>Existing model to predict browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2579,7 +4573,7 @@ def on_predict_model_path_browse_button_click(self):
 <span>def <span class="ident">on_remove_class_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Removing a class to fusion</p></section>
+<div class="desc"><p>Removing a class to fusion</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2597,7 +4591,7 @@ def on_remove_class_button_click(self):
 <span>def <span class="ident">on_save_model_path_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Save model destination browser</p></section>
+<div class="desc"><p>Save model destination browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2618,7 +4612,7 @@ def on_save_model_path_browse_button_click(self):
 <span>def <span class="ident">on_saved_seg_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Seg images destination browser</p></section>
+<div class="desc"><p>Seg images destination browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2639,7 +4633,7 @@ def on_saved_seg_browse_button_click(self):
 <span>def <span class="ident">on_saved_sup_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Overlay images destination browser</p></section>
+<div class="desc"><p>Overlay images destination browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2660,7 +4654,7 @@ def on_saved_sup_browse_button_click(self):
 <span>def <span class="ident">on_train_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Training launcher</p></section>
+<div class="desc"><p>Training launcher</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2716,7 +4710,7 @@ def on_train_button_click(self):
 <span>def <span class="ident">on_train_images_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Images to train on browser</p></section>
+<div class="desc"><p>Images to train on browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2737,7 +4731,7 @@ def on_train_images_browse_button_click(self):
 <span>def <span class="ident">on_train_seg_browse_button_click</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Segs to train on browser</p></section>
+<div class="desc"><p>Segs to train on browser</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2758,7 +4752,7 @@ def on_train_seg_browse_button_click(self):
 <span>def <span class="ident">set_progress_bar_state</span></span>(<span>self, enabled)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Lock or unlock the progress bar</p></section>
+<div class="desc"><p>Lock or unlock the progress bar</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2773,7 +4767,7 @@ def on_train_seg_browse_button_click(self):
 <span>def <span class="ident">treatment_done</span></span>(<span>self, msg=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Called when a treatment is done, notify and disable progress_bar</p></section>
+<div class="desc"><p>Called when a treatment is done, notify and disable progress_bar</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2796,13 +4790,13 @@ def on_train_seg_browse_button_click(self):
 <span>def <span class="ident">update_progress_bar</span></span>(<span>self, value)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Update the current progression of the progress ba</p></section>
+<div class="desc"><p>Update the current progression of the progress bar</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update_progress_bar(self, value):
-    &#34;&#34;&#34;Update the current progression of the progress ba&#34;&#34;&#34;
+    &#34;&#34;&#34;Update the current progression of the progress bar&#34;&#34;&#34;
     self.qt_ui.progress_bar.setValue(value)</code></pre>
 </details>
 </dd>
@@ -2829,6 +4823,13 @@ def on_train_seg_browse_button_click(self):
 <ul class="">
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.append_predict_log" href="#skyeye_segmentation.controller.main_window.MainWindow.append_predict_log">append_predict_log</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.append_train_log" href="#skyeye_segmentation.controller.main_window.MainWindow.append_train_log">append_train_log</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.charb_append_extraction_log" href="#skyeye_segmentation.controller.main_window.MainWindow.charb_append_extraction_log">charb_append_extraction_log</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.charb_append_predict_log" href="#skyeye_segmentation.controller.main_window.MainWindow.charb_append_predict_log">charb_append_predict_log</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.charb_append_train_log" href="#skyeye_segmentation.controller.main_window.MainWindow.charb_append_train_log">charb_append_train_log</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.charb_check_eval_available" href="#skyeye_segmentation.controller.main_window.MainWindow.charb_check_eval_available">charb_check_eval_available</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.charb_check_extract_available" href="#skyeye_segmentation.controller.main_window.MainWindow.charb_check_extract_available">charb_check_extract_available</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.charb_check_predict_available" href="#skyeye_segmentation.controller.main_window.MainWindow.charb_check_predict_available">charb_check_predict_available</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.charb_check_train_available" href="#skyeye_segmentation.controller.main_window.MainWindow.charb_check_train_available">charb_check_train_available</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.check_all_available" href="#skyeye_segmentation.controller.main_window.MainWindow.check_all_available">check_all_available</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.check_aug_available" href="#skyeye_segmentation.controller.main_window.MainWindow.check_aug_available">check_aug_available</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.check_eval_available" href="#skyeye_segmentation.controller.main_window.MainWindow.check_eval_available">check_eval_available</a></code></li>
@@ -2839,12 +4840,29 @@ def on_train_seg_browse_button_click(self):
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.closeEvent" href="#skyeye_segmentation.controller.main_window.MainWindow.closeEvent">closeEvent</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.error_appened" href="#skyeye_segmentation.controller.main_window.MainWindow.error_appened">error_appened</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.load_settings" href="#skyeye_segmentation.controller.main_window.MainWindow.load_settings">load_settings</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.log_file" href="#skyeye_segmentation.controller.main_window.MainWindow.log_file">log_file</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_add_class_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_add_class_button_click">on_add_class_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_aug_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_aug_button_click">on_aug_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_aug_images_dest_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_aug_images_dest_browse_button_click">on_aug_images_dest_browse_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_aug_images_source_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_aug_images_source_browse_button_click">on_aug_images_source_browse_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_aug_seg_dest_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_aug_seg_dest_browse_button_click">on_aug_seg_dest_browse_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_aug_seg_source_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_aug_seg_source_browse_button_click">on_aug_seg_source_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_dataset_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_dataset_browse_button_click">on_charb_extra_dataset_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_extract_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_extract_button_click">on_charb_extra_extract_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_images_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_images_browse_button_click">on_charb_extra_images_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_proportion_slider_change" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_proportion_slider_change">on_charb_extra_proportion_slider_change</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_seg_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_extra_seg_browse_button_click">on_charb_extra_seg_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_images_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_images_browse_button_click">on_charb_pred_images_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_model_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_model_browse_button_click">on_charb_pred_model_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_predict_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_predict_button_click">on_charb_pred_predict_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_seg_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_seg_browse_button_click">on_charb_pred_seg_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_sup_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_pred_sup_browse_button_click">on_charb_pred_sup_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_eval_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_eval_button_click">on_charb_train_eval_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_evaldata_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_evaldata_browse_button_click">on_charb_train_evaldata_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_loadmodel_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_loadmodel_browse_button_click">on_charb_train_loadmodel_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_savemodel_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_savemodel_browse_button_click">on_charb_train_savemodel_browse_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_train_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_train_button_click">on_charb_train_train_button_click</a></code></li>
+<li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_traindata_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_charb_train_traindata_browse_button_click">on_charb_train_traindata_browse_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_eval_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_eval_button_click">on_eval_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_eval_images_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_eval_images_browse_button_click">on_eval_images_browse_button_click</a></code></li>
 <li><code><a title="skyeye_segmentation.controller.main_window.MainWindow.on_eval_seg_browse_button_click" href="#skyeye_segmentation.controller.main_window.MainWindow.on_eval_seg_browse_button_click">on_eval_seg_browse_button_click</a></code></li>
@@ -2872,9 +4890,7 @@ def on_train_seg_browse_button_click(self):
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>
