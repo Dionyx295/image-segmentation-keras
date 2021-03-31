@@ -813,7 +813,7 @@ def add_borders(img, vig_size=32):
 
     for x in range(img_size[0]):
         for y in range(img_size[1]):
-            final_img[x + vig_size // 2, y + vig_size // 2] = img[x, y]
+            final_img[x + vig_size // 2 - 1, y + vig_size // 2 - 1] = img[x, y]
 
     return final_img
 
@@ -876,10 +876,10 @@ class ExtractionWorker(QRunnable):
                 vig_seg = seg[x:x + vig_size, y:y + vig_size]
 
                 if mode == '4px':
-                    center = vig_seg[vig_size // 2:vig_size // 2 + 2, vig_size // 2:vig_size // 2 + 2]
+                    center = vig_seg[vig_size // 2 - 1:vig_size // 2 + 1, vig_size // 2 - 1:vig_size // 2 + 1]
                     is_charb = (np.count_nonzero(center == id_charb) == 4)
                 elif mode == '1px':
-                    is_charb = (vig_seg[vig_size // 2, vig_size // 2] == id_charb)
+                    is_charb = (vig_seg[vig_size // 2 - 1, vig_size // 2 - 1] == id_charb)
                 else:
                     self.signals.error.emit(f'ERREUR: Le mode doit être "1px" ou "4px"')
                     return False
