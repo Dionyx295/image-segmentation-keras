@@ -79,7 +79,7 @@ La documentation disponible dans *html/* a été générée avec [pdoc](https://
 Lancer les tests unitaires des nouvelles fonctions du module *skyeye_segmentation* (**se placer dans test_charb_segmentation/**) :
 
 ```python
->>> pytest
+>>> python -m pytest
 ```
 
 
