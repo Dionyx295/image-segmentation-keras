@@ -528,7 +528,7 @@ class EvalWorker(QRunnable):
                                                     model.output_height,
                                                     no_reshape=True)
                     ground = ground.argmax(-1)
-
+                    
                     pred = pred.flatten()
                     ground = ground.flatten()
 
@@ -536,6 +536,10 @@ class EvalWorker(QRunnable):
                     self.signals.log.emit("Image {}".format(str(inp)))
                     self.signals.log.emit("Matrice de confusion :\n{}\n"
                                           .format(str(matrix)))
+                    
+                    matrix_percent = np.round(100*matrix/(matrix.sum(axis=1, keepdims=True)))
+                    self.signals.log.emit("Matrice de confusion en pourcentage :\n{}\n"
+                                          .format(str(matrix_percent)))
 
                     for cl_i in range(model.n_classes):
                         tpm[cl_i] += np.sum((pred == cl_i) * (ground == cl_i))
@@ -665,23 +669,12 @@ class PredictWorker(QRunnable):
 
         pred = pred.reshape((output_height, output_width, n_classes)).argmax(axis=2)
 
-        seg_img = np.zeros((output_height, output_width, 3))
-
         if clrs is None:
             #colors = class_colors # old version, difficult to distinguish colors
             colors = get_class_colors(n_classes)
         else:
             colors = clrs
-
-        for color in range(n_classes):
-            seg_img[:, :, 0] += ((pred[:, :] == color) * (colors[color][0])) \
-                .astype('uint8')
-            seg_img[:, :, 1] += ((pred[:, :] == color) * (colors[color][1])) \
-                .astype('uint8')
-            seg_img[:, :, 2] += ((pred[:, :] == color) * (colors[color][2])) \
-                .astype('uint8')
-
-        seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
+        seg_img = colors[pred]
 
         if out_fname is not None:
             cv2.imwrite(out_fname, seg_img)
@@ -773,6 +766,7 @@ class PredictWorker(QRunnable):
             seg_image = label_to_color_image(seg_map).astype(np.uint8)
             saved_img = os.path.join(save_dir, os.path.splitext(filename)[0] +
                                      "-sup.png")
+            seg_image = cv2.resize(seg_image, (img.shape[0],img.shape[1]))
             pyplot.figure()
             pyplot.imshow(seg_image, cmap="nipy_spectral", interpolation='none')
             pyplot.imshow(img, interpolation='none', alpha=0.5)
