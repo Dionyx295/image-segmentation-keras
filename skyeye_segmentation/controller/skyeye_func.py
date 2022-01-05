@@ -28,7 +28,7 @@ from tqdm import tqdm
 
 from keras_segmentation.data_utils.data_loader import \
     verify_segmentation_dataset, image_segmentation_generator, \
-    get_image_array, class_colors
+    get_image_array, class_colors, get_class_colors
 from keras_segmentation.models.all_models import model_from_name
 from keras_segmentation.models.config import IMAGE_ORDERING
 from keras_segmentation.predict import model_from_checkpoint_path, \
@@ -668,7 +668,8 @@ class PredictWorker(QRunnable):
         seg_img = np.zeros((output_height, output_width, 3))
 
         if clrs is None:
-            colors = class_colors
+            #colors = class_colors # old version, difficult to distinguish colors
+            colors = get_class_colors(n_classes)
         else:
             colors = clrs
 
@@ -773,8 +774,8 @@ class PredictWorker(QRunnable):
             saved_img = os.path.join(save_dir, os.path.splitext(filename)[0] +
                                      "-sup.png")
             pyplot.figure()
-            pyplot.imshow(seg_image)
-            pyplot.imshow(img, alpha=0.5)
+            pyplot.imshow(seg_image, cmap="nipy_spectral", interpolation='none')
+            pyplot.imshow(img, interpolation='none', alpha=0.5)
             pyplot.axis('off')
             pyplot.savefig(saved_img)
             self.signals.log.emit(saved_img)
