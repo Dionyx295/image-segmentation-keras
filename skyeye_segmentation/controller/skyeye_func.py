@@ -637,6 +637,13 @@ class PredictWorker(QRunnable):
         img_ar = get_image_array(inp, input_width, input_height,
                                  ordering=IMAGE_ORDERING)
         pred = model.predict(np.array([img_ar]))[0]
+        
+        #save heatmap
+        for i in range(0, n_classes):
+            heatmap = np.reshape(pred[:,i],(output_width,output_height))
+            plt.imsave(out_prob_file+"_prob_C{}.png".format(i+1),
+                       heatmap,
+                       cmap='hot')
 
         # Creating probabilities file
         if out_prob_file is not None:
