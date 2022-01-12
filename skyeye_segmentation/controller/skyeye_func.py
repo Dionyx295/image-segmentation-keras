@@ -778,7 +778,7 @@ class PredictWorker(QRunnable):
             pyplot.imshow(seg_image, cmap="nipy_spectral", interpolation='none')
             pyplot.imshow(img, interpolation='none', alpha=0.5)
             pyplot.axis('off')
-            pyplot.savefig(saved_img)
+            pyplot.savefig(saved_img, bbox_inches="tight")
             self.signals.log.emit(saved_img)
             progression = 50 + 100 * files_processed / (files_nb * 2)
             self.signals.progressed.emit(progression)
