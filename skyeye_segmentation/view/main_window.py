@@ -1236,7 +1236,7 @@ class Ui_MainWindow(object):
         self.label_img_base.setText(_translate("MainWindow", "Image initiale"))
         self.pushButtonLeft.setText(_translate("MainWindow", "<"))
         self.label_img_sup.setText(_translate("MainWindow", "Superposition"))
-        self.label_img_pred.setText(_translate("MainWindow", "Prediction"))
+        self.label_img_pred.setText(_translate("MainWindow", "Prédiction"))
         self.pushButtonRight.setText(_translate("MainWindow", ">"))
         self.groupBox_20.setTitle(_translate("MainWindow", "Logs"))
         self.main_tab.setTabText(self.main_tab.indexOf(self.tab), _translate("MainWindow", "Prédiction"))

@@ -1489,7 +1489,7 @@
              <item row="0" column="2">
               <widget class="QLabel" name="label_img_pred">
                <property name="text">
-                <string>Prediction</string>
+                <string>Prédiction</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
