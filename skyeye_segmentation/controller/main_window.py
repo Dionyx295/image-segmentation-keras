@@ -107,8 +107,8 @@ class MainWindow(QMainWindow):
         # Prediction
         self.qt_ui.predict_button.clicked \
             .connect(self.on_predict_button_click)
-        #self.qt_ui.pushButtonLeft_2.cliked.connect(self.on_predict_visu_left_click)
-        #self.qt_ui.pushButtonRight_2.cliked.connect(self.on_predict_visu_right_click)
+        self.qt_ui.pushButtonLeft.clicked.connect(self.on_predict_visu_left_click)
+        self.qt_ui.pushButtonRight.clicked.connect(self.on_predict_visu_right_click)
 
         # UI management
         # Mask fusion
@@ -831,6 +831,21 @@ class MainWindow(QMainWindow):
         worker.signals.finished.connect(self.treatment_done_predict)
         worker.signals.error.connect(self.error_appened)
         self.thread_pool.start(worker)
+        
+    @pyqtSlot()
+    def on_predict_visu_left_click(self):
+        next_idx = self.loaded_img_idx - 1
+        if next_idx == -1:
+            next_idx = len(self.pred_inps)-1
+        self.load_predicted_visu(next_idx)
+    
+    @pyqtSlot()
+    def on_predict_visu_right_click(self):
+        next_idx = self.loaded_img_idx + 1
+        if next_idx == len(self.pred_inps):
+            next_idx = 0
+        self.load_predicted_visu(next_idx)
+        
 
     ###########################################################################
     ### Slots (tab "Charbonnières")                                         ###
@@ -1136,54 +1151,68 @@ class MainWindow(QMainWindow):
         self.set_progress_bar_state(False)
 
         self.check_all_available()
-
+        
+        self.init_predicted_visu()
+        
         if msg:
             QMessageBox.information(self,
                                     "Terminé",
                                     "{}\n".format(msg))
         
+    def init_predicted_visu(self):
         # load img for visualisation (to be put in separate method)
         img_src_dir = self.qt_ui.predict_images_field.text()
-        seg_dest = self.qt_ui.saved_seg_field.text()
-        sup_dest = self.qt_ui.saved_sup_field.text()
         
-        inps = glob.glob(os.path.join(img_src_dir, "*.jpg")) + \
+        
+        self.pred_inps = glob.glob(os.path.join(img_src_dir, "*.jpg")) + \
             glob.glob(os.path.join(img_src_dir, "*.png")) + \
             glob.glob(os.path.join(img_src_dir, "*.jpeg")) + \
             glob.glob(os.path.join(img_src_dir, "*.tif"))
             
-        self.qt_ui.label_img_count_2.setText("1/"+str(len(inps)))
-        
-        #self.append_predict_log(str(inps))
-        img_name = inps[0].split('\\')[-1]
-        
-        self.qt_ui.label_img_name_2.setText(img_name)
-        
-        #self.append_predict_log(img_name)
-        img_src_path = inps[0]
-        img_src = QPixmap(img_src_path)
-        img_src = img_src.scaled(128,128)
-        scene_src = QGraphicsScene(self)
-        item_src = QGraphicsPixmapItem(img_src)
-        scene_src.addItem(item_src)
-        self.qt_ui.graphicsView_imgsrc.setScene(scene_src)
-        
-        img_pred_path = os.path.join(seg_dest,img_name)
-        img_pred = QPixmap(img_pred_path)
-        img_pred = img_pred.scaled(128,128)
-        scene_pred = QGraphicsScene(self)
-        item_pred = QGraphicsPixmapItem(img_pred)
-        scene_pred.addItem(item_pred)
-        self.qt_ui.graphicsView_pred.setScene(scene_pred)
-        
-        splited_name = img_name.split('.')
-        img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup."+splited_name[1])
-        img_sup = QPixmap(img_sup_path)
-        img_sup = img_sup.scaled(128,128)
-        scene_sup = QGraphicsScene(self)
-        item_sup = QGraphicsPixmapItem(img_sup)
-        scene_sup.addItem(item_sup)
-        self.qt_ui.graphicsView_sup.setScene(scene_sup)
+
+        self.load_predicted_visu(0)
+            
+    def load_predicted_visu(self, img_idx):
+        """ load image of given index in prediction view """
+        if self.pred_inps is not None and img_idx < len(self.pred_inps):
+            
+            self.qt_ui.label_img_count.setText(str(img_idx+1)+"/"+str(len(self.pred_inps)))
+            
+            img_name = self.pred_inps[img_idx].split('\\')[-1]
+            
+            self.qt_ui.label_img_name.setText(img_name)
+            
+            #source image
+            img_src_path = self.pred_inps[img_idx]
+            img_src = QPixmap(img_src_path)
+            img_src = img_src.scaled(128,128)
+            scene_src = QGraphicsScene(self)
+            item_src = QGraphicsPixmapItem(img_src)
+            scene_src.addItem(item_src)
+            self.qt_ui.graphicsView_imgsrc.setScene(scene_src)
+            
+            #predicted segmentation
+            seg_dest = self.qt_ui.saved_seg_field.text()
+            img_pred_path = os.path.join(seg_dest,img_name)
+            img_pred = QPixmap(img_pred_path)
+            img_pred = img_pred.scaled(128,128)
+            scene_pred = QGraphicsScene(self)
+            item_pred = QGraphicsPixmapItem(img_pred)
+            scene_pred.addItem(item_pred)
+            self.qt_ui.graphicsView_pred.setScene(scene_pred)
+            
+            #superposition
+            sup_dest = self.qt_ui.saved_sup_field.text()
+            splited_name = img_name.split('.')
+            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup."+splited_name[1])
+            img_sup = QPixmap(img_sup_path)
+            img_sup = img_sup.scaled(128,128)
+            scene_sup = QGraphicsScene(self)
+            item_sup = QGraphicsPixmapItem(img_sup)
+            scene_sup.addItem(item_sup)
+            self.qt_ui.graphicsView_sup.setScene(scene_sup)
+            
+            self.loaded_img_idx = img_idx
         
         
 

@@ -1328,7 +1328,7 @@
             <number>2</number>
            </property>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_img_name_2">
+            <widget class="QLabel" name="label_img_name">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1397,7 +1397,7 @@
               </widget>
              </item>
              <item row="2" column="4">
-              <widget class="QLabel" name="label_img_count_2">
+              <widget class="QLabel" name="label_img_count">
                <property name="text">
                 <string>0/0</string>
                </property>
@@ -1410,7 +1410,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="label_img_base_2">
+              <widget class="QLabel" name="label_img_base">
                <property name="text">
                 <string>Image initiale</string>
                </property>
@@ -1420,7 +1420,7 @@
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QPushButton" name="pushButtonLeft_2">
+              <widget class="QPushButton" name="pushButtonLeft">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1446,7 +1446,7 @@
               </widget>
              </item>
              <item row="0" column="3">
-              <widget class="QLabel" name="label_img_sup_2">
+              <widget class="QLabel" name="label_img_sup">
                <property name="text">
                 <string>Superposition</string>
                </property>
@@ -1487,7 +1487,7 @@
               </widget>
              </item>
              <item row="0" column="2">
-              <widget class="QLabel" name="label_img_pred_2">
+              <widget class="QLabel" name="label_img_pred">
                <property name="text">
                 <string>Prediction</string>
                </property>
@@ -1525,7 +1525,7 @@
               </widget>
              </item>
              <item row="1" column="4">
-              <widget class="QPushButton" name="pushButtonRight_2">
+              <widget class="QPushButton" name="pushButtonRight">
                <property name="enabled">
                 <bool>true</bool>
                </property>
