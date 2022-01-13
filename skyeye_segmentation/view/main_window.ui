@@ -1367,7 +1367,7 @@
               <number>2</number>
              </property>
              <item row="1" column="3">
-              <widget class="QGraphicsView" name="graphicsView_sup">
+              <widget class="ClickableGraphicsView" name="graphicsView_sup">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -1456,7 +1456,7 @@
               </widget>
              </item>
              <item row="1" column="2">
-              <widget class="QGraphicsView" name="graphicsView_pred">
+              <widget class="ClickableGraphicsView" name="graphicsView_pred">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
                  <horstretch>0</horstretch>
@@ -1497,7 +1497,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QGraphicsView" name="graphicsView_imgsrc">
+              <widget class="ClickableGraphicsView" name="graphicsView_imgsrc">
                <property name="enabled">
                 <bool>true</bool>
                </property>
@@ -2550,6 +2550,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClickableGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>skyeye_segmentation/view/clickablegraphicsview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

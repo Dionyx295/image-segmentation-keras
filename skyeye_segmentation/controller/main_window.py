@@ -7,7 +7,7 @@ from pathlib import Path
 
 import numpy as np
 from PyQt5.QtCore import QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings, \
-    pyqtSlot
+    pyqtSlot, QEvent
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, \
     QGraphicsScene, QGraphicsPixmapItem
 
@@ -107,8 +107,13 @@ class MainWindow(QMainWindow):
         # Prediction
         self.qt_ui.predict_button.clicked \
             .connect(self.on_predict_button_click)
+            
+        # Image vision after prediction
         self.qt_ui.pushButtonLeft.clicked.connect(self.on_predict_visu_left_click)
         self.qt_ui.pushButtonRight.clicked.connect(self.on_predict_visu_right_click)
+        self.qt_ui.graphicsView_imgsrc.clicked.connect(self.on_pred_img_src_click)
+        self.qt_ui.graphicsView_pred.clicked.connect(self.on_pred_img_seg_click)
+        self.qt_ui.graphicsView_sup.clicked.connect(self.on_pred_img_sup_click)
 
         # UI management
         # Mask fusion
@@ -305,7 +310,24 @@ class MainWindow(QMainWindow):
 
         self.check_all_available()
         self.show()
-
+        
+        # variable used to load predicted images in ui
+        self.pred_inps = None
+        self.loaded_img_idx = None
+        self.qt_ui.pushButtonLeft.setEnabled(False)
+        self.qt_ui.pushButtonRight.setEnabled(False)
+        
+        #self.qt_ui.graphicsView_imgsrc.installEventFilter(self)
+     
+    """ # works but overkill
+    def eventFilter(self, source, event):
+        self.append_predict_log(event.type())
+        if (event.type() == QEvent.KeyPress): # and source is self.qt_ui.graphicsView_imgsrc):
+            self.append_predict_log('key pressed: %s' % event.text())
+            return True
+        return False
+    """
+    
     def closeEvent(self, event):
         """QMainWindow closeEvent override"""
         # Confirmation
@@ -834,19 +856,43 @@ class MainWindow(QMainWindow):
         
     @pyqtSlot()
     def on_predict_visu_left_click(self):
-        next_idx = self.loaded_img_idx - 1
-        if next_idx == -1:
-            next_idx = len(self.pred_inps)-1
-        self.load_predicted_visu(next_idx)
+        if self.pred_inps is not None:
+            next_idx = self.loaded_img_idx - 1
+            if next_idx == -1:
+                next_idx = len(self.pred_inps)-1
+            self.load_predicted_visu(next_idx)
     
     @pyqtSlot()
     def on_predict_visu_right_click(self):
-        next_idx = self.loaded_img_idx + 1
-        if next_idx == len(self.pred_inps):
-            next_idx = 0
-        self.load_predicted_visu(next_idx)
+        if self.pred_inps is not None:
+            next_idx = self.loaded_img_idx + 1
+            if next_idx == len(self.pred_inps):
+                next_idx = 0
+            self.load_predicted_visu(next_idx)
+            
+    @pyqtSlot()
+    def on_pred_img_src_click(self):
+        if self.pred_inps is not None:
+            os.system(str(self.pred_inps[self.loaded_img_idx]))
         
-
+    @pyqtSlot()
+    def on_pred_img_seg_click(self):
+        if self.pred_inps is not None:
+            img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
+            seg_dest = self.qt_ui.saved_seg_field.text()
+            img_pred_path = os.path.join(seg_dest,img_name)
+            os.system(img_pred_path)
+        
+    @pyqtSlot()
+    def on_pred_img_sup_click(self):
+        if self.pred_inps is not None:
+            img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
+            sup_dest = self.qt_ui.saved_sup_field.text()
+            splited_name = img_name.split('.')
+            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup."+splited_name[1])
+            os.system(img_sup_path)
+    
+    
     ###########################################################################
     ### Slots (tab "Charbonnières")                                         ###
     ###########################################################################
@@ -1169,7 +1215,8 @@ class MainWindow(QMainWindow):
             glob.glob(os.path.join(img_src_dir, "*.jpeg")) + \
             glob.glob(os.path.join(img_src_dir, "*.tif"))
             
-
+        self.qt_ui.pushButtonLeft.setEnabled(True)
+        self.qt_ui.pushButtonRight.setEnabled(True)
         self.load_predicted_visu(0)
             
     def load_predicted_visu(self, img_idx):

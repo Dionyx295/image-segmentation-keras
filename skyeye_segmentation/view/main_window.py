@@ -594,7 +594,7 @@ class Ui_MainWindow(object):
         self.gridLayout_18.setHorizontalSpacing(15)
         self.gridLayout_18.setVerticalSpacing(2)
         self.gridLayout_18.setObjectName("gridLayout_18")
-        self.graphicsView_sup = QtWidgets.QGraphicsView(self.verticalLayoutWidget_12)
+        self.graphicsView_sup = ClickableGraphicsView(self.verticalLayoutWidget_12)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -629,7 +629,7 @@ class Ui_MainWindow(object):
         self.label_img_sup.setAlignment(QtCore.Qt.AlignCenter)
         self.label_img_sup.setObjectName("label_img_sup")
         self.gridLayout_18.addWidget(self.label_img_sup, 0, 3, 1, 1)
-        self.graphicsView_pred = QtWidgets.QGraphicsView(self.verticalLayoutWidget_12)
+        self.graphicsView_pred = ClickableGraphicsView(self.verticalLayoutWidget_12)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -645,7 +645,7 @@ class Ui_MainWindow(object):
         self.label_img_pred.setAlignment(QtCore.Qt.AlignCenter)
         self.label_img_pred.setObjectName("label_img_pred")
         self.gridLayout_18.addWidget(self.label_img_pred, 0, 2, 1, 1)
-        self.graphicsView_imgsrc = QtWidgets.QGraphicsView(self.verticalLayoutWidget_12)
+        self.graphicsView_imgsrc = ClickableGraphicsView(self.verticalLayoutWidget_12)
         self.graphicsView_imgsrc.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -1304,3 +1304,4 @@ class Ui_MainWindow(object):
         self.action_save_conf.setText(_translate("MainWindow", "Sauvegarder cette configuration"))
         self.action_load_conf.setText(_translate("MainWindow", "Charger une configuration"))
 
+from skyeye_segmentation.view.clickablegraphicsview import ClickableGraphicsView
