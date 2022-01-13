@@ -759,7 +759,7 @@ class PredictWorker(QRunnable):
     def create_superpositions(self, img_src, seg_src, save_dir):
         """Creates the superpositions images"""
 
-        files_nb = len(os.listdir(seg_src))
+        files_nb = len(os.listdir(img_src))
         files_processed = 0
         self.signals.log.emit("Création des {} superpositions..."
                               .format(str(files_nb)))
