@@ -312,22 +312,15 @@ class MainWindow(QMainWindow):
         self.show()
         
         # variable used to load predicted images in ui
-        self.pred_inps = None
-        self.loaded_img_idx = None
+        
+        self.pred_inps = None  # path to source images of last prediction
+        self.loaded_img_idx = None # witch image is currently visible
+        
+        # those button will be enable after first prediction
         self.qt_ui.pushButtonLeft.setEnabled(False)
         self.qt_ui.pushButtonRight.setEnabled(False)
         
-        #self.qt_ui.graphicsView_imgsrc.installEventFilter(self)
-     
-    """ # works but overkill
-    def eventFilter(self, source, event):
-        self.append_predict_log(event.type())
-        if (event.type() == QEvent.KeyPress): # and source is self.qt_ui.graphicsView_imgsrc):
-            self.append_predict_log('key pressed: %s' % event.text())
-            return True
-        return False
-    """
-    
+
     def closeEvent(self, event):
         """QMainWindow closeEvent override"""
         # Confirmation
@@ -856,6 +849,7 @@ class MainWindow(QMainWindow):
         
     @pyqtSlot()
     def on_predict_visu_left_click(self):
+        """ left push button event, change currently visible images """
         if self.pred_inps is not None:
             next_idx = self.loaded_img_idx - 1
             if next_idx == -1:
@@ -864,6 +858,7 @@ class MainWindow(QMainWindow):
     
     @pyqtSlot()
     def on_predict_visu_right_click(self):
+        """ right push button event, change currently visible images """
         if self.pred_inps is not None:
             next_idx = self.loaded_img_idx + 1
             if next_idx == len(self.pred_inps):
@@ -872,11 +867,19 @@ class MainWindow(QMainWindow):
             
     @pyqtSlot()
     def on_pred_img_src_click(self):
+        """ 
+            use a system command to open in a new window 
+            the currently visible source image 
+        """
         if self.pred_inps is not None:
             os.system(str(self.pred_inps[self.loaded_img_idx]))
         
     @pyqtSlot()
     def on_pred_img_seg_click(self):
+        """ 
+            use a system command to open in a new window 
+            the currently visible segmentation image 
+        """
         if self.pred_inps is not None:
             img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
             seg_dest = self.qt_ui.saved_seg_field.text()
@@ -885,6 +888,10 @@ class MainWindow(QMainWindow):
         
     @pyqtSlot()
     def on_pred_img_sup_click(self):
+        """ 
+            use a system command to open in a new window 
+            the currently visible superposition image 
+        """
         if self.pred_inps is not None:
             img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
             sup_dest = self.qt_ui.saved_sup_field.text()
@@ -1206,7 +1213,11 @@ class MainWindow(QMainWindow):
                                     "{}\n".format(msg))
         
     def init_predicted_visu(self):
-        # load img for visualisation (to be put in separate method)
+        """
+            Navigation push button are enabled
+            first result images are loaded
+
+        """
         img_src_dir = self.qt_ui.predict_images_field.text()
         
         
