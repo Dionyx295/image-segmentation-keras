@@ -48,7 +48,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="preprocess_tab">
        <attribute name="title">
@@ -140,7 +140,7 @@
             <x>10</x>
             <y>20</y>
             <width>291</width>
-            <height>92</height>
+            <height>94</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -825,7 +825,7 @@
                     <x>9</x>
                     <y>19</y>
                     <width>211</width>
-                    <height>120</height>
+                    <height>122</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -973,7 +973,7 @@
                     <x>10</x>
                     <y>20</y>
                     <width>211</width>
-                    <height>189</height>
+                    <height>193</height>
                    </rect>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_11">
@@ -1137,8 +1137,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>731</width>
-          <height>541</height>
+          <width>711</width>
+          <height>738</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_14">
@@ -1166,7 +1166,7 @@
                <rect>
                 <x>9</x>
                 <y>19</y>
-                <width>601</width>
+                <width>591</width>
                 <height>121</height>
                </rect>
               </property>
@@ -1323,10 +1323,252 @@
           </layout>
          </item>
          <item>
+          <layout class="QGridLayout" name="gridLayout_17">
+           <property name="verticalSpacing">
+            <number>2</number>
+           </property>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_img_name">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Aucune image prédite</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+             </property>
+             <property name="margin">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <layout class="QGridLayout" name="gridLayout_18">
+             <property name="leftMargin">
+              <number>2</number>
+             </property>
+             <property name="rightMargin">
+              <number>2</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>15</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>2</number>
+             </property>
+             <item row="1" column="3">
+              <widget class="ClickableGraphicsView" name="graphicsView_sup">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="sceneRect">
+                <rectf>
+                 <x>0.000000000000000</x>
+                 <y>0.000000000000000</y>
+                 <width>0.000000000000000</width>
+                 <height>0.000000000000000</height>
+                </rectf>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLabel" name="label_img_count">
+               <property name="text">
+                <string>0/0</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="margin">
+                <number>0</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_img_base">
+               <property name="text">
+                <string>Image initiale</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QPushButton" name="pushButtonLeft">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">image: url(:/arrow/arrow.png);
+</string>
+               </property>
+               <property name="text">
+                <string>&lt;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QLabel" name="label_img_sup">
+               <property name="text">
+                <string>Superposition</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="ClickableGraphicsView" name="graphicsView_pred">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="baseSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_img_pred">
+               <property name="text">
+                <string>Prédiction</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="ClickableGraphicsView" name="graphicsView_imgsrc">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QPushButton" name="pushButtonRight">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>100</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">image: url(:/arrow/arrowR.png);
+
+</string>
+               </property>
+               <property name="text">
+                <string>&gt;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
           <widget class="QGroupBox" name="groupBox_20">
            <property name="minimumSize">
             <size>
              <width>0</width>
+             <height>370</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
              <height>370</height>
             </size>
            </property>
@@ -1336,10 +1578,10 @@
            <widget class="QScrollArea" name="scrollArea_3">
             <property name="geometry">
              <rect>
-              <x>10</x>
+              <x>0</x>
               <y>20</y>
               <width>710</width>
-              <height>340</height>
+              <height>141</height>
              </rect>
             </property>
             <property name="widgetResizable">
@@ -1351,7 +1593,7 @@
                <x>0</x>
                <y>0</y>
                <width>708</width>
-               <height>338</height>
+               <height>139</height>
               </rect>
              </property>
              <widget class="QPlainTextEdit" name="predict_logs_textedit">
@@ -1359,8 +1601,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>710</width>
-                <height>340</height>
+                <width>711</width>
+                <height>141</height>
                </rect>
               </property>
               <property name="undoRedoEnabled">
@@ -2308,6 +2550,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClickableGraphicsView</class>
+   <extends>QGraphicsView</extends>
+   <header>skyeye_segmentation/view/clickablegraphicsview.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

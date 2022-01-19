@@ -1,13 +1,17 @@
 """Main controller, handles connections, ui management."""
 import os
 import sys
+import glob
 from datetime import datetime
 from pathlib import Path
 
 import numpy as np
 from PyQt5.QtCore import QtWarningMsg, QThreadPool, QtCriticalMsg, QSettings, \
-    pyqtSlot
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+    pyqtSlot, QEvent
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, \
+    QGraphicsScene, QGraphicsPixmapItem
+
+from PyQt5.QtGui import QPixmap
 
 from keras_segmentation.models.all_models import model_from_name
 from skyeye_segmentation.controller.error_handler import errormsg
@@ -103,6 +107,13 @@ class MainWindow(QMainWindow):
         # Prediction
         self.qt_ui.predict_button.clicked \
             .connect(self.on_predict_button_click)
+            
+        # Image vision after prediction
+        self.qt_ui.pushButtonLeft.clicked.connect(self.on_predict_visu_left_click)
+        self.qt_ui.pushButtonRight.clicked.connect(self.on_predict_visu_right_click)
+        self.qt_ui.graphicsView_imgsrc.clicked.connect(self.on_pred_img_src_click)
+        self.qt_ui.graphicsView_pred.clicked.connect(self.on_pred_img_seg_click)
+        self.qt_ui.graphicsView_sup.clicked.connect(self.on_pred_img_sup_click)
 
         # UI management
         # Mask fusion
@@ -299,6 +310,16 @@ class MainWindow(QMainWindow):
 
         self.check_all_available()
         self.show()
+        
+        # variable used to load predicted images in ui
+        
+        self.pred_inps = None  # path to source images of last prediction
+        self.loaded_img_idx = None # witch image is currently visible
+        
+        # those button will be enable after first prediction
+        self.qt_ui.pushButtonLeft.setEnabled(False)
+        self.qt_ui.pushButtonRight.setEnabled(False)
+        
 
     def closeEvent(self, event):
         """QMainWindow closeEvent override"""
@@ -822,10 +843,63 @@ class MainWindow(QMainWindow):
         self.check_all_available()  # Lock other buttons
         worker.signals.progressed.connect(self.update_progress_bar)
         worker.signals.log.connect(self.append_predict_log)
-        worker.signals.finished.connect(self.treatment_done)
+        worker.signals.finished.connect(self.treatment_done_predict)
         worker.signals.error.connect(self.error_appened)
         self.thread_pool.start(worker)
-
+        
+    @pyqtSlot()
+    def on_predict_visu_left_click(self):
+        """ left push button event, change currently visible images """
+        if self.pred_inps is not None:
+            next_idx = self.loaded_img_idx - 1
+            if next_idx == -1:
+                next_idx = len(self.pred_inps)-1
+            self.load_predicted_visu(next_idx)
+    
+    @pyqtSlot()
+    def on_predict_visu_right_click(self):
+        """ right push button event, change currently visible images """
+        if self.pred_inps is not None:
+            next_idx = self.loaded_img_idx + 1
+            if next_idx == len(self.pred_inps):
+                next_idx = 0
+            self.load_predicted_visu(next_idx)
+            
+    @pyqtSlot()
+    def on_pred_img_src_click(self):
+        """ 
+            use a system command to open in a new window 
+            the currently visible source image 
+        """
+        if self.pred_inps is not None:
+            os.system(str(self.pred_inps[self.loaded_img_idx]))
+        
+    @pyqtSlot()
+    def on_pred_img_seg_click(self):
+        """ 
+            use a system command to open in a new window 
+            the currently visible segmentation image 
+        """
+        if self.pred_inps is not None:
+            img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
+            seg_dest = self.qt_ui.saved_seg_field.text()
+            img_pred_path = os.path.join(seg_dest,img_name)
+            os.system(img_pred_path)
+        
+    @pyqtSlot()
+    def on_pred_img_sup_click(self):
+        """ 
+            use a system command to open in a new window 
+            the currently visible superposition image 
+        """
+        if self.pred_inps is not None:
+            img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
+            sup_dest = self.qt_ui.saved_sup_field.text()
+            splited_name = img_name.split('.')
+            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup."+splited_name[1])
+            os.system(img_sup_path)
+    
+    
     ###########################################################################
     ### Slots (tab "Charbonnières")                                         ###
     ###########################################################################
@@ -1118,6 +1192,87 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self,
                                     "Terminé",
                                     "{}\n".format(msg))
+            
+    def treatment_done_predict(self, msg=None):
+        """
+            Called when the predict worker is done, 
+            notify and disable progress_bar
+            load img for result visualisation
+        """
+
+        # unlock other treatments
+        self.set_progress_bar_state(False)
+
+        self.check_all_available()
+        
+        self.init_predicted_visu()
+        
+        if msg:
+            QMessageBox.information(self,
+                                    "Terminé",
+                                    "{}\n".format(msg))
+        
+    def init_predicted_visu(self):
+        """
+            Navigation push button are enabled
+            first result images are loaded
+
+        """
+        img_src_dir = self.qt_ui.predict_images_field.text()
+        
+        
+        self.pred_inps = glob.glob(os.path.join(img_src_dir, "*.jpg")) + \
+            glob.glob(os.path.join(img_src_dir, "*.png")) + \
+            glob.glob(os.path.join(img_src_dir, "*.jpeg")) + \
+            glob.glob(os.path.join(img_src_dir, "*.tif"))
+            
+        self.qt_ui.pushButtonLeft.setEnabled(True)
+        self.qt_ui.pushButtonRight.setEnabled(True)
+        self.load_predicted_visu(0)
+            
+    def load_predicted_visu(self, img_idx):
+        """ load image of given index in prediction view """
+        if self.pred_inps is not None and img_idx < len(self.pred_inps):
+            
+            self.qt_ui.label_img_count.setText(str(img_idx+1)+"/"+str(len(self.pred_inps)))
+            
+            img_name = self.pred_inps[img_idx].split('\\')[-1]
+            
+            self.qt_ui.label_img_name.setText(img_name)
+            
+            #source image
+            img_src_path = self.pred_inps[img_idx]
+            img_src = QPixmap(img_src_path)
+            img_src = img_src.scaled(128,128)
+            scene_src = QGraphicsScene(self)
+            item_src = QGraphicsPixmapItem(img_src)
+            scene_src.addItem(item_src)
+            self.qt_ui.graphicsView_imgsrc.setScene(scene_src)
+            
+            #predicted segmentation
+            seg_dest = self.qt_ui.saved_seg_field.text()
+            img_pred_path = os.path.join(seg_dest,img_name)
+            img_pred = QPixmap(img_pred_path)
+            img_pred = img_pred.scaled(128,128)
+            scene_pred = QGraphicsScene(self)
+            item_pred = QGraphicsPixmapItem(img_pred)
+            scene_pred.addItem(item_pred)
+            self.qt_ui.graphicsView_pred.setScene(scene_pred)
+            
+            #superposition
+            sup_dest = self.qt_ui.saved_sup_field.text()
+            splited_name = img_name.split('.')
+            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup."+splited_name[1])
+            img_sup = QPixmap(img_sup_path)
+            img_sup = img_sup.scaled(128,128)
+            scene_sup = QGraphicsScene(self)
+            item_sup = QGraphicsPixmapItem(img_sup)
+            scene_sup.addItem(item_sup)
+            self.qt_ui.graphicsView_sup.setScene(scene_sup)
+            
+            self.loaded_img_idx = img_idx
+        
+        
 
     def error_appened(self, msg=""):
         """Called when an error happens"""

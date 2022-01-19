@@ -2,6 +2,10 @@ sync.expect
 
 test_charb_segmentation/test_train
 
+run.py
+
+.spyproject
+
 # OS generated files #
 ######################
 .DS_Store

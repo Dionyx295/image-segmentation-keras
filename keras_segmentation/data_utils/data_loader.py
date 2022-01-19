@@ -5,6 +5,9 @@ import random
 import six
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+import matplotlib.cm as cmx
 
 try:
     from tqdm import tqdm
@@ -186,3 +189,19 @@ def image_segmentation_generator(images_path, segs_path, batch_size,
                 seg, n_classes, output_width, output_height))
 
         yield np.array(X), np.array(Y)
+        
+def get_class_colors(n_classes):
+    """define n_classes different colors following nipy_spectral colormap"""
+    color_classes = []
+    colormap = plt.get_cmap('nipy_spectral')
+    cNorm = colors.Normalize(vmin=0, vmax=n_classes-1)
+    scalarMap = cmx.ScalarMappable(norm=cNorm, cmap=colormap)
+    
+    for idx in range(n_classes):
+        colorVal = scalarMap.to_rgba(idx)
+        print(colorVal[0]*256, colorVal[1]*256, colorVal[2]*256)
+        color_classes = np.concatenate((color_classes, (colorVal[2], colorVal[1], colorVal[0])))
+    color_classes = np.reshape(color_classes, (n_classes, 3))
+    color_classes = np.floor(color_classes*256).astype(int)
+    
+    return color_classes
