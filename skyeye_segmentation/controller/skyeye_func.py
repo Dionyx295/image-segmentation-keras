@@ -378,6 +378,7 @@ class TrainWorker(QRunnable):
                     self.signals.log.emit("")
                     if validate:
                         print("Verifying validation dataset")
+                        self.signals.log.emit("Vérification du jeu de validation")
                         verified = verify_segmentation_dataset(val_images,
                                                                val_annotations,
                                                                nb_class)
@@ -394,6 +395,8 @@ class TrainWorker(QRunnable):
                                                     "entation, nb de classes, "
                                                     "format..).")
                             return
+                        self.signals.log.emit("Jeu de validation vérifié !")
+                        self.signals.log.emit("")
 
                 train_gen = image_segmentation_generator(
                     img_src, seg_src, batch, nb_class,
@@ -428,25 +431,33 @@ class TrainWorker(QRunnable):
                         progression = 100 * (epoch + 1) / epochs
                         self.signals.progressed.emit(progression)
                 else:
+                    best_val_acc=0
                     for epoch in range(epochs):
                         print("Starting Epoch ", epoch)
                         self.signals.log.emit("Début de l'époque {}".format(epoch))
                         history = model.fit_generator(train_gen, steps,
                                                       validation_data=val_gen,
-                                                      validation_steps=200,
+                                                      validation_steps=steps,
                                                       epochs=1)
 
                         msg = ""
                         for key, value in history.history.items():
                             msg += "{}:{}  ".format(str(key), str(value))
                         self.signals.log.emit(msg)
-
-                        if checkpoint is not None:
-                            model.save_weights(checkpoint + "." + str(epoch))
-                            print("saved ", checkpoint + ".model." + str(epoch))
+                        
+                        val_acc = history.history['val_acc'][-1]
+                        self.signals.log.emit(str(val_acc))
+                        if checkpoint is not None and val_acc > best_val_acc:
+                            best_val_acc = val_acc
+                            #model.save_weights(checkpoint + "." + str(epoch))
+                            model.save_weights("{}.{:0.0f}"
+                                               .format(checkpoint, val_acc*100))
+                            #print("saved ", checkpoint + ".model." + str(epoch))
+                            print("aved {}_acc{:0.1f}"
+                                               .format(checkpoint, val_acc))
                             self.signals.log.emit("Modèle sauvegardé : "
-                                                  "{}.model.{}"
-                                                  .format(checkpoint, str(epoch)))
+                                                  "{}.{:0.0f}"
+                                                  .format(checkpoint, val_acc*100))
                         print("Finished Epoch", epoch)
                         self.signals.log.emit("époque {} terminée\n".format(epoch))
                         self.signals.log.emit("")
