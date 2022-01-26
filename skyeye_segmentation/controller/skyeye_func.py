@@ -777,7 +777,9 @@ class PredictWorker(QRunnable):
         files = os.listdir(img_src)
         for filename in files:
             imgfile = os.path.join(img_src, filename)
-            pngfile = os.path.join(seg_src, filename)
+            filename_png = filename.split('.')[0]+".png"
+            pngfile = os.path.join(seg_src, filename_png)
+            self.signals.log.emit(pngfile)
             img = cv2.imread(imgfile, 1)
             img = img[:, :, ::-1]
             seg_map = cv2.imread(pngfile, 0)

@@ -890,7 +890,8 @@ class MainWindow(QMainWindow):
         if self.pred_inps is not None:
             img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
             seg_dest = self.qt_ui.saved_seg_field.text()
-            img_pred_path = os.path.join(seg_dest,img_name)
+            splited_name = img_name.split('.')
+            img_pred_path = os.path.join(seg_dest,splited_name[0]+".png")
             os.system(img_pred_path)
         
     @pyqtSlot()
@@ -903,7 +904,7 @@ class MainWindow(QMainWindow):
             img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
             sup_dest = self.qt_ui.saved_sup_field.text()
             splited_name = img_name.split('.')
-            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup."+splited_name[1])
+            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup.png")
             os.system(img_sup_path)
     
     
@@ -1257,6 +1258,7 @@ class MainWindow(QMainWindow):
             self.qt_ui.graphicsView_imgsrc.setScene(scene_src)
             
             #predicted segmentation
+            img_name = img_name.split('.')[0]+".png" # all predictions are png
             seg_dest = self.qt_ui.saved_seg_field.text()
             img_pred_path = os.path.join(seg_dest,img_name)
             img_pred = QPixmap(img_pred_path)
