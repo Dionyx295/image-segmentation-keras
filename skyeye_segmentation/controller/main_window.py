@@ -787,12 +787,19 @@ class MainWindow(QMainWindow):
         epochs = self.qt_ui.epochs_spinbox.value()
         checkpoint = self.qt_ui.save_model_path_field.text()
         nb_class = self.qt_ui.nb_class_spinbox.value()
+        validate = True
+        val_images = self.qt_ui.eval_images_field.text()
+        val_annotations = self.qt_ui.eval_seg_field.text()      
+        if val_images=="" or val_annotations=="":
+            validate = False
 
         worker = TrainWorker(existing=existing, new=new, width=width,
                              height=height, img_src=img_src,
                              seg_src=seg_src, batch=batch, steps=steps,
                              epochs=epochs, checkpoint=checkpoint,
-                             nb_class=nb_class)
+                             nb_class=nb_class, validate=validate,
+                             val_images=val_images,
+                             val_annotations=val_annotations)
 
         # Launching treatment
         self.set_progress_bar_state(True)
@@ -883,7 +890,8 @@ class MainWindow(QMainWindow):
         if self.pred_inps is not None:
             img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
             seg_dest = self.qt_ui.saved_seg_field.text()
-            img_pred_path = os.path.join(seg_dest,img_name)
+            splited_name = img_name.split('.')
+            img_pred_path = os.path.join(seg_dest,splited_name[0]+".png")
             os.system(img_pred_path)
         
     @pyqtSlot()
@@ -896,7 +904,7 @@ class MainWindow(QMainWindow):
             img_name = self.pred_inps[self.loaded_img_idx].split('\\')[-1]
             sup_dest = self.qt_ui.saved_sup_field.text()
             splited_name = img_name.split('.')
-            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup."+splited_name[1])
+            img_sup_path = os.path.join(sup_dest,splited_name[0]+"-sup.png")
             os.system(img_sup_path)
     
     
@@ -1250,6 +1258,7 @@ class MainWindow(QMainWindow):
             self.qt_ui.graphicsView_imgsrc.setScene(scene_src)
             
             #predicted segmentation
+            img_name = img_name.split('.')[0]+".png" # all predictions are png
             seg_dest = self.qt_ui.saved_seg_field.text()
             img_pred_path = os.path.join(seg_dest,img_name)
             img_pred = QPixmap(img_pred_path)
