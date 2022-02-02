@@ -447,17 +447,17 @@ class TrainWorker(QRunnable):
                         
                         val_acc = history.history['val_acc'][-1]
                         self.signals.log.emit(str(val_acc))
-                        if checkpoint is not None and val_acc > best_val_acc:
+                        if checkpoint is not None and(val_acc > best_val_acc or (epoch+1)%5==0):
                             best_val_acc = val_acc
                             #model.save_weights(checkpoint + "." + str(epoch))
-                            model.save_weights("{}.{:0.0f}"
-                                               .format(checkpoint, val_acc*100))
+                            model.save_weights("{}.e{}_vacc{:0.0f}"
+                                               .format(checkpoint,epoch, val_acc*100))
                             #print("saved ", checkpoint + ".model." + str(epoch))
-                            print("aved {}_acc{:0.1f}"
+                            print("saved {}_acc{:0.1f}"
                                                .format(checkpoint, val_acc))
                             self.signals.log.emit("Modèle sauvegardé : "
-                                                  "{}.{:0.0f}"
-                                                  .format(checkpoint, val_acc*100))
+                                                  "{}.e{}_vacc{:0.0f}"
+                                                  .format(checkpoint,epoch, val_acc*100))
                         print("Finished Epoch", epoch)
                         self.signals.log.emit("époque {} terminée\n".format(epoch))
                         self.signals.log.emit("")
