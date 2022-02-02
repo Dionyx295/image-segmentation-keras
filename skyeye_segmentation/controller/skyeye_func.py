@@ -327,13 +327,14 @@ class TrainWorker(QRunnable):
 
                 # Model compilation
                 if optimizer_name is not None:
-                    # weights = [0.1, 10, 20]
-                    # loss_func = weighted_categorical_crossentropy(weights)
+                    #class_weights = {0:1.,1:100.}
+                    #loss_func = weighted_categorical_crossentropy(weights)
                     # print("Weighted loss : " + str(weights))
                     loss_func = "categorical_crossentropy"
                     model.compile(loss=loss_func,
                                   optimizer=optimizer_name,
-                                  metrics=['accuracy'])
+                                  metrics=['accuracy'],
+                                  sample_weight_mode="temporal")
 
                 if checkpoint is not None:
                     with open(checkpoint + "_config.json", "w") as file:
@@ -446,7 +447,7 @@ class TrainWorker(QRunnable):
                         self.signals.log.emit(msg)
                         
                         val_acc = history.history['val_acc'][-1]
-                        self.signals.log.emit(str(val_acc))
+                        #self.signals.log.emit(str(val_acc))
                         if checkpoint is not None and(val_acc > best_val_acc or (epoch+1)%5==0):
                             best_val_acc = val_acc
                             #model.save_weights(checkpoint + "." + str(epoch))

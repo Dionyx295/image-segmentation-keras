@@ -165,11 +165,12 @@ def verify_segmentation_dataset(images_path, segs_path, n_classes, show_all_erro
 def image_segmentation_generator(images_path, segs_path, batch_size,
                                  n_classes, input_height, input_width,
                                  output_height, output_width,
-                                 do_augment=False):
+                                 do_augment=False,class_weights=None):
 
     img_seg_pairs = get_pairs_from_paths(images_path, segs_path)
     random.shuffle(img_seg_pairs)
     zipped = itertools.cycle(img_seg_pairs)
+    #class_weights should be like np.array([1.,100.])
 
     while True:
         X = []
@@ -187,8 +188,14 @@ def image_segmentation_generator(images_path, segs_path, batch_size,
                                    input_height, ordering=IMAGE_ORDERING))
             Y.append(get_segmentation_array(
                 seg, n_classes, output_width, output_height))
+            
+        if class_weights is None:
+            yield np.array(X), np.array(Y)
+            
+        else:
+            sample_weights = class_weights[np.argmax(np.array(Y),axis=2)]
 
-        yield np.array(X), np.array(Y)
+            yield np.array(X), np.array(Y), sample_weights
         
 def get_class_colors(n_classes):
     """define n_classes different colors following nipy_spectral colormap"""
