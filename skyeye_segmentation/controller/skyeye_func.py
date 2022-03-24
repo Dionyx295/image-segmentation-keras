@@ -398,16 +398,19 @@ class TrainWorker(QRunnable):
                             return
                         self.signals.log.emit("Jeu de validation vérifié !")
                         self.signals.log.emit("")
-
+                
+                weights = np.array([1.,50.]) # should definable in th UI
+                weights = None # so the segmentation is not biased
                 train_gen = image_segmentation_generator(
                     img_src, seg_src, batch, nb_class,
                     height, width, output_height, output_width,
-                    do_augment=do_augment)
+                    do_augment=do_augment,class_weights=weights)
 
                 if validate:
                     val_gen = image_segmentation_generator(
                         val_images, val_annotations, val_batch_size,
-                        nb_class, height, width, output_height, output_width)
+                        nb_class, height, width, output_height, output_width,
+                        class_weights=weights)
 
                 if not validate:
                     for epoch in range(epochs):
@@ -433,6 +436,7 @@ class TrainWorker(QRunnable):
                         self.signals.progressed.emit(progression)
                 else:
                     best_val_acc=0
+                    hist_for_plot =[]
                     for epoch in range(epochs):
                         print("Starting Epoch ", epoch)
                         self.signals.log.emit("Début de l'époque {}".format(epoch))
@@ -447,6 +451,7 @@ class TrainWorker(QRunnable):
                         self.signals.log.emit(msg)
                         
                         val_acc = history.history['val_acc'][-1]
+                        hist_for_plot.append(history.history['loss'])
                         #self.signals.log.emit(str(val_acc))
                         if checkpoint is not None and(val_acc > best_val_acc or (epoch+1)%5==0):
                             best_val_acc = val_acc
@@ -464,6 +469,8 @@ class TrainWorker(QRunnable):
                         self.signals.log.emit("")
                         progression = 100 * (epoch + 1) / epochs
                         self.signals.progressed.emit(progression)
+                    plt.plot(hist_for_plot)
+                    plt.savefig("{}_lossplot.png".format(checkpoint))
 
                 self.signals.finished.emit("Entrainement terminé !")
 
