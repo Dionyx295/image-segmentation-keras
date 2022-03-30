@@ -1,12 +1,18 @@
 # Outil de segmentation d'image en Deep Learning : SkyEye :small_airplane::eye::earth_africa:
 
 
-Ce projet est un *fork* du projet https://github.com/Millasta/image-segmentation-keras, lui-même étant un fork du projet https://github.com/divamgupta/image-segmentation-keras : *Implémentation de Segnet, FCN, UNet, PSPNet et d'autres modèles avec Keras.*
+Ce projet est un *fork* du projet https://github.com/OakenMan/image-segmentation-keras, lui même étant un fork du projet https://github.com/Millasta/image-segmentation-keras, lui-même étant un fork du projet https://github.com/divamgupta/image-segmentation-keras : *Implémentation de Segnet, FCN, UNet, PSPNet et d'autres modèles avec Keras.*
 
-Le projet a été réalisé par Tom SUCHEL dans le cadre du **P**rojet **R**echerche et **D**éveloppement (**P**rojet de **F**in d'**É**tude) de la troisième année du cycle ingénieur au département informatique de l'école Polytech Tours, lors de l'année 2020-21. 
+Le prolongement de ce projet a été réalisé par Jean-Malo dans le cadre du **P**rojet **R**echerche et **D**éveloppement (**P**rojet de **F**in d'**É**tude) de la troisième année du cycle ingénieur au département informatique de l'école Polytech Tours, lors de l'année 2021-22. 
 
 L'objectif de ce projet est de rajouter un ensemble de fonctionnalités à l'outil SkyEye, permettant la segmentation automatique des charbonnières sur des images LiDAR.
-Le projet initial a été développé par Valentin MAURICE lors de son PRD sur le même sujet, réalisé en 2019-20.
+Le projet initial a été développé par Valentin MAURICE lors de son PRD sur le même sujet, réalisé en 2019-20, puis Tom Suchel a repirs le projet, aussi lors de son PRD, en 2020-21.
+
+Mon role était principalement d'améliorer les résultats de prédictions, qui ne sont toujours pas suffisant pour une réelle utilisation de l'application.
+
+Les differentes modification que j'ai rélaisé sur l'application peuevnt être visibles dans la liste de commit.
+
+J'ai choisi de tester une architecture s'éloigant un peu de la segmentation d'image pour résoudre le problème de reconnaissance des charbonnières : le Faster R-CNN, qui consiste à faire de la détection d'objets. Cette architecture étant assez complexe j'ai finalement principalement travaillé sur la première partie du réseau : le Region Proposal Network que j'ai testé en dehors de l'application SkyEye (https://github.com/Dionyx295/rpn_helpers). En effet, les données d'entrées sont différentes de ce que prévoit pour l'insatnt SkyeEye, j'ai donc préféré tester l'architecture à part en me disant que l'intégration dans SkyEye n'aurait de sens que si les résultats du RPN sont concluants.
 
 
 ## Prérequis
@@ -28,12 +34,11 @@ Le projet a été développé avec une distribution Python 3.6.5 (64bit) sur win
 - imgaug (0.4.0)
 - sklearn (0.0)
 
-**Attention**: Qt 5.15 doit être installé sur l'ordinateur afin de pouvoir éxécuter le logiciel.
+**Attention**: Qt 5.15 doit être installé sur l'ordinateur afin de pouvoir modifier l'interface utilisateur.
 
 ## Lancement
 
-Il suffit d'éxécuter *skyeye_segmentation/entrypoint.py* avec Python, l'application devrait s'ouvrir.
-
+Il suffit d'éxécuter en ligne de commande ```python entrypoint.py```.
 
 
 ## Structure du projet
@@ -94,15 +99,13 @@ Pour lancer une analyse statique du code avec [PyLint](https://www.pylint.org/) 
 
 Le rapport PyLint est alors disponible et donne des indications sur la qualité du code analysé, ainsi qu'une note générale :
 
-![Rapport PyLint](README/pylint.PNG "Rapport PyLint")
+![Rapport PyLint](README/pylint.txt "Rapport PyLint")
 
 
 
-## Manuel d'utilisation
+## Manuel d'utilisation de la partie réalisé par Tom Suchel
 
+Il a créé une rachitecture correspondant à un VGG de taille réduite. Le travail de segmentation est devenu un travail de prédiction (il découpe les images en patch de petites taille et donne ces patch à son réseau). Les résultats ne sont pas concluant, il faudrait surement plus d'image d'apprentissage.
 Voir le [manuel d'utilisation](MANUAL/Manuel.md)
 
 
-## Téléchargement
-
-Télécharger l'archive de la dernière version [ici](https://github.com/Millasta/image-segmentation-keras/releases).
