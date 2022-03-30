@@ -34,8 +34,8 @@ def test_predict():
     assert im.size[1] == 256
 
     im = Image.open("test_data/predict/1-sup.png", "r")
-    assert im.size[0] == 640
-    assert im.size[1] == 480
+    assert im.size[0] == 389
+    assert im.size[1] == 389
 
     assert os.path.exists("test_data/predict/z09.png")
     assert os.path.exists("test_data/predict/z09-sup.png")
@@ -46,8 +46,8 @@ def test_predict():
     assert im.size[1] == 251
 
     im = Image.open("test_data/predict/z09-sup.png", "r")
-    assert im.size[0] == 640
-    assert im.size[1] == 480
+    assert im.size[0] == 374
+    assert im.size[1] == 389
     im.close()
 
     if os.path.exists(save):
