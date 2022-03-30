@@ -663,7 +663,7 @@ class PredictWorker(QRunnable):
             plt.imsave(out_prob_file+"_prob_C{}.png".format(i+1),
                        heatmap,
                        cmap='hot')
-
+        
         # Creating probabilities file
         if out_prob_file is not None:
             out_prob_file += "_prob_{}x{}.csv".format(output_width,
@@ -695,12 +695,24 @@ class PredictWorker(QRunnable):
 
         pred = pred.reshape((output_height, output_width, n_classes)).argmax(axis=2)
 
+        seg_img = np.zeros((output_height, output_width, 3))
+
         if clrs is None:
             #colors = class_colors # old version, difficult to distinguish colors
             colors = get_class_colors(n_classes)
         else:
             colors = clrs
-        seg_img = colors[pred]
+
+        # i don't really understand this part but dosen't work if i try to replace it
+        for color in range(n_classes):
+            seg_img[:, :, 0] += ((pred[:, :] == color) * (colors[color][0])) \
+                .astype('uint8')
+            seg_img[:, :, 1] += ((pred[:, :] == color) * (colors[color][1])) \
+                .astype('uint8')
+            seg_img[:, :, 2] += ((pred[:, :] == color) * (colors[color][2])) \
+                .astype('uint8')
+        
+        seg_img = cv2.resize(seg_img, (orininal_w, orininal_h))
 
         if out_fname is not None:
             cv2.imwrite(out_fname, seg_img)
@@ -795,6 +807,7 @@ class PredictWorker(QRunnable):
             saved_img = os.path.join(save_dir, os.path.splitext(filename)[0] +
                                      "-sup.png")
             seg_image = cv2.resize(seg_image, (img.shape[0],img.shape[1]))
+            
             pyplot.figure()
             pyplot.imshow(seg_image, cmap="nipy_spectral", interpolation='none')
             pyplot.imshow(img, interpolation='none', alpha=0.5)
@@ -803,7 +816,7 @@ class PredictWorker(QRunnable):
             self.signals.log.emit(saved_img)
             progression = 50 + 100 * files_processed / (files_nb * 2)
             self.signals.progressed.emit(progression)
-
+        
 
 def model_from_checkpoint_path_nb(checkpoints_path, checkpoint_nb):
     """Loads the weights from the n° model in the specified folder."""
