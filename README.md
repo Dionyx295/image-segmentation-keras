@@ -55,20 +55,6 @@ Le projet est structué de la manière suivante :
 
 
 
-### Modules
-
-Les modules pythons s'organisent de la manière suivante. Les modules en orange sont ceux qui ont été modifiés depuis la version initiale du projet.
-
-![Diagramme des modules](README/project-uml.png "Diagramme de modules")
-
-Le module **view** contient un fichier .ui généré avec [Qt Designer](https://build-system.fman.io/qt-designer-download), qui a été automatiquement traduit en .py grâce au convertisseur pyuic5 (contenu dans PyQt5) : 
-
-```python
->>> pyuic5 main_window.ui > main_window.py
-```
-
-
-
 ## Documentation
 
 La documentation disponible dans *html/* a été générée avec [pdoc](https://pdoc3.github.io/pdoc/) : 
@@ -79,13 +65,13 @@ La documentation disponible dans *html/* a été générée avec [pdoc](https://
 
 
 
-## Tests unitaires
+<!--## Tests unitaires
 
 Lancer les tests unitaires des nouvelles fonctions du module *skyeye_segmentation* (**se placer dans test_charb_segmentation/**) :
 
 ```python
 >>> python -m pytest
-```
+```--->
 
 
 
@@ -97,15 +83,13 @@ Pour lancer une analyse statique du code avec [PyLint](https://www.pylint.org/) 
 >>> pylint --rcfile=.pylintrc skyeye_segmentation > pylint.txt
 ```
 
-Le rapport PyLint est alors disponible et donne des indications sur la qualité du code analysé, ainsi qu'une note générale :
-
-![Rapport PyLint](README/pylint.txt "Rapport PyLint")
+Le rapport PyLint est alors disponible et donne des indications sur la qualité du code analysé, ainsi qu'une note générale.
 
 
 
-## Manuel d'utilisation de la partie réalisé par Tom Suchel
+## Manuel d'utilisation de la partie réalisée par Tom Suchel
 
-Il a créé une rachitecture correspondant à un VGG de taille réduite. Le travail de segmentation est devenu un travail de prédiction (il découpe les images en patch de petites taille et donne ces patch à son réseau). Les résultats ne sont pas concluant, il faudrait surement plus d'image d'apprentissage.
+Il a créé une rachitecture correspondant à un VGG de taille réduite. Le travail de segmentation est devenu un travail de prédiction (il découpe les images en patch de petite taille et donne ces patch à son réseau qui predit si oui ou non le patch contient une charbonnière). Les résultats ne sont pas concluants, il faudrait surement plus d'image d'apprentissage.
 Voir le [manuel d'utilisation](MANUAL/Manuel.md)
 
 
