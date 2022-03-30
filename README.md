@@ -65,14 +65,10 @@ La documentation disponible dans *html/* a été générée avec [pdoc](https://
 
 
 
-<!--## Tests unitaires
+## Tests unitaires
 
-Lancer les tests unitaires des nouvelles fonctions du module *skyeye_segmentation* (**se placer dans test_charb_segmentation/**) :
-
-```python
->>> python -m pytest
-```--->
-
+Pour lancer les tests unitaires il suffit de se placer dans un des dossier test_... et de taper dans un terminal ```python -m pytest```.
+Le test_charb_segmentation serait à revoir, trop d'images sont générées et cela pollue le repertoire de travail.
 
 
 ## Qualimétrie
