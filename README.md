@@ -15,7 +15,7 @@ Les differentes modification que j'ai rélaisé sur l'application peuevnt être 
 J'ai choisi de tester une architecture s'éloigant un peu de la segmentation d'image pour résoudre le problème de reconnaissance des charbonnières : le Faster R-CNN, qui consiste à faire de la détection d'objets. Cette architecture étant assez complexe j'ai finalement principalement travaillé sur la première partie du réseau : le Region Proposal Network que j'ai testé en dehors de l'application SkyEye (https://github.com/Dionyx295/rpn_helpers). En effet, les données d'entrées sont différentes de ce que prévoit pour l'insatnt SkyeEye, j'ai donc préféré tester l'architecture à part en me disant que l'intégration dans SkyEye n'aurait de sens que si les résultats du RPN sont concluants.
 
 
-## Prérequis
+## Installation
 
 Le projet a été développé avec une distribution Python 3.6.5 (64bit) sur windows, et nécessite les dépendances suivantes (à retrouver dans requirements.txt) :
 
@@ -35,6 +35,8 @@ Le projet a été développé avec une distribution Python 3.6.5 (64bit) sur win
 - sklearn (0.0)
 
 **Attention**: Qt 5.15 doit être installé sur l'ordinateur afin de pouvoir modifier l'interface utilisateur.
+
+Lien vers le [guide d'installation](MANUAL/Installation.md).
 
 ## Lancement
 
@@ -86,6 +88,11 @@ Le rapport PyLint est alors disponible et donne des indications sur la qualité 
 ## Manuel d'utilisation de la partie réalisée par Tom Suchel
 
 Il a créé une rachitecture correspondant à un VGG de taille réduite. Le travail de segmentation est devenu un travail de prédiction (il découpe les images en patch de petite taille et donne ces patch à son réseau qui predit si oui ou non le patch contient une charbonnière). Les résultats ne sont pas concluants, il faudrait surement plus d'image d'apprentissage.
-Voir le [manuel d'utilisation](MANUAL/Manuel.md)
+Voir le [manuel d'utilisation](MANUAL/Manuel.md).
+
+## Informations pour le développeur
+
+Lien vers le [guide développeur](MANUAL/GuideDev.md).
+
 
 
